@@ -1,6 +1,6 @@
 # LICENSE
 
-Copyright 2023 Exabyte Inc.
+Copyright 2024 Exabyte Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

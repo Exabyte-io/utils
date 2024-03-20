@@ -1,7 +1,7 @@
 [project]
-name = "mat3ra-templator"
+name = "mat3ra-utils"
 dynamic = ["version"]
-description = "A template for Python projects."
+description = "Utils."
 readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE.md"}
@@ -20,8 +20,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pre-commit", "black", "ruff", "isort", "mypy", "pip-tools"]
-test = ["coverage", "mock"]
+tests = [
+    "coverage[toml]>=5.3",
+    "pre-commit",
+    "black",
+    "ruff",
+    "isort",
+    "mypy",
+    "pip-tools"
+]
+all = ["mat3ra-utils[tests]"]
 
 # Entrypoint scripts can be defined here, see examples below.
 [project.scripts]

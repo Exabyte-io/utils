@@ -1,7 +1,7 @@
 import unittest
 
 import numpy as np
-from mat3ra.templator import get_length
+from mat3ra.utils import get_length
 
 
 class TestSample(unittest.TestCase):

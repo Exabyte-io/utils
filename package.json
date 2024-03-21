@@ -4,9 +4,9 @@
     "description": "Utils Py/JS",
     "author": "Exabyte Inc.",
     "license": "ISC",
-    "main": "lib/index.js",
+    "main": "dist/index.js",
     "files": [
-        "/lib",
+        "/dist",
         "/src/js",
         "tsconfig.json"
     ],
@@ -59,7 +59,7 @@
         "transpile": "tsc"
     },
     "engines": {
-        "node": ">=12.0.0"
+        "node": ">=14.0.0"
     },
     "lint-staged": {
         "*.{js,ts,tsx}": "eslint --cache --fix",

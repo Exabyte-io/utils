@@ -7,10 +7,11 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+# "dist" folder is not ignored on purpose to be able to install intermediate changes from github commits
+# dist
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/

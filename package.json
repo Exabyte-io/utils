@@ -15,6 +15,7 @@
     "license": "ISC",
     "main": "dist/js/index.js",
     "exports": {
+        ".": "./dist/js/index.js",
         "./server": "./dist/js/index_server.js",
         "./browser": "./dist/js/index_browser.js"
     },

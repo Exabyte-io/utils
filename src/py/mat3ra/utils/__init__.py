@@ -1,5 +1,4 @@
-import numpy as np
-
-
-def get_length(vec: np.ndarray) -> np.float_:
-    return np.linalg.norm(vec)
+from .string import (
+    camel_to_snake,
+    snake_to_camel,
+)

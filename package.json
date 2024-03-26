@@ -15,8 +15,12 @@
     "author": "Exabyte Inc.",
     "license": "ISC",
     "main": "dist/js/index.js",
+    "exports": {
+        "./server": "./dist/js/index_server.js",
+        "./browser": "./dist/js/index_browser.js"
+    },
     "files": [
-        "/dist",
+        "/dist/js",
         "/src/js",
         "tsconfig.json"
     ],

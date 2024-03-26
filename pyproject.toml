@@ -27,7 +27,11 @@ tests = [
     "ruff",
     "isort",
     "mypy",
-    "pip-tools"
+    "pip-tools",
+    # Testing
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
 ]
 all = ["mat3ra-utils[tests]"]
 

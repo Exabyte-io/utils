@@ -11,7 +11,7 @@ def test_snake_to_camel():
 
 def test_camel_to_snake():
     """
-     testCamelToSnake should be converted to test_camel_to_snake
+    testCamelToSnake should be converted to test_camel_to_snake
     """
     print(utils.camel_to_snake("testCamelToSnake"))
     assert utils.camel_to_snake("TestCamelToSnake") == "test_camel_to_snake"

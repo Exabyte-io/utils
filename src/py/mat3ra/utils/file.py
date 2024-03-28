@@ -1,7 +1,7 @@
 import os
 
 
-def file_get_content(file_path: str) -> str:
+def get_file_content(file_path: str) -> str:
     """
     Returns the content of a given file.
 

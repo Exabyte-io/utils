@@ -1,6 +1,6 @@
 from mat3ra.utils import mixins as mixins
 
-ARRAY_TO_ROUND = [1.23456789101112, 2.34567899, 3.456789, 4.56789999, 5.67899999]
+ARRAY_TO_ROUND = [1.23456789101112, 2.34567899, 3.45678999, 4.56789999, 5.67899999]
 
 
 def test_RoundNumericValuesMixin():

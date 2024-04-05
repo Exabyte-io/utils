@@ -1,5 +1,5 @@
-from typing import Any, Dict, List
 import copy
+from typing import Any, Dict, List
 
 
 def omit(obj: Dict[str, Any], keys: List[str]) -> Dict[str, Any]:
@@ -16,3 +16,13 @@ def clone_shallow(obj: Any) -> Any:
 
 def clone_deep(obj: Any) -> Any:
     return copy.deepcopy(obj)
+
+
+def get(config: Dict, path: str = "", separator: str = "/") -> Any:
+    """
+    Get value by deep/nested path with separator "/ or "."
+    """
+    segments = path.strip(separator).split(separator)
+    for segment in segments:
+        config = config.get(segment, {})
+    return config

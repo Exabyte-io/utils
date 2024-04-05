@@ -1,5 +1,6 @@
-from mat3ra.utils import file as utils
 from pathlib import Path
+
+from mat3ra.utils import file as utils
 
 REFERENCE_FILE_PATH = Path(__file__).parent / "./fixtures/file_with_content.txt"
 REFERENCE_FILE_CONTENT = """Content Line 1\nContent Line 2\nContent Line 3\n"""

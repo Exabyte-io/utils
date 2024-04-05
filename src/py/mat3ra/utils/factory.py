@@ -1,10 +1,12 @@
 import importlib
 from collections.abc import Callable
 
+
 class BaseFactory(object):
     """
     Base Factory class.
     """
+
     __class_registry___ = {
         "object_name1": "module.reference.to.ObjectName1",
         "object_name2": "module.reference.to.ObjectName2",

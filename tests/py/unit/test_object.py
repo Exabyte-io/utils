@@ -1,5 +1,3 @@
-import copy
-
 from mat3ra.utils import object as utils
 
 REFERENCE_OBJECT_1 = {"key1": "value1", "key2": "value2"}

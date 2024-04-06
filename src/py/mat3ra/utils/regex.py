@@ -10,11 +10,11 @@ def convert_js_flags_to_python(flags: str) -> int:
     """
     python_flags = 0
 
-    if 'i' in flags:
+    if "i" in flags:
         python_flags |= re.IGNORECASE
-    if 'm' in flags:
+    if "m" in flags:
         python_flags |= re.MULTILINE
-    if 's' in flags:
+    if "s" in flags:
         python_flags |= re.DOTALL
 
     # Note: JavaScript 'g' flag has no direct equivalent in Python, as Python inherently performs global searches.

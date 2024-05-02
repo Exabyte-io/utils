@@ -21,7 +21,7 @@ def test_filter_by_slice_or_index_or_indices():
 
 
 def test_convert_to_array_if_not():
-    array = utils.safe_make_array_if_not(REFERENCE_ARRAY)
+    array = utils.convert_to_array_if_not(REFERENCE_ARRAY)
     assert array == REFERENCE_ARRAY
-    item = utils.safe_make_array_if_not(REFERENCE_ARRAY[0])
+    item = utils.convert_to_array_if_not(REFERENCE_ARRAY[0])
     assert item == [REFERENCE_ARRAY[0]]

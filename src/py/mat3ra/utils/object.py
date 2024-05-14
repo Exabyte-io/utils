@@ -1,6 +1,6 @@
 import copy
 from typing import Any, Dict, List
-from unittest import TestCase
+import unittest
 
 import numpy as np
 # Overriding the built-in set function to not interfere with object.set in this module
@@ -32,6 +32,16 @@ def get(config: Dict, path: str = "", separator: str = "/") -> Any:
     return config
 
 
+def assert_almost_equal(expected, actual, *args, **kwargs):
+    test_case = unittest.TestCase()
+    test_case.assertAlmostEqual(expected, actual, *args, **kwargs)
+
+
+def assert_equal(expected, actual):
+    test_case = unittest.TestCase()
+    test_case.assertEqual(expected, actual)
+
+
 def assert_deep_almost_equal(expected, actual, *args, **kwargs):
     """
     Asserts that two complex structures have almost equal contents. Compares lists, dicts and tuples recursively.
@@ -49,16 +59,16 @@ def assert_deep_almost_equal(expected, actual, *args, **kwargs):
     trace = kwargs.pop("__trace", "ROOT")
     try:
         if isinstance(expected, (int, float, complex)):
-            TestCase.assertAlmostEqual(expected, actual, *args, **kwargs)
+            assert_almost_equal(expected, actual, *args, **kwargs)
         elif isinstance(expected, (str)):
-            TestCase.assertEqual(expected, actual)
+            assert_equal(expected, actual)
         elif isinstance(expected, (list, tuple, np.ndarray)):
-            TestCase.assertEqual(len(expected), len(actual))
+            assert_equal(len(expected), len(actual))
             for index in range(len(expected)):
                 v1, v2 = expected[index], actual[index]
                 assert_deep_almost_equal(v1, v2, __trace=repr(index), *args, **kwargs)
         elif isinstance(expected, dict):
-            TestCase.assertEqual(builtin_set(expected), builtin_set(actual))
+            assert_equal(builtin_set(expected), builtin_set(actual))
             for key in expected:
                 assert_deep_almost_equal(expected[key], actual[key], __trace=repr(key), *args, **kwargs)
     except AssertionError as exc:

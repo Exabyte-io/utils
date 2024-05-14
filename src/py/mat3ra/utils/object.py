@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Any, Callable, Dict, List
 
 import numpy as np
+from mat3ra.utils.mixins import RoundNumericValuesMixin
 
 # Overriding the built-in set function to not interfere with object.set in this module
 builtin_set = set
@@ -97,7 +98,9 @@ def assert_deep_almost_equal(expected: Any, actual: Any, *args: Any, **kwargs: A
         raise exc
 
 
-def convert_key_and_round(k: Any, v: Any, round_func: Callable[[Any], Any]) -> tuple:
+def convert_key_and_round(
+    k: Any, v: Any, round_func: Callable[[Any], Any] = RoundNumericValuesMixin.round_array_or_number
+) -> tuple:
     """
     Convert enum keys to strings and round numeric values for JSON serialization.
 

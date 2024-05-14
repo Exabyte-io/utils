@@ -3,7 +3,8 @@ from typing import Any, Dict, List
 from unittest import TestCase
 
 import numpy as np
-
+# Overriding the built-in set function to not interfere with object.set in this module
+builtin_set = set
 
 def omit(obj: Dict[str, Any], keys: List[str]) -> Dict[str, Any]:
     return {k: v for k, v in obj.items() if k not in keys}
@@ -57,7 +58,7 @@ def assert_deep_almost_equal(expected, actual, *args, **kwargs):
                 v1, v2 = expected[index], actual[index]
                 assert_deep_almost_equal(v1, v2, __trace=repr(index), *args, **kwargs)
         elif isinstance(expected, dict):
-            TestCase.assertEqual(set(expected), set(actual))
+            TestCase.assertEqual(builtin_set(expected), builtin_set(actual))
             for key in expected:
                 assert_deep_almost_equal(expected[key], actual[key], __trace=repr(key), *args, **kwargs)
     except AssertionError as exc:

@@ -1,10 +1,13 @@
 import copy
-from typing import Any, Dict, List
 import unittest
 from enum import Enum
+from typing import Any, Callable, Dict, List
+
 import numpy as np
+
 # Overriding the built-in set function to not interfere with object.set in this module
 builtin_set = set
+
 
 def omit(obj: Dict[str, Any], keys: List[str]) -> Dict[str, Any]:
     return {k: v for k, v in obj.items() if k not in keys}
@@ -32,17 +35,17 @@ def get(config: Dict, path: str = "", separator: str = "/") -> Any:
     return config
 
 
-def assert_almost_equal(expected, actual, *args, **kwargs):
+def assert_almost_equal(expected: Any, actual: Any, *args: Any, **kwargs: Any) -> None:
     test_case = unittest.TestCase()
     test_case.assertAlmostEqual(expected, actual, *args, **kwargs)
 
 
-def assert_equal(expected, actual):
+def assert_equal(expected: Any, actual: Any) -> None:
     test_case = unittest.TestCase()
     test_case.assertEqual(expected, actual)
 
 
-def assert_deep_almost_equal(expected, actual, *args, **kwargs):
+def assert_deep_almost_equal(expected: Any, actual: Any, *args: Any, **kwargs: Any) -> None:
     """
     Asserts that two complex structures have almost equal contents. Compares lists, dicts and tuples recursively.
     Checks numeric values using assertAlmostEqual() and checks all other values with assertEqual(). Accepts
@@ -74,12 +77,12 @@ def assert_deep_almost_equal(expected, actual, *args, **kwargs):
     except AssertionError as exc:
         exc.__dict__.setdefault("traces", []).append(trace)
         if is_root:
-            trace = " -> ".join(reversed(exc.traces))
+            trace = " -> ".join(reversed(exc.traces))  # type: ignore
             exc = AssertionError("%s\nTRACE: %s" % (str(exc), trace))
         raise exc
 
 
-def convert_key_and_round(k, v, round_func):
+def convert_key_and_round(k: Any, v: Any, round_func: Callable[[Any], Any]) -> tuple:
     """
     Convert enum keys to strings and round numeric values for JSON serialization.
 
@@ -100,4 +103,3 @@ def convert_key_and_round(k, v, round_func):
         v = round_func(v)
 
     return k, v
-

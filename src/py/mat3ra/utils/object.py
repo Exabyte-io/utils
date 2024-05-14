@@ -1,7 +1,7 @@
 import copy
 from typing import Any, Dict, List
 import unittest
-
+from enum import Enum
 import numpy as np
 # Overriding the built-in set function to not interfere with object.set in this module
 builtin_set = set
@@ -77,3 +77,27 @@ def assert_deep_almost_equal(expected, actual, *args, **kwargs):
             trace = " -> ".join(reversed(exc.traces))
             exc = AssertionError("%s\nTRACE: %s" % (str(exc), trace))
         raise exc
+
+
+def convert_key_and_round(k, v, round_func):
+    """
+    Convert enum keys to strings and round numeric values for JSON serialization.
+
+    Args:
+        k: The key to convert.
+        v: The value to convert and round if it's numeric.
+        round_func: The rounding function to use for numeric values.
+
+    Returns:
+        tuple: A tuple containing the converted key and the rounded value.
+    """
+    if isinstance(k, Enum):
+        k = k.value
+
+    if isinstance(v, (int, float, list, np.ndarray)):
+        if isinstance(v, np.ndarray):
+            v = v.tolist()
+        v = round_func(v)
+
+    return k, v
+

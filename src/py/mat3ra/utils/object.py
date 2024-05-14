@@ -1,5 +1,6 @@
 import copy
 from typing import Any, Dict, List
+from unittest import TestCase
 
 import numpy as np
 
@@ -30,7 +31,7 @@ def get(config: Dict, path: str = "", separator: str = "/") -> Any:
     return config
 
 
-def assert_deep_almost_equal(self, expected, actual, *args, **kwargs):
+def assert_deep_almost_equal(expected, actual, *args, **kwargs):
     """
     Asserts that two complex structures have almost equal contents. Compares lists, dicts and tuples recursively.
     Checks numeric values using assertAlmostEqual() and checks all other values with assertEqual(). Accepts
@@ -47,18 +48,18 @@ def assert_deep_almost_equal(self, expected, actual, *args, **kwargs):
     trace = kwargs.pop("__trace", "ROOT")
     try:
         if isinstance(expected, (int, float, complex)):
-            self.assertAlmostEqual(expected, actual, *args, **kwargs)
+            TestCase.assertAlmostEqual(expected, actual, *args, **kwargs)
         elif isinstance(expected, (str)):
-            self.assertEqual(expected, actual)
+            TestCase.assertEqual(expected, actual)
         elif isinstance(expected, (list, tuple, np.ndarray)):
-            self.assertEqual(len(expected), len(actual))
+            TestCase.assertEqual(len(expected), len(actual))
             for index in range(len(expected)):
                 v1, v2 = expected[index], actual[index]
-                self.assert_deep_almost_equal(v1, v2, __trace=repr(index), *args, **kwargs)
+                assert_deep_almost_equal(v1, v2, __trace=repr(index), *args, **kwargs)
         elif isinstance(expected, dict):
-            self.assertEqual(set(expected), set(actual))
+            TestCase.assertEqual(set(expected), set(actual))
             for key in expected:
-                self.assert_deep_almost_equal(expected[key], actual[key], __trace=repr(key), *args, **kwargs)
+                assert_deep_almost_equal(expected[key], actual[key], __trace=repr(key), *args, **kwargs)
     except AssertionError as exc:
         exc.__dict__.setdefault("traces", []).append(trace)
         if is_root:

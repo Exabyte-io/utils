@@ -30,7 +30,7 @@ def get(config: Dict, path: str = "", separator: str = "/") -> Any:
     return config
 
 
-def assertDeepAlmostEqual(self, expected, actual, *args, **kwargs):
+def assert_deep_almost_equal(self, expected, actual, *args, **kwargs):
     """
     Asserts that two complex structures have almost equal contents. Compares lists, dicts and tuples recursively.
     Checks numeric values using assertAlmostEqual() and checks all other values with assertEqual(). Accepts
@@ -54,11 +54,11 @@ def assertDeepAlmostEqual(self, expected, actual, *args, **kwargs):
             self.assertEqual(len(expected), len(actual))
             for index in range(len(expected)):
                 v1, v2 = expected[index], actual[index]
-                self.assertDeepAlmostEqual(v1, v2, __trace=repr(index), *args, **kwargs)
+                self.assert_deep_almost_equal(v1, v2, __trace=repr(index), *args, **kwargs)
         elif isinstance(expected, dict):
             self.assertEqual(set(expected), set(actual))
             for key in expected:
-                self.assertDeepAlmostEqual(expected[key], actual[key], __trace=repr(key), *args, **kwargs)
+                self.assert_deep_almost_equal(expected[key], actual[key], __trace=repr(key), *args, **kwargs)
     except AssertionError as exc:
         exc.__dict__.setdefault("traces", []).append(trace)
         if is_root:

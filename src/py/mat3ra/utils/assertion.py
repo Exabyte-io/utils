@@ -10,8 +10,8 @@ def assert_almost_equal_numbers(
     Assert that two values are almost equal within tolerance.
 
     Args:
-        expected (Any): The expected value.
-        actual (Any): The actual value.
+        expected (Union[int, float, complex]): The expected value.
+        actual (Union[int, float, complex]): The actual value.
         *args (Any): Additional positional arguments for np.isclose (e.g. rtol, atol).
         **kwargs (Any): Additional keyword arguments for np.isclose.
     """
@@ -24,8 +24,8 @@ def assert_equal(expected: Union[str, int, list, set], actual: Union[str, int, l
     Assert that two values are equal.
 
     Args:
-        expected (Any): The expected value.
-        actual (Any): The actual value.
+        expected (Union[str, int, list, set]): The expected value.
+        actual (Union[str, int, list, set]): The actual value.
     """
     if expected != actual:
         raise AssertionError(f"Expected {expected} and actual {actual} are not equal.")
@@ -41,8 +41,10 @@ def assert_deep_almost_equal(expected: Any, actual: Any, *args: Any, **kwargs: A
         Based on: https://stackoverflow.com/a/23550280
 
     Args:
-        expected (Union[Dict[str, Any], List[Any], Tuple[Any], int, float, complex, str]): The expected complex object.
-        actual (Union[Dict[str, Any], List[Any], Tuple[Any], int, float, complex, str]): The actual complex object.
+        expected (Any): The expected complex object.
+        actual (Any): The actual complex object.
+        *args (Any): Additional positional arguments for np.isclose (e.g. rtol, atol).
+        **kwargs (Any): Additional keyword arguments for np.isclose.
     """
     is_root = "__trace" not in kwargs
     trace = kwargs.pop("__trace", "ROOT")

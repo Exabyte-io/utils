@@ -1,5 +1,5 @@
 import pytest
-from mat3ra.utils.assertion import assert_almost_equal_numbers, assert_equal, assert_deep_almost_equal
+from mat3ra.utils.assertion import assert_almost_equal_numbers, assert_deep_almost_equal, assert_equal
 
 
 def test_assert_almost_equal_numbers():

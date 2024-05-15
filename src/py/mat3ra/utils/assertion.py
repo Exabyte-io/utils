@@ -1,6 +1,11 @@
-from typing import Any
+from typing import Any, Union
+
 import numpy as np
-def assert_almost_equal_numbers(expected: (int, float, complex), actual: Any, *args: Any, **kwargs: Any) -> None:
+
+
+def assert_almost_equal_numbers(
+    expected: Union[int, float, complex], actual: Union[int, float, complex], *args: Any, **kwargs: Any
+) -> None:
     """
     Assert that two values are almost equal within tolerance.
 
@@ -14,7 +19,7 @@ def assert_almost_equal_numbers(expected: (int, float, complex), actual: Any, *a
         raise AssertionError(f"Expected {expected} and actual {actual} are not almost equal.")
 
 
-def assert_equal(expected: (str, int, list, set), actual: (str, int, list, set)) -> None:
+def assert_equal(expected: Union[str, int, list, set], actual: Union[str, int, list, set]) -> None:
     """
     Assert that two values are equal.
 
@@ -61,4 +66,3 @@ def assert_deep_almost_equal(expected: Any, actual: Any, *args: Any, **kwargs: A
             trace = " -> ".join(reversed(exc.traces))  # type: ignore
             exc = AssertionError("%s\nTRACE: %s" % (str(exc), trace))
         raise exc
-

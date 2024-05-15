@@ -47,4 +47,3 @@ class NumpyNDArrayRoundEncoder(json.JSONEncoder, RoundNumericValuesMixin):
         if isinstance(obj, (int, float)):
             return self.round_array_or_number(obj)
         return json.JSONEncoder.default(self, obj)
-

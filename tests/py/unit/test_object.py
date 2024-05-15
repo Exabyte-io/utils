@@ -14,9 +14,9 @@ def test_omit():
     assert object_without_key1 == REFERENCE_OBJECT_1_WITHOUT_KEY1
 
 
-def test_set():
+def test_set_object_key():
     object_with_key3 = utils.clone_deep(REFERENCE_OBJECT_1)
-    utils.set(object_with_key3, "key3", "value3")
+    utils.set_object_key(object_with_key3, "key3", "value3")
     assert object_with_key3 == REFERENCE_OBJECT_1_WITH_KEY3
 
 

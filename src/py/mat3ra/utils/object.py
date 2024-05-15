@@ -1,12 +1,16 @@
 import copy
+import json
 from typing import Any, Dict, List
+
+import numpy as np
+from mat3ra.utils.mixins import RoundNumericValuesMixin
 
 
 def omit(obj: Dict[str, Any], keys: List[str]) -> Dict[str, Any]:
     return {k: v for k, v in obj.items() if k not in keys}
 
 
-def set(obj: Dict[str, Any], key: str, value: Any) -> None:
+def set_object_key(obj: Dict[str, Any], key: str, value: Any) -> None:
     obj[key] = value
 
 
@@ -26,3 +30,20 @@ def get(config: Dict, path: str = "", separator: str = "/") -> Any:
     for segment in segments:
         config = config.get(segment, {})
     return config
+
+
+class NumpyNDArrayRoundEncoder(json.JSONEncoder, RoundNumericValuesMixin):
+    def default(self, obj: Any) -> Any:
+        """
+        Convert Numpy NDArray to list and round numeric values.
+        Args:
+            obj (Any): The object to convert.
+
+        Returns:
+            tuple: A tuple containing the converted key and the rounded value.
+        """
+        if isinstance(obj, np.ndarray):
+            return self.round_array_or_number(obj.tolist())
+        if isinstance(obj, (int, float)):
+            return self.round_array_or_number(obj)
+        return json.JSONEncoder.default(self, obj)

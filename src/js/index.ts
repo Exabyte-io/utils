@@ -1,6 +1,7 @@
 import * as array from "./shared/array";
 import * as cls from "./shared/class";
 import * as clone from "./shared/clone";
+import * as compare from "./shared/compare";
 import * as constants from "./shared/constants";
 import * as hash from "./shared/hash";
 import * as math from "./shared/math";
@@ -26,6 +27,7 @@ export const sharedUtils = {
     tree,
     url,
     uuid,
+    compare,
 };
 
 export const Utils = sharedUtils;

@@ -43,9 +43,9 @@ var __importStar =
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utils = exports.sharedUtils = void 0;
 const array = __importStar(require("./shared/array"));
+const assertion = __importStar(require("./shared/assertion"));
 const cls = __importStar(require("./shared/class"));
 const clone = __importStar(require("./shared/clone"));
-const compare = __importStar(require("./shared/compare"));
 const constants = __importStar(require("./shared/constants"));
 const hash = __importStar(require("./shared/hash"));
 const math = __importStar(require("./shared/math"));
@@ -70,7 +70,7 @@ exports.sharedUtils = {
     tree,
     url,
     uuid,
-    compare,
+    assertion,
 };
 exports.Utils = exports.sharedUtils;
 exports.default = { ...exports.Utils };

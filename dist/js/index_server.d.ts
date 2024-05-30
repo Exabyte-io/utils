@@ -17,7 +17,7 @@ export declare const Utils: {
     tree: typeof import("./shared/tree");
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
-    compare: typeof import("./shared/compare");
+    assertion: typeof import("./shared/assertion");
 };
 declare const _default: {
     file: typeof file;
@@ -34,6 +34,6 @@ declare const _default: {
     tree: typeof import("./shared/tree");
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
-    compare: typeof import("./shared/compare");
+    assertion: typeof import("./shared/assertion");
 };
 export default _default;

@@ -78,7 +78,7 @@ export function assertShallowDeepAlmostEqual(
         const newPath = path + (path === "/" ? "" : "/") + prop;
 
         // @ts-ignore
-        shallowDeepAlmostEqual(expect[prop], actual[prop], newPath, threshold);
+        assertShallowDeepAlmostEqual(expect[prop], actual[prop], newPath, threshold);
     }
 
     return true;

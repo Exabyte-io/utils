@@ -1,4 +1,5 @@
 import * as array from "./shared/array";
+import * as assertion from "./shared/assertion";
 import * as cls from "./shared/class";
 import * as clone from "./shared/clone";
 import * as constants from "./shared/constants";
@@ -25,6 +26,7 @@ export declare const sharedUtils: {
     tree: typeof tree;
     url: typeof url;
     uuid: typeof uuid;
+    assertion: typeof assertion;
 };
 export declare const Utils: {
     array: typeof array;
@@ -40,6 +42,7 @@ export declare const Utils: {
     tree: typeof tree;
     url: typeof url;
     uuid: typeof uuid;
+    assertion: typeof assertion;
 };
 declare const _default: {
     array: typeof array;
@@ -55,5 +58,6 @@ declare const _default: {
     tree: typeof tree;
     url: typeof url;
     uuid: typeof uuid;
+    assertion: typeof assertion;
 };
 export default _default;

@@ -1,4 +1,5 @@
 import * as array from "./shared/array";
+import * as assertion from "./shared/assertion";
 import * as cls from "./shared/class";
 import * as clone from "./shared/clone";
 import * as constants from "./shared/constants";
@@ -26,6 +27,7 @@ export const sharedUtils = {
     tree,
     url,
     uuid,
+    assertion,
 };
 
 export const Utils = sharedUtils;

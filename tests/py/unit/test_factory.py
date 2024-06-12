@@ -7,7 +7,7 @@ def test_BaseFactory():
     """
 
     class ObjectFactory(factory.BaseFactory):
-        __class_registry___ = {
+        __class_registry__ = {
             "object_name_1": "mat3ra.utils.factory.BaseFactory",
         }
 

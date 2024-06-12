@@ -7,7 +7,7 @@ class BaseFactory(object):
     Base Factory class.
     """
 
-    __class_registry___ = {
+    __class_registry__ = {
         "object_name1": "module.reference.to.ObjectName1",
         "object_name2": "module.reference.to.ObjectName2",
     }
@@ -26,7 +26,7 @@ class BaseFactory(object):
         Returns:
              class
         """
-        reference = cls.__class_registry___[name]
+        reference = cls.__class_registry__[name]
         return cls.get_class_by_module_reference(reference)
 
     @staticmethod

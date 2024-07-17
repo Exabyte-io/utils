@@ -24,8 +24,8 @@
 import argparse
 import glob
 import os
-import subprocess
 import socket
+import subprocess
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 

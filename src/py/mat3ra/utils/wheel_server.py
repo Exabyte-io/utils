@@ -41,7 +41,7 @@ def inform_user(port):
     print(f"import micropip\nawait micropip.install('{url_str}')\n")
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Python wheel server.")
     parser.add_argument("--port", type=int, default=8080, help="Port to run the server on.")
     parser.add_argument("--dir", type=str, default="./dist", help="Directory to serve.")
@@ -60,3 +60,7 @@ if __name__ == "__main__":
     print(f"Serving at http://{bind_addr}:{port}")
     inform_user(port)
     httpd.serve_forever()
+
+
+if __name__ == "__main__":
+    main()

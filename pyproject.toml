@@ -38,7 +38,7 @@ all = ["mat3ra-utils[tests]"]
 # Entrypoint scripts can be defined here, see examples below.
 [project.scripts]
 # my-script = "my_package.my_module:my_function"
-
+wheel_server = "wheel_server:main"
 
 [build-system]
 requires = [

@@ -73,7 +73,7 @@ def inform_user(port):
     file = whl_files[0] if whl_files else None
     url_str = f"http://localhost:{port}/{file}"
     print("Copy URL to use in notebook or `config.yml`: ", url_str, "\n")
-    print(f"import micropip\nawait micropip.install('{url_str}', deps=False)\n")
+    print(f"import micropip\nawait micropip.install('{url_str}')\n")
 
 
 def main():

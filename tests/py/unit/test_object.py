@@ -1,3 +1,6 @@
+import json
+import numpy as np
+
 from mat3ra.utils import object as utils
 
 REFERENCE_OBJECT_1 = {"key1": "value1", "key2": "value2"}
@@ -37,3 +40,20 @@ def test_get():
     assert nested_value1 == "nested_value1"
     assert nested_value1 == utils.get(REFERENCE_OBJECT_2_GET, "/key2/nested_key1")
     assert nested_value1 == utils.get(REFERENCE_OBJECT_2_GET, "key2.nested_key1", ".")
+
+
+def test_attribute_dict():
+    attribute_dict = utils.AttributeDict(REFERENCE_OBJECT_1)
+    assert attribute_dict.key1 == "value1"
+    assert attribute_dict.key2 == "value2"
+    assert attribute_dict["key1"] == "value1"
+    assert attribute_dict["key2"] == "value2"
+
+
+def test_numpy_ndarray_round_encoder():
+    example_object = {"key1": np.array([1.1, 2.2, 3.3])}
+    json_object = json.dumps(example_object, cls=utils.NumpyNDArrayRoundEncoder)
+    assert json_object == '{"key1": [1.1, 2.2, 3.3]}'
+    example_object = {"key1": np.array([1.1, 2.2, 3.3]), "key2": np.array([1.1, 2.2, 3.3])}
+    json_object = json.dumps(example_object, cls=utils.NumpyNDArrayRoundEncoder)
+    assert json_object == '{"key1": [1.1, 2.2, 3.3], "key2": [1.1, 2.2, 3.3]}'

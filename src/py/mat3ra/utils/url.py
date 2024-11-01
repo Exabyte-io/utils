@@ -1,7 +1,7 @@
 import urllib
 
 
-def is_url(url):
+def is_url(url: str):
     """
     Check whether the provided string is a valid url.
 

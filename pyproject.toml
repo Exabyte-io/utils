@@ -24,6 +24,9 @@ extra = [
     "tabulate",
     "jinja2",
 ]
+jupyterlite = [
+    "pyyaml",
+]
 dev = [
     "pre-commit",
     "black",

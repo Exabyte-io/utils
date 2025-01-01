@@ -1,5 +1,4 @@
 import shutil
-import time
 from pathlib import Path
 
 from mat3ra.utils import file as utils

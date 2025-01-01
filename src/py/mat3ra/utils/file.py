@@ -1,5 +1,6 @@
 import os
 import fcntl
+import time
 
 
 def get_file_content(file_path: str) -> str:
@@ -47,3 +48,24 @@ def remove_line_containing_pattern(pattern: str, file_path: str):
         for line in lines:
             if pattern not in line:
                 f.write(line)
+
+
+# Logfile management
+TMP_LOG_LATEST_BASENAME = "tmp-latest.log"
+TMP_LOG_REGEX = "tmp-*.log"
+
+
+def get_tmp_logfile_basename(use_timestamp=True):
+    """
+    Returns the basename of the log file for provision output.
+
+    Args:
+        use_timestamp (bool): whether to include timestamp in the log file name. Default is True.
+
+    Returns:
+        str: log file basename
+    """
+    timestamp = "latest"
+    if use_timestamp:
+        timestamp = time.strftime("%Y%m%d-%H%M%S")
+    return f"tmp-{timestamp}.log"

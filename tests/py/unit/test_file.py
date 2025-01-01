@@ -1,4 +1,5 @@
 import shutil
+import time
 from pathlib import Path
 
 from mat3ra.utils import file as utils
@@ -30,3 +31,9 @@ def test_file_remove_line():
     content = utils.get_file_content(reference_file_copy_path)
     assert pattern not in content
     Path.unlink(reference_file_copy_path)
+
+
+def test_file_get_tmp_logfile_basename():
+    log_basename = utils.get_tmp_logfile_basename()
+    assert log_basename.startswith("tmp-")
+    assert log_basename.endswith(".log")

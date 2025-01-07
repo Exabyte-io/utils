@@ -16,7 +16,9 @@ classifiers = [
 ]
 dependencies = [
     # add requirements here
-    "numpy"
+    "numpy",
+    "plotly==5.18",
+    "matplotlib>=3.4.1"
 ]
 
 [project.optional-dependencies]

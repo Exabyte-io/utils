@@ -107,6 +107,14 @@ def plot_distribution_function(
 ) -> None:
     """
     Plot a generic distribution function.
+
+    Args:
+        bin_centers: The bin centers.
+        distribution: The distribution values.
+        xlabel: The x-axis label.
+        ylabel: The y-axis label.
+        title: The title of the plot.
+        figsize: The size of the figure.
     """
     plt.figure(figsize=figsize)
     plt.plot(bin_centers, distribution, label=title)
@@ -128,6 +136,14 @@ def plot_3d_surface(
 ) -> None:
     """
     Create a 3D surface plot with optional optimal point.
+
+    Args:
+        x_matrix: The x-axis matrix.
+        y_matrix: The y-axis matrix.
+        z_matrix: The z-axis matrix.
+        optimal_point: The optimal point to highlight.
+        title: The title of the plot.
+        labels: The labels for the axes.
     """
     if labels is None:
         labels = {"x": "X", "y": "Y", "z": "Z"}
@@ -162,6 +178,14 @@ def plot_2d_heatmap(
 ) -> None:
     """
     Create a 2D heatmap with optional optimal point.
+
+    Args:
+        x_values: The x-axis values.
+        y_values: The y-axis values.
+        z_matrix: The z-axis matrix.
+        optimal_point: The optimal point to highlight.
+        title: The title of the plot.
+        labels: The labels for the axes.
     """
     if labels is None:
         labels = {"x": "X", "y": "Y", "z": "Z"}

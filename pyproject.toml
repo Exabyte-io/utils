@@ -18,7 +18,8 @@ dependencies = [
     # add requirements here
     "numpy",
     "plotly==5.18",
-    "matplotlib>=3.4.1"
+    "matplotlib>=3.4.1",
+    "ipython==8.24.0",
 ]
 
 [project.optional-dependencies]

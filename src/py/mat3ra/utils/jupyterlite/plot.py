@@ -1,9 +1,10 @@
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+from IPython.display import display
 
 
 def scatter_plot_2d(
@@ -57,12 +58,14 @@ def create_realtime_plot(
     scatter = go.Scatter(x=[], y=[], mode="lines+markers", name="Progress")
     fig.add_trace(scatter)
     fig.update_layout(title_text=title, xaxis_title=x_label, yaxis_title=y_label)
-    return go.FigureWidget(fig)
+    widget = go.FigureWidget(fig)
+    display(widget)  # Automatically display the widget
+    return widget
 
 
 def create_update_callback(
     dynamic_object: Any,
-    value_getter: Callable,
+    value_getter: Union[Callable, Any],
     figure: go.FigureWidget,
     steps: List[int],
     values: List[float],
@@ -70,13 +73,13 @@ def create_update_callback(
     print_format: str = "Step: {}, Value: {:.4f}",
 ) -> Callable:
     """
-    Create a generic update callback for real-time plotting.
+    Create a general update callback for real-time plotting.
 
     Args:
         dynamic_object: Object containing step information
-        value_getter: Function to get the current value
+        value_getter: Either a callable function or an object with a getter method
         figure: Plotly figure widget to update
-        steps: List to store step counts
+        steps: List to store step values
         values: List to store measured values
         step_attr: Attribute name for step count in dynamic_object
         print_format: Format string for progress printing
@@ -84,7 +87,8 @@ def create_update_callback(
 
     def update():
         step = getattr(dynamic_object, step_attr)
-        value = value_getter()
+        # Handle both callable and object with getter method
+        value = value_getter() if callable(value_getter) else value_getter.get_total_energy()
 
         steps.append(step)
         values.append(value)

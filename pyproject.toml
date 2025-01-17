@@ -16,10 +16,7 @@ classifiers = [
 ]
 dependencies = [
     # add requirements here
-    "numpy",
-    "plotly==5.18",
-    "matplotlib>=3.4.1",
-    "ipython<=8.0",
+    "numpy"
 ]
 
 [project.optional-dependencies]
@@ -29,6 +26,9 @@ extra = [
 ]
 jupyterlite = [
     "pyyaml",
+    "matplotlib>=3.4.1",
+    "plotly>=5.18",
+    "ipython>=8.0",
 ]
 dev = [
     "pre-commit",

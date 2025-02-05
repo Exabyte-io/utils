@@ -42,7 +42,8 @@
         "semver": "^7.5.3",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4",
-        "uuid": "8.3.2"
+        "uuid": "8.3.2",
+        "js-yaml": "^4.1.0"
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2023.8.29-1",

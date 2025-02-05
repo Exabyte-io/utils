@@ -106,3 +106,17 @@ export function findPreviousVersion(versions, inputVersion) {
     const prev = versions_.find((o) => semverLt(o.coerced, version));
     return prev?.raw;
 }
+
+/**
+ * Expands template string by replacing placeholders with corresponding values from a context object.
+ *
+ * @param {string} template - The template string containing placeholders in the format `${variable}`.
+ * @param {Object} context - A map of variables where keys are placeholders and values are the corresponding replacements.
+ * @returns {string} - The template string with placeholders replaced by corresponding values from the context.
+ */
+export function expandTemplate(template, context) {
+    return template.replace(/\${([^}]+)}/g, (match, key) => {
+        const trimmedKey = key.trim();
+        return context[trimmedKey] !== undefined ? String(context[trimmedKey]) : match;
+    });
+}

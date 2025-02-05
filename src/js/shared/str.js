@@ -1,3 +1,4 @@
+import yaml from "js-yaml";
 import semverCoerce from "semver/functions/coerce";
 import semverLt from "semver/functions/lt";
 import semverRcompare from "semver/functions/rcompare";
@@ -119,4 +120,22 @@ export function expandTemplate(template, context) {
         const trimmedKey = key.trim();
         return context[trimmedKey] !== undefined ? String(context[trimmedKey]) : match;
     });
+}
+
+/**
+ * Converts a YAML string to a JSON object.
+ * @param {string} YAMLString - The YAML string to convert.
+ * @returns {object} - The resulting JSON object.
+ */
+export function convertYAMLStringToJSON(YAMLString) {
+    return yaml.load(YAMLString);
+}
+
+/**
+ * Converts a JSON object to a YAML string.
+ * @param {object} data - The JSON object to convert.
+ * @returns {string} - The resulting YAML string.
+ */
+export function convertJSONToYAMLString(data) {
+    return yaml.dump(data);
 }

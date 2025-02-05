@@ -1,14 +1,6 @@
 import fs from "fs";
-import yaml from "js-yaml";
 
-/**
- * Converts a YAML string to a JSON object.
- * @param {string} YAMLString - The YAML string to convert.
- * @returns {object} - The resulting JSON object.
- */
-export function convertYAMLStringToJSON(YAMLString: string): object {
-    return yaml.load(YAMLString) as object;
-}
+import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../shared/str";
 
 /**
  * Reads a YAML file and converts its content to a JSON object.
@@ -18,15 +10,6 @@ export function convertYAMLStringToJSON(YAMLString: string): object {
 export function readYAMLFile(filePath: string): object {
     const YAMLContent = fs.readFileSync(filePath, "utf8");
     return convertYAMLStringToJSON(YAMLContent);
-}
-
-/**
- * Converts a JSON object to a YAML string.
- * @param {object} data - The JSON object to convert.
- * @returns {string} - The resulting YAML string.
- */
-export function convertJSONToYAMLString(data: object): string {
-    return yaml.dump(data);
 }
 
 /**

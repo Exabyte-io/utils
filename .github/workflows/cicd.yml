@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        python-version: [3.8.6]
+        python-version: [3.10.13]
 
     steps:
       - name: Checkout this repository
@@ -41,6 +41,7 @@ jobs:
           - 3.9.x
           - 3.10.x
           - 3.11.x
+          - 3.12.x
 
     steps:
       - name: Checkout this repository
@@ -66,8 +67,8 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
           - 20.x
+          - 22.x
 
     steps:
       - name: Checkout this repository
@@ -85,7 +86,7 @@ jobs:
       - name: Run JS validate
         uses: ./actions/js/validate
         with:
-          node-version: '14.x'
+          node-version: '20.x'
           skip-eslint: 'true'
 
       - name: Run JS tests
@@ -115,7 +116,7 @@ jobs:
       - name: Publish JS release
         uses: ./actions/js/publish
         with:
-          node-version: 14.19.x
+          node-version: 20.x
           npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
@@ -143,7 +144,7 @@ jobs:
       -   name: Publish python release
           uses: ./actions/py/publish
           with:
-            python-version: 3.8.x
+            python-version: 3.10.x
             github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
             pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
             publish-tag: 'false'

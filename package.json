@@ -78,7 +78,7 @@
         "node": ">=14.0.0"
     },
     "lint-staged": {
-        "*.{js,ts,tsx}": "eslint --cache --fix",
+        "*.{js,ts,tsx!dist/**/*}": "eslint --cache --fix",
         "*.{js,ts,tsx,css}": "prettier --write"
     }
 }

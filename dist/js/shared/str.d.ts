@@ -32,3 +32,23 @@ export function convertArabicToRoman(num: number): string;
  * @returns {string | undefined}
  */
 export function findPreviousVersion(versions: string[], inputVersion: string): string | undefined;
+/**
+ * Expands template string by replacing placeholders with corresponding values from a context object.
+ *
+ * @param {string} template - The template string containing placeholders in the format `${variable}`.
+ * @param {Object} context - A map of variables where keys are placeholders and values are the corresponding replacements.
+ * @returns {string} - The template string with placeholders replaced by corresponding values from the context.
+ */
+export function expandTemplate(template: string, context: Object): string;
+/**
+ * Converts a YAML string to a JSON object.
+ * @param {string} YAMLString - The YAML string to convert.
+ * @returns {object} - The resulting JSON object.
+ */
+export function convertYAMLStringToJSON(YAMLString: string): object;
+/**
+ * Converts a JSON object to a YAML string.
+ * @param {object} data - The JSON object to convert.
+ * @returns {string} - The resulting YAML string.
+ */
+export function convertJSONToYAMLString(data: object): string;

@@ -14,9 +14,5 @@ interface FilterEntityListProps {
  * Filter list of entity paths or entities by paths and regular expressions.
  * @return {Object[]} - filtered entity path objects or entities
  */
-export declare function filterEntityList({
-    entitiesOrPaths,
-    filterObjects,
-    multiPathSeparator,
-}: FilterEntityListProps): PathObject[];
+export declare function filterEntityList({ entitiesOrPaths, filterObjects, multiPathSeparator, }: FilterEntityListProps): PathObject[];
 export {};

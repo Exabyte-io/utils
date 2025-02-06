@@ -1,22 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.convertJSONToYAMLString =
-    exports.convertYAMLStringToJSON =
-    exports.expandTemplate =
-    exports.findPreviousVersion =
-    exports.convertArabicToRoman =
-    exports.removeEmptyLinesFromString =
-    exports.removeCommentsFromSourceCode =
-    exports.toFixedLocale =
-    exports.randomAlphanumeric =
-    exports.removeNewLinesAndExtraSpaces =
-        void 0;
-const js_yaml_1 = __importDefault(require("js-yaml"));
+exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
 const lt_1 = __importDefault(require("semver/functions/lt"));
 const rcompare_1 = __importDefault(require("semver/functions/rcompare"));
@@ -38,12 +25,10 @@ function randomAlphanumeric(length) {
     // Random letter is required in generated string because of when
     // the result is used as username and contains only numbers, the
     // slug will be inappropriate (e.g., "user-1232", "user-12" both have "user" as slug).
-    return (
-        randomLetter +
+    return (randomLetter +
         Math.random()
             .toString(36)
-            .substring(2, 2 + length - 1)
-    );
+            .substring(2, 2 + length - 1));
 }
 exports.randomAlphanumeric = randomAlphanumeric;
 function toFixedLocale(number, precision) {
@@ -123,35 +108,3 @@ function findPreviousVersion(versions, inputVersion) {
     return prev === null || prev === void 0 ? void 0 : prev.raw;
 }
 exports.findPreviousVersion = findPreviousVersion;
-/**
- * Expands template string by replacing placeholders with corresponding values from a context object.
- *
- * @param {string} template - The template string containing placeholders in the format `${variable}`.
- * @param {Object} context - A map of variables where keys are placeholders and values are the corresponding replacements.
- * @returns {string} - The template string with placeholders replaced by corresponding values from the context.
- */
-function expandTemplate(template, context) {
-    return template.replace(/\${([^}]+)}/g, (match, key) => {
-        const trimmedKey = key.trim();
-        return context[trimmedKey] !== undefined ? String(context[trimmedKey]) : match;
-    });
-}
-exports.expandTemplate = expandTemplate;
-/**
- * Converts a YAML string to a JSON object.
- * @param {string} YAMLString - The YAML string to convert.
- * @returns {object} - The resulting JSON object.
- */
-function convertYAMLStringToJSON(YAMLString) {
-    return js_yaml_1.default.load(YAMLString);
-}
-exports.convertYAMLStringToJSON = convertYAMLStringToJSON;
-/**
- * Converts a JSON object to a YAML string.
- * @param {object} data - The JSON object to convert.
- * @returns {string} - The resulting YAML string.
- */
-function convertJSONToYAMLString(data) {
-    return js_yaml_1.default.dump(data);
-}
-exports.convertJSONToYAMLString = convertJSONToYAMLString;

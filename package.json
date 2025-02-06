@@ -42,7 +42,8 @@
         "semver": "^7.5.3",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4",
-        "uuid": "8.3.2"
+        "uuid": "8.3.2",
+        "js-yaml": "^4.1.0"
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2023.8.29-1",
@@ -78,7 +79,7 @@
         "node": ">=14.0.0"
     },
     "lint-staged": {
-        "*.{js,ts,tsx,!dist/**/*,!*runtime_data*}": "eslint --cache --fix",
-        "*.{js,ts,tsx,css,!dist/**/*,!*runtime_data*}": "prettier --write"
+        "*.{js,ts,tsx,!dist/**/*}": "eslint --cache --fix",
+        "*.{js,ts,tsx,css,!dist/**/*}": "prettier --write"
     }
 }

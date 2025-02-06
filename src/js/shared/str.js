@@ -1,3 +1,4 @@
+import yaml from "js-yaml";
 import semverCoerce from "semver/functions/coerce";
 import semverLt from "semver/functions/lt";
 import semverRcompare from "semver/functions/rcompare";
@@ -105,4 +106,36 @@ export function findPreviousVersion(versions, inputVersion) {
         .sort((a, b) => semverRcompare(a.coerced, b.coerced));
     const prev = versions_.find((o) => semverLt(o.coerced, version));
     return prev?.raw;
+}
+
+/**
+ * Renders template string by replacing placeholders with corresponding values from a context object.
+ *
+ * @param {string} template - The template string containing placeholders in the format `${variable}`.
+ * @param {Object} context - A map of variables where keys are placeholders and values are the corresponding replacements.
+ * @returns {string} - The template string with placeholders replaced by corresponding values from the context.
+ */
+export function renderTemplateString(template, context) {
+    return template.replace(/\${([^}]+)}/g, (match, key) => {
+        const trimmedKey = key.trim();
+        return context[trimmedKey] !== undefined ? String(context[trimmedKey]) : match;
+    });
+}
+
+/**
+ * Converts a YAML string to a JSON object.
+ * @param {string} YAMLString - The YAML string to convert.
+ * @returns {object} - The resulting JSON object.
+ */
+export function convertYAMLStringToJSON(YAMLString) {
+    return yaml.load(YAMLString);
+}
+
+/**
+ * Converts a JSON object to a YAML string.
+ * @param {object} data - The JSON object to convert.
+ * @returns {string} - The resulting YAML string.
+ */
+export function convertJSONToYAMLString(data) {
+    return yaml.dump(data);
 }

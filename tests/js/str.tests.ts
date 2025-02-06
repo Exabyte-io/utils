@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { findPreviousVersion } from "../../src/js/shared/str";
+import { findPreviousVersion, renderTemplateString } from "../../src/js/shared/str";
 
 describe("findPreviousVersion", () => {
     const versions = ["5.4.2", "3.2", "6.2", "4", "7.2.1"];
@@ -14,5 +14,41 @@ describe("findPreviousVersion", () => {
         const previous = findPreviousVersion(versions, "2");
         // eslint-disable-next-line no-unused-expressions
         expect(previous).to.be.undefined;
+    });
+});
+
+/* eslint-disable no-template-curly-in-string */
+describe("Test string template expansion", () => {
+    it("should expand test feature template with variables", () => {
+        const template = "As a ${role}, I want to ${action}.";
+        const context = {
+            role: "User",
+            action: "generate test cases automatically",
+        };
+        const expected = "As a User, I want to generate test cases automatically.";
+        expect(renderTemplateString(template, context)).to.equal(expected);
+    });
+
+    it("should handle missing test feature variables", () => {
+        const template = "Given ${precondition}, when ${action}, then ${result}";
+        const context = {
+            precondition: "the system is configured",
+            action: "I run the test generator",
+        };
+        const expected =
+            "Given the system is configured, when I run the test generator, then ${result}";
+        expect(renderTemplateString(template, context)).to.equal(expected);
+    });
+
+    it("should handle empty test context", () => {
+        const template = "Test Scenario: ${scenario_name}";
+        const context = {};
+        expect(renderTemplateString(template, context)).to.equal("Test Scenario: ${scenario_name}");
+    });
+
+    it("should handle test template without variables", () => {
+        const template = "No variables";
+        const context = { scenario_name: "No variables" };
+        expect(renderTemplateString(template, context)).to.equal("No variables");
     });
 });

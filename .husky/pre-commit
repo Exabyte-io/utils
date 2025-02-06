@@ -11,4 +11,5 @@
 # fi
 
 # Automatically lint staged files in pre-commit hook
-npx lint-staged
+# allow-empty is to be able to commit dist only
+npx lint-staged --allow-empty

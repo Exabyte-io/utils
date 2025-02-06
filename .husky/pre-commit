@@ -11,5 +11,6 @@
 # fi
 
 # Automatically lint staged files in pre-commit hook
-# allow-empty is to be able to commit dist only
-npx lint-staged --allow-empty
+npm run transpile
+npx lint-staged
+git add dist/js

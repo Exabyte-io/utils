@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 import { readYAMLFile, writeYAMLFile } from "../../src/js/server/yaml";
-import { expandTemplate } from "../../src/js/shared/str";
+import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../../src/js/shared/str";
 
 describe("YAML operations", () => {
     const testDir = path.join(__dirname, "fixtures");
@@ -52,38 +52,28 @@ describe("YAML operations", () => {
     });
 });
 
-/* eslint-disable no-template-curly-in-string */
-describe("Test feature template expansion", () => {
-    it("should expand test feature template with variables", () => {
-        const template = "As a ${role}, I want to ${action}.";
-        const context = {
-            role: "User",
-            action: "generate test cases automatically",
-        };
-        const expected = "As a User, I want to generate test cases automatically.";
-        expect(expandTemplate(template, context)).to.equal(expected);
+describe("YAML to JSON conversion", () => {
+    const yamlString = `name: test
+values:
+  - 1
+  - 2
+  - 3
+nested:
+  key: value
+`;
+    const jsonObject = {
+        name: "test",
+        values: [1, 2, 3],
+        nested: {
+            key: "value",
+        },
+    };
+
+    it("should convert YAML string to JSON", () => {
+        expect(convertYAMLStringToJSON(yamlString)).to.deep.equal(jsonObject);
     });
 
-    it("should handle missing test feature variables", () => {
-        const template = "Given ${precondition}, when ${action}, then ${result}";
-        const context = {
-            precondition: "the system is configured",
-            action: "I run the test generator",
-        };
-        const expected =
-            "Given the system is configured, when I run the test generator, then ${result}";
-        expect(expandTemplate(template, context)).to.equal(expected);
-    });
-
-    it("should handle empty test context", () => {
-        const template = "Test Scenario: ${scenario_name}";
-        const context = {};
-        expect(expandTemplate(template, context)).to.equal("Test Scenario: ${scenario_name}");
-    });
-
-    it("should handle test template without variables", () => {
-        const template = "No variables";
-        const context = { scenario_name: "No variables" };
-        expect(expandTemplate(template, context)).to.equal("No variables");
+    it("should convert JSON to YAML string", () => {
+        expect(convertJSONToYAMLString(jsonObject)).to.equal(yamlString);
     });
 });

@@ -1,18 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cleanDirectory =
-    exports.createDirIfNotExists =
-    exports.createObjectPathFromFilePath =
-    exports.getDirectories =
-    exports.getFilesInDirectory =
-    exports.formatFileSize =
-    exports.getProgrammingLanguageFromFileExtension =
-        void 0;
+exports.cleanDirectory = exports.createDirIfNotExists = exports.createObjectPathFromFilePath = exports.getDirectories = exports.getFilesInDirectory = exports.formatFileSize = exports.getProgrammingLanguageFromFileExtension = void 0;
 const fs_1 = __importDefault(require("fs"));
 const promises_1 = require("node:fs/promises");
 const node_path_1 = __importDefault(require("node:path"));
@@ -29,8 +20,7 @@ const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
  */
 function getProgrammingLanguageFromFileExtension(filename, defaultLanguage = "fortran") {
     var _a;
-    const fileExt =
-        (_a = filename.split(".").pop()) === null || _a === void 0 ? void 0 : _a.toLowerCase();
+    const fileExt = (_a = filename.split(".").pop()) === null || _a === void 0 ? void 0 : _a.toLowerCase();
     if (!fileExt) {
         return defaultLanguage;
     }
@@ -43,7 +33,8 @@ exports.getProgrammingLanguageFromFileExtension = getProgrammingLanguageFromFile
  * @param decimals number of decimals to round.
  */
 function formatFileSize(size, decimals = 2) {
-    if (size === 0) return "0 Bytes";
+    if (size === 0)
+        return "0 Bytes";
     const index = Math.floor(Math.log(size) / Math.log(1024));
     const units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     return parseFloat((size / 1024 ** index).toFixed(decimals)) + " " + units[index];
@@ -58,9 +49,7 @@ exports.formatFileSize = formatFileSize;
 function getFilesInDirectory(dirPath, fileExtensions = [], resolvePath = true) {
     let fileNames = fs_1.default.readdirSync(dirPath);
     if (fileExtensions.length) {
-        fileNames = fileNames.filter((dirItem) =>
-            fileExtensions.includes(node_path_1.default.extname(dirItem)),
-        );
+        fileNames = fileNames.filter((dirItem) => fileExtensions.includes(node_path_1.default.extname(dirItem)));
     }
     if (resolvePath)
         return fileNames.map((fileName) => node_path_1.default.resolve(dirPath, fileName));
@@ -92,16 +81,15 @@ function createObjectPathFromFilePath(filePath, root) {
     const dirname = node_path_1.default.dirname(filePath);
     const extension = node_path_1.default.extname(filePath);
     const basename = node_path_1.default.basename(filePath, extension);
-    const parentDirs = root
-        ? node_path_1.default.relative(root, dirname).split(node_path_1.default.sep)
-        : [];
+    const parentDirs = root ? node_path_1.default.relative(root, dirname).split(node_path_1.default.sep) : [];
     return [...parentDirs, basename].map((item) => `['${item}']`).join("");
 }
 exports.createObjectPathFromFilePath = createObjectPathFromFilePath;
 async function createDirIfNotExists(directory) {
     try {
         await (0, promises_1.access)(directory);
-    } catch (err) {
+    }
+    catch (err) {
         await (0, promises_1.mkdir)(directory, { recursive: true });
     }
 }
@@ -112,11 +100,9 @@ async function cleanDirectory(directory) {
         const file = files[i];
         if (file.isDirectory()) {
             // eslint-disable-next-line no-await-in-loop
-            await (0, promises_1.rm)(node_path_1.default.join(directory, file.name), {
-                recursive: true,
-                force: true,
-            });
-        } else {
+            await (0, promises_1.rm)(node_path_1.default.join(directory, file.name), { recursive: true, force: true });
+        }
+        else {
             // eslint-disable-next-line no-await-in-loop
             await (0, promises_1.rm)(node_path_1.default.join(directory, file.name));
         }

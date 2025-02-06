@@ -6,28 +6,16 @@ export interface NameOrObjectWithNameKey {
  * @param name {String|Object} the input to convert
  * @returns result {Object|null} converted object if any
  */
-export declare function safeMakeObject(
-    name: string | NameOrObjectWithNameKey,
-): NameOrObjectWithNameKey;
+export declare function safeMakeObject(name: string | NameOrObjectWithNameKey): NameOrObjectWithNameKey;
 /**
  * @summary Pluck a single entry out of an iterable according to an attribute and match condition
  */
-export declare function getOneMatchFromObject(
-    obj: object,
-    attribute: string,
-    value: unknown,
-): unknown;
+export declare function getOneMatchFromObject(obj: object, attribute: string, value: unknown): unknown;
 /**
  * @summary Converts all keys of object to camelCase.
  */
-export declare function convertKeysToCamelCaseForObject(
-    obj: object,
-): import("lodash").Dictionary<any>;
-export declare function renameKeysForObject<T>(
-    o: T,
-    keysOriginal: string[],
-    keysRenamed: string[],
-): T;
+export declare function convertKeysToCamelCaseForObject(obj: object): import("lodash").Dictionary<any>;
+export declare function renameKeysForObject<T>(o: T, keysOriginal: string[], keysRenamed: string[]): T;
 export interface NameValueObject {
     name: string;
     value: unknown;
@@ -43,12 +31,7 @@ export interface NameValueObject {
  * @param {String} [keyValueSeparator] '=' by default.
  * @param {String} [prefix] Empty by default.
  */
-export declare function stringifyObject(
-    obj: NameValueObject,
-    levelSeparator?: string,
-    keyValueSeparator?: string,
-    prefix?: string,
-): string;
+export declare function stringifyObject(obj: NameValueObject, levelSeparator?: string, keyValueSeparator?: string, prefix?: string): string;
 /**
  * @summary Flattens complex object into object with single key-value pair.  Required properties for object: "name", "value".
  * "units" property is ignored. Only one extra property is allowed. E.g.
@@ -60,12 +43,7 @@ export declare function stringifyObject(
  * @param {String} [suffix]
  * @return {Object}
  */
-export declare function flattenObject(
-    obj: NameValueObject,
-    levelSeparator?: string,
-    keyValueSeparator?: string,
-    suffix?: string | undefined,
-): {
+export declare function flattenObject(obj: NameValueObject, levelSeparator?: string, keyValueSeparator?: string, suffix?: string | undefined): {
     [x: string]: unknown;
 };
 /**

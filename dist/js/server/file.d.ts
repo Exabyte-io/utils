@@ -1,10 +1,7 @@
 /**
  * @summary Identifies language by file extension. Uses 'fortran' by default.
  */
-export declare function getProgrammingLanguageFromFileExtension(
-    filename: string,
-    defaultLanguage?: string,
-): string;
+export declare function getProgrammingLanguageFromFileExtension(filename: string, defaultLanguage?: string): string;
 /**
  * @summary Formats a given file size.
  * @param size file size.
@@ -17,11 +14,7 @@ export declare function formatFileSize(size: number, decimals?: number): string;
  * @param resolvePath - whether to resolve the paths of files
  * @returns - Array of file paths
  */
-export declare function getFilesInDirectory(
-    dirPath: string,
-    fileExtensions?: string[],
-    resolvePath?: boolean,
-): string[];
+export declare function getFilesInDirectory(dirPath: string, fileExtensions?: string[], resolvePath?: boolean): string[];
 /**
  * Get list of directories contained in current directory.
  * @param currentPath - current directory

@@ -23,16 +23,14 @@
  *   console.error("Error fetching files:", error);
  * });
  */
-export function fetchFilesFromGitHubAPI(url: string): Promise<
-    Array<{
-        name: string;
-        download_url: string;
-        git_url: string;
-        html_url: string;
-        path: string;
-        sha: string;
-        size: number;
-        type: string;
-        url: string;
-    }>
->;
+export function fetchFilesFromGitHubAPI(url: string): Promise<Array<{
+    name: string;
+    download_url: string;
+    git_url: string;
+    html_url: string;
+    path: string;
+    sha: string;
+    size: number;
+    type: string;
+    url: string;
+}>>;

@@ -1,18 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findPreviousVersion =
-    exports.convertArabicToRoman =
-    exports.removeEmptyLinesFromString =
-    exports.removeCommentsFromSourceCode =
-    exports.toFixedLocale =
-    exports.randomAlphanumeric =
-    exports.removeNewLinesAndExtraSpaces =
-        void 0;
+exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
 const lt_1 = __importDefault(require("semver/functions/lt"));
 const rcompare_1 = __importDefault(require("semver/functions/rcompare"));
@@ -34,12 +25,10 @@ function randomAlphanumeric(length) {
     // Random letter is required in generated string because of when
     // the result is used as username and contains only numbers, the
     // slug will be inappropriate (e.g., "user-1232", "user-12" both have "user" as slug).
-    return (
-        randomLetter +
+    return (randomLetter +
         Math.random()
             .toString(36)
-            .substring(2, 2 + length - 1)
-    );
+            .substring(2, 2 + length - 1));
 }
 exports.randomAlphanumeric = randomAlphanumeric;
 function toFixedLocale(number, precision) {

@@ -30,9 +30,7 @@ function assertShallowDeepAlmostEqual(expect, actual, path = "", threshold = 0.0
             throw new Error(`Expected to have number but got "${actual}" at path "${path}".`);
         }
         if (Math.abs(expect - actual) > threshold) {
-            throw new Error(
-                `Expected to have "${expect}+-${threshold}" but got "${actual}" at path "${path}".`,
-            );
+            throw new Error(`Expected to have "${expect}+-${threshold}" but got "${actual}" at path "${path}".`);
         }
         return true;
     }
@@ -40,14 +38,11 @@ function assertShallowDeepAlmostEqual(expect, actual, path = "", threshold = 0.0
     if (expect instanceof Date) {
         if (actual instanceof Date) {
             if (expect.getTime() !== actual.getTime()) {
-                throw new Error(
-                    `Expected to have date "${expect.toISOString()}" but got "${actual.toISOString()}" at path "${path}".`,
-                );
+                throw new Error(`Expected to have date "${expect.toISOString()}" but got "${actual.toISOString()}" at path "${path}".`);
             }
-        } else {
-            throw new Error(
-                `Expected to have date "${expect.toISOString()}" but got "${actual}" at path "${path}".`,
-            );
+        }
+        else {
+            throw new Error(`Expected to have date "${expect.toISOString()}" but got "${actual}" at path "${path}".`);
         }
         return true;
     }

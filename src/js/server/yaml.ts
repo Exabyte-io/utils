@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../shared/str";
+import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../shared/yaml";
 
 /**
  * Reads a YAML file and converts its content to a JSON object.

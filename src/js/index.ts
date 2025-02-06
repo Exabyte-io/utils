@@ -12,6 +12,7 @@ import * as str from "./shared/str";
 import * as tree from "./shared/tree";
 import * as url from "./shared/url";
 import * as uuid from "./shared/uuid";
+import * as yaml from "./shared/yaml";
 
 export const sharedUtils = {
     array,
@@ -28,6 +29,7 @@ export const sharedUtils = {
     url,
     uuid,
     assertion,
+    yaml,
 };
 
 export const Utils = sharedUtils;

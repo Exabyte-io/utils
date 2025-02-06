@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 import { readYAMLFile, writeYAMLFile } from "../../src/js/server/yaml";
-import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../../src/js/shared/str";
+import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../../src/js/shared/yaml";
 
 describe("YAML operations", () => {
     const testDir = path.join(__dirname, "fixtures");

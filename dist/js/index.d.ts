@@ -12,6 +12,7 @@ import * as str from "./shared/str";
 import * as tree from "./shared/tree";
 import * as url from "./shared/url";
 import * as uuid from "./shared/uuid";
+import * as yaml from "./shared/yaml";
 export declare const sharedUtils: {
     array: typeof array;
     cls: typeof cls;
@@ -27,6 +28,7 @@ export declare const sharedUtils: {
     url: typeof url;
     uuid: typeof uuid;
     assertion: typeof assertion;
+    yaml: typeof yaml;
 };
 export declare const Utils: {
     array: typeof array;
@@ -43,6 +45,7 @@ export declare const Utils: {
     url: typeof url;
     uuid: typeof uuid;
     assertion: typeof assertion;
+    yaml: typeof yaml;
 };
 declare const _default: {
     array: typeof array;
@@ -59,5 +62,6 @@ declare const _default: {
     url: typeof url;
     uuid: typeof uuid;
     assertion: typeof assertion;
+    yaml: typeof yaml;
 };
 export default _default;

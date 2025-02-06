@@ -18,6 +18,7 @@ export declare const Utils: {
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
     assertion: typeof import("./shared/assertion");
+    yaml: typeof import("./shared/yaml");
 };
 declare const _default: {
     codemirror: typeof codemirror;
@@ -35,5 +36,6 @@ declare const _default: {
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
     assertion: typeof import("./shared/assertion");
+    yaml: typeof import("./shared/yaml");
 };
 export default _default;

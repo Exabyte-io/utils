@@ -38,6 +38,7 @@ const str = __importStar(require("./shared/str"));
 const tree = __importStar(require("./shared/tree"));
 const url = __importStar(require("./shared/url"));
 const uuid = __importStar(require("./shared/uuid"));
+const yaml = __importStar(require("./shared/yaml"));
 exports.sharedUtils = {
     array,
     cls,
@@ -53,6 +54,7 @@ exports.sharedUtils = {
     url,
     uuid,
     assertion,
+    yaml,
 };
 exports.Utils = exports.sharedUtils;
 exports.default = { ...exports.Utils };

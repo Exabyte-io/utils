@@ -120,3 +120,8 @@ export function renderTemplateString(template, context) {
         return context[trimmedKey] !== undefined ? String(context[trimmedKey]) : match;
     });
 }
+
+export function renderTemplateStringWithEval(template, context) {
+    // eslint-disable-next-line no-new-func
+    return new Function("context", "with (context) { return `" + template + "`; }")(context);
+}

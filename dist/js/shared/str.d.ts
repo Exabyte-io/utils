@@ -40,3 +40,4 @@ export function findPreviousVersion(versions: string[], inputVersion: string): s
  * @returns {string} - The template string with placeholders replaced by corresponding values from the context.
  */
 export function renderTemplateString(template: string, context: Object): string;
+export function renderTemplateStringWithEval(template: any, context: any): any;

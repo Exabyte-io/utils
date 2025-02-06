@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
+exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
 const lt_1 = __importDefault(require("semver/functions/lt"));
 const rcompare_1 = __importDefault(require("semver/functions/rcompare"));
@@ -122,3 +122,8 @@ function renderTemplateString(template, context) {
     });
 }
 exports.renderTemplateString = renderTemplateString;
+function renderTemplateStringWithEval(template, context) {
+    // eslint-disable-next-line no-new-func
+    return new Function("context", "with (context) { return `" + template + "`; }")(context);
+}
+exports.renderTemplateStringWithEval = renderTemplateStringWithEval;

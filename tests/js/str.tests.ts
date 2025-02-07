@@ -1,6 +1,10 @@
 import { expect } from "chai";
 
-import { findPreviousVersion, renderTemplateString } from "../../src/js/shared/str";
+import {
+    findPreviousVersion,
+    renderTemplateString,
+    renderTemplateStringWithEval,
+} from "../../src/js/shared/str";
 
 describe("findPreviousVersion", () => {
     const versions = ["5.4.2", "3.2", "6.2", "4", "7.2.1"];
@@ -50,5 +54,21 @@ describe("Test string template expansion", () => {
         const template = "No variables";
         const context = { scenario_name: "No variables" };
         expect(renderTemplateString(template, context)).to.equal("No variables");
+    });
+});
+
+/* eslint-disable no-template-curly-in-string */
+describe("Test string template expansion with eval", () => {
+    it("should expand test feature template with variables", () => {
+        // @ts-ignore
+        const padWithDashes = (x) => "---" + x + "---";
+        const template = "As a ${role}, I want to ${action}. ${padWithDashes('test')}";
+        const context = {
+            role: "User",
+            action: "generate test cases automatically",
+            padWithDashes,
+        };
+        const expected = "As a User, I want to generate test cases automatically. ---test---";
+        expect(renderTemplateStringWithEval(template, context)).to.equal(expected);
     });
 });

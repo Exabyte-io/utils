@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
+exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
 const lt_1 = __importDefault(require("semver/functions/lt"));
 const rcompare_1 = __importDefault(require("semver/functions/rcompare"));
@@ -122,3 +122,14 @@ function renderTemplateString(template, context) {
     });
 }
 exports.renderTemplateString = renderTemplateString;
+/**
+ * Renders template string by evaluating the template string as a JavaScript template literal with the context object.
+ * @param {string} template - The template string containing placeholders in the format `${variable}` or `${expression}`.
+ * @param {Object} context - A map of variables and functions where keys are placeholders and values are the corresponding replacements.
+ * @returns {*}
+ */
+function renderTemplateStringWithEval(template, context) {
+    // eslint-disable-next-line no-new-func
+    return new Function("context", "with (context) { return `" + template + "`; }")(context);
+}
+exports.renderTemplateStringWithEval = renderTemplateStringWithEval;

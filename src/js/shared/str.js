@@ -120,3 +120,14 @@ export function renderTemplateString(template, context) {
         return context[trimmedKey] !== undefined ? String(context[trimmedKey]) : match;
     });
 }
+
+/**
+ * Renders template string by evaluating the template string as a JavaScript template literal with the context object.
+ * @param {string} template - The template string containing placeholders in the format `${variable}` or `${expression}`.
+ * @param {Object} context - A map of variables and functions where keys are placeholders and values are the corresponding replacements.
+ * @returns {*}
+ */
+export function renderTemplateStringWithEval(template, context) {
+    // eslint-disable-next-line no-new-func
+    return new Function("context", "with (context) { return `" + template + "`; }")(context);
+}

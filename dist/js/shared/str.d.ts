@@ -40,3 +40,10 @@ export function findPreviousVersion(versions: string[], inputVersion: string): s
  * @returns {string} - The template string with placeholders replaced by corresponding values from the context.
  */
 export function renderTemplateString(template: string, context: Object): string;
+/**
+ * Renders template string by evaluating the template string as a JavaScript template literal with the context object.
+ * @param {string} template - The template string containing placeholders in the format `${variable}` or `${expression}`.
+ * @param {Object} context - A map of variables and functions where keys are placeholders and values are the corresponding replacements.
+ * @returns {*}
+ */
+export function renderTemplateStringWithEval(template: string, context: Object): any;

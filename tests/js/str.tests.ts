@@ -61,14 +61,14 @@ describe("Test string template expansion", () => {
 describe("Test string template expansion with eval", () => {
     it("should expand test feature template with variables", () => {
         // @ts-ignore
-        const asTable = (x) => 2 * x;
-        const template = "As a ${role}, I want to ${action}. ${asTable(2)}";
+        const padWithDashes = (x) => "---" + x + "---";
+        const template = "As a ${role}, I want to ${action}. ${padWithDashes('test')}";
         const context = {
             role: "User",
             action: "generate test cases automatically",
-            asTable,
+            padWithDashes,
         };
-        const expected = "As a User, I want to generate test cases automatically.";
+        const expected = "As a User, I want to generate test cases automatically. ---test---";
         expect(renderTemplateStringWithEval(template, context)).to.equal(expected);
     });
 });

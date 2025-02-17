@@ -4,10 +4,9 @@ import re
 import sys
 from typing import List
 from .enums import EnvironmentsEnum
+from .environment import ENVIRONMENT
 from .logger import log
 
-# default value for env.HOME from https://pyodide.org/en/stable/usage/api/js-api.html
-ENVIRONMENT = EnvironmentsEnum.PYODIDE if os.environ.get("HOME") == "/home/pyodide" else EnvironmentsEnum.PYTHON
 
 if ENVIRONMENT == EnvironmentsEnum.PYODIDE:
     import micropip

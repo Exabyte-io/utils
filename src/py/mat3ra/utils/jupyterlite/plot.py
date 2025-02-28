@@ -69,6 +69,7 @@ def create_update_callback(
         steps,
         values,
         step_attr="nsteps",
+        value_attr=None,
         print_format="Step: {}, Value: {:.4f}",
 ):
     """
@@ -76,29 +77,39 @@ def create_update_callback(
 
     Args:
         dynamic_object: Object containing step information
-        value_getter: Either a callable function or an object with a getter method
-        figure: Plotly figure widget to update
+        value_getter: Function to retrieve the measured value
+        figure: Plotly figure to update
         steps: List to store step values
         values: List to store measured values
         step_attr: Attribute name for step count in dynamic_object
+        value_attr: Optional attribute name for retrieving value from dynamic_object
         print_format: Format string for progress printing
     """
 
     def update():
-        step = getattr(dynamic_object, step_attr)
-        value = value_getter() if callable(value_getter) else value_getter.get_total_energy()
+        step = getattr(dynamic_object, step_attr, len(steps))
+
+        if callable(value_getter):
+            value = value_getter()
+        elif value_attr:
+            value = getattr(dynamic_object, value_attr, None)
+        else:
+            raise ValueError("Either value_getter (function) or value_attr (object attribute) must be provided.")
 
         steps.append(step)
         values.append(value)
 
         print(print_format.format(step, value))
+
         figure.data[0].x = steps
         figure.data[0].y = values
 
+        # Update the plot by clearing and redrawing
         clear_output(wait=True)
         display(figure)
 
     return update
+
 
 
 def plot_distribution_function(

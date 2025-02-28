@@ -65,6 +65,7 @@ def create_update_callback(
     figure: go.FigureWidget,
     steps: List[int],
     values: List[float],
+    value_attr: Optional[str] = None,
     step_attr: str = "nsteps",
     print_format: str = "Step: {}, Value: {:.4f}",
 ):

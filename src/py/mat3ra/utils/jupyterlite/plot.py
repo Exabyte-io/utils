@@ -1,10 +1,10 @@
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union, Callable
 
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objs as go
+from IPython.display import clear_output, display
 from plotly.subplots import make_subplots
-from IPython.display import display, clear_output
 
 
 def scatter_plot_2d(
@@ -48,10 +48,7 @@ def scatter_plot_2d(
     return go.Figure(data=data, layout=layout)
 
 
-
-def create_realtime_plot(
-    title: str = "Real-time Progress", x_label: str = "Step", y_label: str = "Value"
-) -> go.Figure:
+def create_realtime_plot(title: str = "Real-time Progress", x_label: str = "Step", y_label: str = "Value") -> go.Figure:
     """
     Create a real-time updating plot.
     """
@@ -63,14 +60,13 @@ def create_realtime_plot(
 
 
 def create_update_callback(
-        dynamic_object,
-        value_getter,
-        figure,
-        steps,
-        values,
-        step_attr="nsteps",
-        value_attr=None,
-        print_format="Step: {}, Value: {:.4f}",
+    dynamic_object: Any,
+    value_getter: Union[Callable, Any],
+    figure: go.FigureWidget,
+    steps: List[int],
+    values: List[float],
+    step_attr: str = "nsteps",
+    print_format: str = "Step: {}, Value: {:.4f}",
 ):
     """
     Create a general update callback for real-time plotting.
@@ -109,7 +105,6 @@ def create_update_callback(
         display(figure)
 
     return update
-
 
 
 def plot_distribution_function(

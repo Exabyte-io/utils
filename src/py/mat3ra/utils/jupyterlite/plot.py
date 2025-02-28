@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-from IPython.display import display
+from IPython.display import display, clear_output
 
 
 def scatter_plot_2d(
@@ -48,9 +48,10 @@ def scatter_plot_2d(
     return go.Figure(data=data, layout=layout)
 
 
+
 def create_realtime_plot(
     title: str = "Real-time Progress", x_label: str = "Step", y_label: str = "Value"
-) -> go.FigureWidget:
+) -> go.Figure:
     """
     Create a real-time updating plot.
     """
@@ -58,20 +59,18 @@ def create_realtime_plot(
     scatter = go.Scatter(x=[], y=[], mode="lines+markers", name="Progress")
     fig.add_trace(scatter)
     fig.update_layout(title_text=title, xaxis_title=x_label, yaxis_title=y_label)
-    widget = go.FigureWidget(fig)
-    display(widget)  # Automatically display the widget
-    return widget
+    return fig
 
 
 def create_update_callback(
-    dynamic_object: Any,
-    value_getter: Union[Callable, Any],
-    figure: go.FigureWidget,
-    steps: List[int],
-    values: List[float],
-    step_attr: str = "nsteps",
-    print_format: str = "Step: {}, Value: {:.4f}",
-) -> Callable:
+        dynamic_object,
+        value_getter,
+        figure,
+        steps,
+        values,
+        step_attr="nsteps",
+        print_format="Step: {}, Value: {:.4f}",
+):
     """
     Create a general update callback for real-time plotting.
 
@@ -87,16 +86,17 @@ def create_update_callback(
 
     def update():
         step = getattr(dynamic_object, step_attr)
-        # Handle both callable and object with getter method
         value = value_getter() if callable(value_getter) else value_getter.get_total_energy()
 
         steps.append(step)
         values.append(value)
 
         print(print_format.format(step, value))
-        with figure.batch_update():
-            figure.data[0].x = steps
-            figure.data[0].y = values
+        figure.data[0].x = steps
+        figure.data[0].y = values
+
+        clear_output(wait=True)
+        display(figure)
 
     return update
 

@@ -1,10 +1,10 @@
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union, Callable
 
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objs as go
+from IPython.display import clear_output, display
 from plotly.subplots import make_subplots
-from IPython.display import display
 
 
 def scatter_plot_2d(
@@ -48,9 +48,7 @@ def scatter_plot_2d(
     return go.Figure(data=data, layout=layout)
 
 
-def create_realtime_plot(
-    title: str = "Real-time Progress", x_label: str = "Step", y_label: str = "Value"
-) -> go.FigureWidget:
+def create_realtime_plot(title: str = "Real-time Progress", x_label: str = "Step", y_label: str = "Value") -> go.Figure:
     """
     Create a real-time updating plot.
     """
@@ -58,9 +56,7 @@ def create_realtime_plot(
     scatter = go.Scatter(x=[], y=[], mode="lines+markers", name="Progress")
     fig.add_trace(scatter)
     fig.update_layout(title_text=title, xaxis_title=x_label, yaxis_title=y_label)
-    widget = go.FigureWidget(fig)
-    display(widget)  # Automatically display the widget
-    return widget
+    return fig
 
 
 def create_update_callback(
@@ -69,34 +65,45 @@ def create_update_callback(
     figure: go.FigureWidget,
     steps: List[int],
     values: List[float],
+    value_attr: Optional[str] = None,
     step_attr: str = "nsteps",
     print_format: str = "Step: {}, Value: {:.4f}",
-) -> Callable:
+):
     """
     Create a general update callback for real-time plotting.
 
     Args:
         dynamic_object: Object containing step information
-        value_getter: Either a callable function or an object with a getter method
-        figure: Plotly figure widget to update
+        value_getter: Function to retrieve the measured value
+        figure: Plotly figure to update
         steps: List to store step values
         values: List to store measured values
         step_attr: Attribute name for step count in dynamic_object
+        value_attr: Optional attribute name for retrieving value from dynamic_object
         print_format: Format string for progress printing
     """
 
     def update():
-        step = getattr(dynamic_object, step_attr)
-        # Handle both callable and object with getter method
-        value = value_getter() if callable(value_getter) else value_getter.get_total_energy()
+        step = getattr(dynamic_object, step_attr, len(steps))
+
+        if callable(value_getter):
+            value = value_getter()
+        elif value_attr:
+            value = getattr(dynamic_object, value_attr, None)
+        else:
+            raise ValueError("Either value_getter (function) or value_attr (object attribute) must be provided.")
 
         steps.append(step)
         values.append(value)
 
         print(print_format.format(step, value))
-        with figure.batch_update():
-            figure.data[0].x = steps
-            figure.data[0].y = values
+
+        figure.data[0].x = steps
+        figure.data[0].y = values
+
+        # Update the plot by clearing and redrawing
+        clear_output(wait=True)
+        display(figure)
 
     return update
 

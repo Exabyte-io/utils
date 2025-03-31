@@ -6,5 +6,10 @@ class RoundNumericValuesMixin(object):
     __round_precision__ = 9
 
     @classmethod
-    def round_array_or_number(cls, array, decimal_places=__round_precision__):
-        return np.round(array, cls.__round_precision__).tolist()
+    def round_array_or_number(cls, array, decimal_places=None, retain_sign_for_zero=False):
+        decimal_places = cls.__round_precision__ if decimal_places is None else decimal_places
+        rounded_array = np.round(array, decimal_places)
+        resulting_ndarray = rounded_array
+        if not retain_sign_for_zero:
+            resulting_ndarray = np.where(rounded_array == 0, 0.0, rounded_array)
+        return resulting_ndarray.tolist()

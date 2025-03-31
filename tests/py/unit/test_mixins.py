@@ -1,6 +1,9 @@
+import numpy as np
 from mat3ra.utils import mixins as mixins
 
-ARRAY_TO_ROUND = [1.23456789101112, 2.34567899, 3.45678999, 4.56789999, 5.67899999]
+ARRAY_TO_ROUND = [1.23456789101112, 2.34567899, 3.45678999, 4.56789999, -5.67899999]
+
+ARRAY_TO_ROUND_WITH_NEGATIVE_ZERO = [3.0616852911453934e-17, 0, -3.0616852911453934e-17]
 
 
 def test_RoundNumericValuesMixin():
@@ -17,8 +20,20 @@ def test_RoundNumericValuesMixin():
         2.34567899,
         3.45678999,
         4.56789999,
-        5.67899999,
+        -5.67899999,
     ]
+
+
+def test_RoundNumericValuesMixin_with_negative_zero():
+    class TestClass(mixins.RoundNumericValuesMixin):
+        pass
+
+    rounded = TestClass.round_array_or_number(ARRAY_TO_ROUND_WITH_NEGATIVE_ZERO)
+
+    signs = [bool(np.signbit(x)) for x in rounded]
+    # Assert there is no negative zero
+    assert signs == [False, False, False]
+    assert rounded == [0.0, 0.0, 0.0]
 
 
 def test_RoundNumericValuesMixin_inheritance():

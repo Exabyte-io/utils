@@ -1,4 +1,4 @@
-import urllib
+from urllib.parse import urlparse
 
 
 def is_url(url: str):
@@ -12,7 +12,7 @@ def is_url(url: str):
         bool: True if the provided string is a valid url, False otherwise.
     """
     try:
-        parts = urllib.parse.urlparse(url)
+        parts = urlparse(url)
         scheme = parts[0]
         netloc = parts[1]
         if scheme and netloc:

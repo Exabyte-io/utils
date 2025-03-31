@@ -1,7 +1,8 @@
 import subprocess
+
 import pytest
 from mat3ra.utils import command as utils
-from mat3ra.utils.command import  TIMEOUT_RETURNCODE
+from mat3ra.utils.command import TIMEOUT_RETURNCODE
 
 COMMAND_TO_SUCCEED = "echo 'Hello, World!'"
 COMMAND_TO_FAIL = "false"

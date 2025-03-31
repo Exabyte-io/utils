@@ -1,5 +1,5 @@
-import os
 import inspect
+import os
 from typing import Optional
 
 from .enums import SeverityLevelEnum

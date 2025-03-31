@@ -1,4 +1,5 @@
 import os
+
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -14,8 +15,8 @@ def render_template_file(template_file_path: str, **kwargs):
         str
     """
     env = Environment(loader=FileSystemLoader(os.path.dirname(template_file_path)))
-    template_file_path = env.get_template(os.path.basename(template_file_path))
-    return template_file_path.render(**kwargs)
+    template = env.get_template(os.path.basename(template_file_path))
+    return template.render(**kwargs)
 
 
 def render_template_string(template_string: str, **kwargs):

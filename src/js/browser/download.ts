@@ -1,9 +1,4 @@
-/**
- * Helper to save textual/bitmap data to a file.
- * @param {String} strData - Textual data
- * @param {String} filename
- */
-export function saveFile(strData, filename) {
+export function saveFile(strData: string, filename: string) {
     const link = document.createElement("a");
     document.body.appendChild(link);
     link.download = filename;
@@ -12,12 +7,7 @@ export function saveFile(strData, filename) {
     document.body.removeChild(link);
 }
 
-/**
- * Save image data file with type
- * @param {String} imgData
- * @param {String} type
- */
-export function saveImageDataToFile(imgData, type = "png") {
+export function saveImageDataToFile(imgData: string, type = "png") {
     try {
         saveFile(imgData, `screenshot.${type}`);
     } catch (e) {
@@ -34,18 +24,20 @@ export function saveImageDataToFile(imgData, type = "png") {
  * Source: https://github.com/kennethjiang/js-file-download/blob/master/file-download.js
  */
 export const exportToDisk = function exportToDisk(
-    content,
+    content: string,
     name = "file",
     extension = "txt",
     mime = "application/octet-stream",
 ) {
     const blob = new Blob([content], { type: mime });
     const filename = `${name}.${extension}`;
+    // @ts-ignore
     if (typeof window.navigator.msSaveBlob !== "undefined") {
         // IE workaround for "HTML7007: One or more blob URLs were
         // revoked by closing the blob for which they were created.
         // These URLs will no longer resolve as the data backing
         // the URL has been freed."
+        // @ts-ignore
         window.navigator.msSaveBlob(blob, filename);
     } else {
         const blobURL = window.URL.createObjectURL(blob);

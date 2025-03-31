@@ -1,10 +1,5 @@
-export declare function saveStringDataToFile(strData: string, filename?: string): void;
-/**
- * Save image data file with type
- * @param {String} imgData
- * @param {String} filename
- */
-export declare function saveImageDataToFile(imgData: string, filename?: string): void;
+export declare function saveFile(strData: string, filename: string): void;
+export declare function saveImageDataToFile(imgData: string, type?: string): void;
 /**
  * Exports and downloads the content.
  * @param content {String} Content to be saved in downloaded file

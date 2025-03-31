@@ -3,10 +3,10 @@ import os
 import re
 import sys
 from typing import List
+
 from .enums import EnvironmentsEnum
 from .environment import ENVIRONMENT
 from .logger import log
-
 
 if ENVIRONMENT == EnvironmentsEnum.PYODIDE:
     import micropip
@@ -17,6 +17,7 @@ elif ENVIRONMENT == EnvironmentsEnum.PYTHON:
 async def install_init():
     if sys.platform == "emscripten":
         import micropip
+
         for package in ["pyyaml"]:
             await micropip.install(package)
 
@@ -90,12 +91,13 @@ def get_packages_list(requirements_dict: dict, notebook_name_pattern: str = "") 
         List[str]: The list of packages to install.
     """
     packages_default_common = requirements_dict.get("default", {}).get("packages_common", [])
-    packages_default_environment_specific = (
-        requirements_dict.get("default", {}).get(f"packages_{ENVIRONMENT.value}", [])
+    packages_default_environment_specific = requirements_dict.get("default", {}).get(
+        f"packages_{ENVIRONMENT.value}", []
     )
 
-    matching_notebook_requirements_list = [cfg for cfg in requirements_dict.get("notebooks", []) if
-                                           re.search(cfg.get("name"), notebook_name_pattern)]
+    matching_notebook_requirements_list = [
+        cfg for cfg in requirements_dict.get("notebooks", []) if re.search(cfg.get("name"), notebook_name_pattern)
+    ]
     packages_notebook_common = []
     packages_notebook_environment_specific = []
 
@@ -152,7 +154,8 @@ async def install_packages(notebook_name_pattern: str, config_file_path: str = "
     if ENVIRONMENT == EnvironmentsEnum.PYODIDE:
         await install_init()
     # PyYAML has to be installed before being imported in Pyodide and can't appear at the top of the file
-    import yaml
+    import yaml  # type: ignore[import]
+
     with open(get_config_yml_file_path(config_file_path), "r") as f:
         requirements_dict = yaml.safe_load(f)
     packages = get_packages_list(requirements_dict, notebook_name_pattern)

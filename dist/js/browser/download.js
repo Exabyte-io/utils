@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exportToDisk = exports.saveImageDataToFile = exports.saveStringDataToFile = void 0;
-function saveStringDataToFile(strData, filename = "data.txt") {
+exports.exportToDisk = exports.saveImageDataToFile = exports.saveFile = void 0;
+function saveFile(strData, filename) {
     const link = document.createElement("a");
     document.body.appendChild(link);
     link.download = filename;
@@ -9,15 +9,10 @@ function saveStringDataToFile(strData, filename = "data.txt") {
     link.click();
     document.body.removeChild(link);
 }
-exports.saveStringDataToFile = saveStringDataToFile;
-/**
- * Save image data file with type
- * @param {String} imgData
- * @param {String} filename
- */
-function saveImageDataToFile(imgData, filename = "screenshot.png") {
+exports.saveFile = saveFile;
+function saveImageDataToFile(imgData, type = "png") {
     try {
-        saveStringDataToFile(imgData, `${filename}`);
+        saveFile(imgData, `screenshot.${type}`);
     }
     catch (e) {
         console.error(e);

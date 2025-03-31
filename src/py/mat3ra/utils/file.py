@@ -1,5 +1,5 @@
-import os
 import fcntl
+import os
 import time
 
 

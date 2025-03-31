@@ -53,5 +53,5 @@ def test_RoundNumericValuesMixin_inheritance():
         2.346,
         3.457,
         4.568,
-        5.679,
+        -5.679,
     ]

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.convertToCompactCSVArrayOfObjects = exports.safeMakeArray = void 0;
+exports.sortArrayByOrder = exports.convertToCompactCSVArrayOfObjects = exports.safeMakeArray = void 0;
 const flatten_1 = __importDefault(require("lodash/flatten"));
 const isArray_1 = __importDefault(require("lodash/isArray"));
 const keys_1 = __importDefault(require("lodash/keys"));
@@ -33,3 +33,19 @@ function convertToCompactCSVArrayOfObjects(objects) {
     return result;
 }
 exports.convertToCompactCSVArrayOfObjects = convertToCompactCSVArrayOfObjects;
+/**
+ * @summary Function to sort array based on the order given in a separate array
+ * @param arr {Array<number|string|object>}: input array to sort
+ * @param arr {Array<number|string|object>}: define the order of item in array
+ * @return {Array<number|string|object>}
+ */
+function sortArrayByOrder(arr, order) {
+    const orderMap = new Map();
+    order.forEach((item, index) => orderMap.set(item, index));
+    return arr.sort((a, b) => {
+        const indexA = orderMap.has(a) ? orderMap.get(a) : order.length;
+        const indexB = orderMap.has(b) ? orderMap.get(b) : order.length;
+        return indexA - indexB;
+    });
+}
+exports.sortArrayByOrder = sortArrayByOrder;

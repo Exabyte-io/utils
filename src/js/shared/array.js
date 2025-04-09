@@ -27,3 +27,20 @@ export function convertToCompactCSVArrayOfObjects(objects) {
 
     return result;
 }
+
+/**
+ * @summary Function to sort array based on the order given in a separate array
+ * @param arr {Array<number|string|object>}: input array to sort
+ * @param order {Array<number|string|object>}: define the order of item in array
+ * @return {Array<number|string|object>}
+ */
+export function sortArrayByOrder(arr, order) {
+    const orderMap = new Map();
+    order.forEach((item, index) => orderMap.set(item, index));
+
+    return arr.sort((a, b) => {
+        const indexA = orderMap.has(a) ? orderMap.get(a) : order.length;
+        const indexB = orderMap.has(b) ? orderMap.get(b) : order.length;
+        return indexA - indexB;
+    });
+}

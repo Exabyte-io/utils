@@ -1,6 +1,8 @@
+import omit from "lodash/omit";
+
 export function assertShallowDeepAlmostEqual(
-    expect?: object | boolean | number | null | string | Date,
-    actual?: object | boolean | number | null | string | Date,
+    expect: object | boolean | number | null | string | Date,
+    actual: object | boolean | number | null | string | Date,
     path = "",
     threshold = 0.01,
 ) {
@@ -82,4 +84,14 @@ export function assertShallowDeepAlmostEqual(
     }
 
     return true;
+}
+
+export function assertDeepAlmostEqual(
+    leftHandOperand: object,
+    rightHandOperand: object,
+    excludedKeys: string[] = [],
+) {
+    const expected = omit({ ...leftHandOperand }, excludedKeys);
+    const actual = omit({ ...rightHandOperand }, excludedKeys);
+    return assertShallowDeepAlmostEqual(expected, actual);
 }

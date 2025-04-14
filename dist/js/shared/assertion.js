@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.assertShallowDeepAlmostEqual = void 0;
+exports.assertDeepAlmostEqual = exports.assertShallowDeepAlmostEqual = void 0;
+const omit_1 = __importDefault(require("lodash/omit"));
 function assertShallowDeepAlmostEqual(expect, actual, path = "", threshold = 0.01) {
     // null value
     if (expect === null) {
@@ -63,3 +67,9 @@ function assertShallowDeepAlmostEqual(expect, actual, path = "", threshold = 0.0
     return true;
 }
 exports.assertShallowDeepAlmostEqual = assertShallowDeepAlmostEqual;
+function assertDeepAlmostEqual(leftHandOperand, rightHandOperand, excludedKeys = []) {
+    const expected = (0, omit_1.default)({ ...leftHandOperand }, excludedKeys);
+    const actual = (0, omit_1.default)({ ...rightHandOperand }, excludedKeys);
+    return assertShallowDeepAlmostEqual(expected, actual);
+}
+exports.assertDeepAlmostEqual = assertDeepAlmostEqual;

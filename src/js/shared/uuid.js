@@ -4,9 +4,9 @@ export function getUUID() {
     return uuidv4();
 }
 
-export function getDeterministicUUID(
+export function getUUIDFromNamespace(
     seed = "",
-    workflowNamespace = "00000000-0000-4000-8000-000000000000",
+    namespace = "00000000-0000-4000-8000-000000000000",
 ) {
-    return uuidv5(seed, workflowNamespace);
+    return uuidv5(seed, namespace);
 }

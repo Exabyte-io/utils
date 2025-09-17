@@ -1,2 +1,2 @@
 export function getUUID(): any;
-export function getDeterministicUUID(seed?: string, workflowNamespace?: string): any;
+export function getUUIDFromNamespace(seed?: string, namespace?: string): any;

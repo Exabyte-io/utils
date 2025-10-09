@@ -1,10 +1,33 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cleanDirectory = exports.createDirIfNotExists = exports.createObjectPathFromFilePath = exports.getDirectories = exports.getFilesInDirectory = exports.formatFileSize = exports.getProgrammingLanguageFromFileExtension = void 0;
-const fs_1 = __importDefault(require("fs"));
+exports.cleanDirectorySync = exports.cleanDirectory = exports.createDirIfNotExistsSync = exports.createDirIfNotExists = exports.createObjectPathFromFilePath = exports.getDirectories = exports.getFilesInDirectory = exports.formatFileSize = exports.getProgrammingLanguageFromFileExtension = void 0;
+const fs = __importStar(require("fs"));
 const promises_1 = require("node:fs/promises");
 const node_path_1 = __importDefault(require("node:path"));
 const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
@@ -47,7 +70,7 @@ exports.formatFileSize = formatFileSize;
  * @returns - Array of file paths
  */
 function getFilesInDirectory(dirPath, fileExtensions = [], resolvePath = true) {
-    let fileNames = fs_1.default.readdirSync(dirPath);
+    let fileNames = fs.readdirSync(dirPath);
     if (fileExtensions.length) {
         fileNames = fileNames.filter((dirItem) => fileExtensions.includes(node_path_1.default.extname(dirItem)));
     }
@@ -61,7 +84,7 @@ exports.getFilesInDirectory = getFilesInDirectory;
  * @param currentPath - current directory
  */
 function getDirectories(currentPath) {
-    return fs_1.default
+    return fs
         .readdirSync(currentPath, { withFileTypes: true })
         .filter((dirent) => dirent.isDirectory())
         .map((dirent) => dirent.name);
@@ -94,6 +117,12 @@ async function createDirIfNotExists(directory) {
     }
 }
 exports.createDirIfNotExists = createDirIfNotExists;
+function createDirIfNotExistsSync(directoryPath) {
+    if (!fs.existsSync(directoryPath)) {
+        fs.mkdirSync(directoryPath, { recursive: true });
+    }
+}
+exports.createDirIfNotExistsSync = createDirIfNotExistsSync;
 async function cleanDirectory(directory) {
     const files = await (0, promises_1.readdir)(directory, { withFileTypes: true });
     for (let i = 0; i < files.length; i++) {
@@ -109,3 +138,27 @@ async function cleanDirectory(directory) {
     }
 }
 exports.cleanDirectory = cleanDirectory;
+/**
+ * Remove all files and folders in a directory except those specified to omit.
+ * @param directoryPath
+ * @param omitFiles
+ */
+function cleanDirectorySync(directoryPath, omitFiles = []) {
+    if (!fs.existsSync(directoryPath)) {
+        return;
+    }
+    const files = fs.readdirSync(directoryPath, { withFileTypes: true });
+    files.forEach((file) => {
+        if (omitFiles.includes(file.name)) {
+            return;
+        }
+        const filePath = node_path_1.default.join(directoryPath, file.name);
+        if (file.isDirectory()) {
+            fs.rmSync(filePath, { recursive: true, force: true });
+        }
+        else {
+            fs.unlinkSync(filePath);
+        }
+    });
+}
+exports.cleanDirectorySync = cleanDirectorySync;

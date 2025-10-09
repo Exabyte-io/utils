@@ -1,4 +1,4 @@
-import fs from "fs";
+import * as fs from "fs";
 import { access, mkdir, readdir, rm } from "node:fs/promises";
 import path from "node:path";
 
@@ -95,6 +95,12 @@ export async function createDirIfNotExists(directory: string) {
     }
 }
 
+export function createDirIfNotExistsSync(directoryPath: string) {
+    if (!fs.existsSync(directoryPath)) {
+        fs.mkdirSync(directoryPath, { recursive: true });
+    }
+}
+
 export async function cleanDirectory(directory: string) {
     const files = await readdir(directory, { withFileTypes: true });
 
@@ -108,4 +114,28 @@ export async function cleanDirectory(directory: string) {
             await rm(path.join(directory, file.name));
         }
     }
+}
+
+/**
+ * Remove all files and folders in a directory except those specified to omit.
+ * @param directoryPath
+ * @param omitFiles
+ */
+export function cleanDirectorySync(directoryPath: string, omitFiles: string[] = []) {
+    if (!fs.existsSync(directoryPath)) {
+        return;
+    }
+    const files = fs.readdirSync(directoryPath, { withFileTypes: true });
+
+    files.forEach((file) => {
+        if (omitFiles.includes(file.name)) {
+            return;
+        }
+        const filePath = path.join(directoryPath, file.name);
+        if (file.isDirectory()) {
+            fs.rmSync(filePath, { recursive: true, force: true });
+        } else {
+            fs.unlinkSync(filePath);
+        }
+    });
 }

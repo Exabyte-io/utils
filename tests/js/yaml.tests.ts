@@ -2,7 +2,7 @@ import { expect } from "chai";
 import fs from "fs";
 import path from "path";
 
-import { readYAMLFile, writeYAMLFile } from "../../src/js/server/yaml";
+import { readYAMLFile, writeYAMLFileSync } from "../../src/js/server/yaml";
 import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../../src/js/shared/yaml";
 
 describe("YAML operations", () => {
@@ -34,16 +34,55 @@ describe("YAML operations", () => {
             },
         };
 
-        writeYAMLFile(testFilePath, testData);
+        writeYAMLFileSync(testFilePath, testData);
         const readData = readYAMLFile(testFilePath);
         expect(readData).to.deep.equal(testData);
     });
 
     it("should handle empty objects", () => {
         const emptyData = {};
-        writeYAMLFile(testFilePath, emptyData);
+        writeYAMLFileSync(testFilePath, emptyData);
         const readData = readYAMLFile(testFilePath);
         expect(readData).to.deep.equal(emptyData);
+    });
+
+    it("should handle arrays", () => {
+        const arrayData = [
+            { id: 1, name: "first" },
+            { id: 2, name: "second" },
+            { id: 3, name: "third" },
+        ];
+        writeYAMLFileSync(testFilePath, arrayData);
+        const readData = readYAMLFile(testFilePath);
+        expect(readData).to.deep.equal(arrayData);
+    });
+
+    it("should write YAML with custom options", () => {
+        const testData = {
+            description: "This is a very long line that should normally be folded",
+            key: "value",
+        };
+        writeYAMLFileSync(testFilePath, testData, { lineWidth: 20 });
+        const readData = readYAMLFile(testFilePath);
+        expect(readData).to.deep.equal(testData);
+    });
+
+    it("should handle complex nested structures", () => {
+        const complexData = {
+            level1: {
+                level2: {
+                    level3: {
+                        array: [1, 2, 3],
+                        string: "test",
+                        boolean: true,
+                        number: 42,
+                    },
+                },
+            },
+        };
+        writeYAMLFileSync(testFilePath, complexData);
+        const readData = readYAMLFile(testFilePath);
+        expect(readData).to.deep.equal(complexData);
     });
 
     it("should throw error when reading non-existent file", () => {

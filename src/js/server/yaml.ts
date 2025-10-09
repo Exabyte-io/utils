@@ -7,10 +7,12 @@ import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../shared/yaml
  * @param {string} filePath - The path to the YAML file.
  * @returns {object} - The resulting JSON object.
  */
-export function readYAMLFile(filePath: string): object {
+export function readYAMLFileSync(filePath: string): object {
     const YAMLContent = fs.readFileSync(filePath, "utf8");
     return convertYAMLStringToJSON(YAMLContent);
 }
+
+export const readYAMLFile = readYAMLFileSync;
 
 /**
  * Writes a JSON object to a YAML file.
@@ -22,3 +24,5 @@ export function writeYAMLFileSync(filePath: string, data: object, options?: obje
     const YAMLContent = convertJSONToYAMLString(data, options);
     fs.writeFileSync(filePath, YAMLContent);
 }
+
+export const writeYAMLFile = writeYAMLFileSync;

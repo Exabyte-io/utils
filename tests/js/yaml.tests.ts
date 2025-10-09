@@ -2,7 +2,7 @@ import { expect } from "chai";
 import fs from "fs";
 import path from "path";
 
-import { readYAMLFile, writeYAMLFileSync } from "../../src/js/server/yaml";
+import { readYAMLFileSync, writeYAMLFileSync } from "../../src/js/server/yaml";
 import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../../src/js/shared/yaml";
 
 describe("YAML operations", () => {
@@ -35,14 +35,14 @@ describe("YAML operations", () => {
         };
 
         writeYAMLFileSync(testFilePath, testData);
-        const readData = readYAMLFile(testFilePath);
+        const readData = readYAMLFileSync(testFilePath);
         expect(readData).to.deep.equal(testData);
     });
 
     it("should handle empty objects", () => {
         const emptyData = {};
         writeYAMLFileSync(testFilePath, emptyData);
-        const readData = readYAMLFile(testFilePath);
+        const readData = readYAMLFileSync(testFilePath);
         expect(readData).to.deep.equal(emptyData);
     });
 
@@ -53,7 +53,7 @@ describe("YAML operations", () => {
             { id: 3, name: "third" },
         ];
         writeYAMLFileSync(testFilePath, arrayData);
-        const readData = readYAMLFile(testFilePath);
+        const readData = readYAMLFileSync(testFilePath);
         expect(readData).to.deep.equal(arrayData);
     });
 
@@ -63,7 +63,7 @@ describe("YAML operations", () => {
             key: "value",
         };
         writeYAMLFileSync(testFilePath, testData, { lineWidth: 20 });
-        const readData = readYAMLFile(testFilePath);
+        const readData = readYAMLFileSync(testFilePath);
         expect(readData).to.deep.equal(testData);
     });
 
@@ -81,13 +81,13 @@ describe("YAML operations", () => {
             },
         };
         writeYAMLFileSync(testFilePath, complexData);
-        const readData = readYAMLFile(testFilePath);
+        const readData = readYAMLFileSync(testFilePath);
         expect(readData).to.deep.equal(complexData);
     });
 
     it("should throw error when reading non-existent file", () => {
         const nonExistentPath = path.join(testDir, "nonexistent.yml");
-        expect(() => readYAMLFile(nonExistentPath)).to.throw();
+        expect(() => readYAMLFileSync(nonExistentPath)).to.throw();
     });
 });
 

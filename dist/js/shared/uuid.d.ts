@@ -1,2 +1,2 @@
-export function getUUID(): any;
-export function getUUIDFromNamespace(seed?: string, namespace?: string): any;
+export function getUUID(): string;
+export function getUUIDFromNamespace(seed?: string, namespace?: string): string;

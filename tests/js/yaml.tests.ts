@@ -46,6 +46,45 @@ describe("YAML operations", () => {
         expect(readData).to.deep.equal(emptyData);
     });
 
+    it("should handle arrays", () => {
+        const arrayData = [
+            { id: 1, name: "first" },
+            { id: 2, name: "second" },
+            { id: 3, name: "third" },
+        ];
+        writeYAMLFile(testFilePath, arrayData);
+        const readData = readYAMLFile(testFilePath);
+        expect(readData).to.deep.equal(arrayData);
+    });
+
+    it("should write YAML with custom options", () => {
+        const testData = {
+            description: "This is a very long line that should normally be folded",
+            key: "value",
+        };
+        writeYAMLFile(testFilePath, testData, { lineWidth: 20 });
+        const readData = readYAMLFile(testFilePath);
+        expect(readData).to.deep.equal(testData);
+    });
+
+    it("should handle complex nested structures", () => {
+        const complexData = {
+            level1: {
+                level2: {
+                    level3: {
+                        array: [1, 2, 3],
+                        string: "test",
+                        boolean: true,
+                        number: 42,
+                    },
+                },
+            },
+        };
+        writeYAMLFile(testFilePath, complexData);
+        const readData = readYAMLFile(testFilePath);
+        expect(readData).to.deep.equal(complexData);
+    });
+
     it("should throw error when reading non-existent file", () => {
         const nonExistentPath = path.join(testDir, "nonexistent.yml");
         expect(() => readYAMLFile(nonExistentPath)).to.throw();

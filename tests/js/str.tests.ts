@@ -1,6 +1,7 @@
 import { expect } from "chai";
 
 import {
+    createSafeFilename,
     findPreviousVersion,
     renderTemplateString,
     renderTemplateStringWithEval,
@@ -70,5 +71,13 @@ describe("Test string template expansion with eval", () => {
         };
         const expected = "As a User, I want to generate test cases automatically. ---test---";
         expect(renderTemplateStringWithEval(template, context)).to.equal(expected);
+    });
+});
+
+describe("createSafeFilename", () => {
+    it("should convert to lowercase, replace special chars with underscores, and trim", () => {
+        expect(createSafeFilename("My File Name!")).to.equal("my_file_name");
+        expect(createSafeFilename("Test@#$%/File123")).to.equal("test_file123");
+        expect(createSafeFilename("---spaces and dashes---")).to.equal("spaces_and_dashes");
     });
 });

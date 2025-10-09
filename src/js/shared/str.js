@@ -131,3 +131,16 @@ export function renderTemplateStringWithEval(template, context) {
     // eslint-disable-next-line no-new-func
     return new Function("context", "with (context) { return `" + template + "`; }")(context);
 }
+
+/**
+ * Creates a filesystem-safe filename from a given name.
+ * @param {string} name - The input name to be converted into a safe filename.
+ * @return {string} - The resulting safe filename.
+ *
+ */
+export function createSafeFilename(name) {
+    return name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "");
+}

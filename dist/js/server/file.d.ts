@@ -32,4 +32,5 @@ export declare function getDirectories(currentPath: string): string[];
  */
 export declare function createObjectPathFromFilePath(filePath: string, root: string): string;
 export declare function createDirIfNotExists(directory: string): Promise<void>;
+export declare function createDirIfNotExistsSync(directoryPath: string): void;
 export declare function cleanDirectory(directory: string): Promise<void>;

@@ -1,4 +1,4 @@
-import fs from "fs";
+import * as fs from "fs";
 import { access, mkdir, readdir, rm } from "node:fs/promises";
 import path from "node:path";
 
@@ -92,6 +92,12 @@ export async function createDirIfNotExists(directory: string) {
         await access(directory);
     } catch (err) {
         await mkdir(directory, { recursive: true });
+    }
+}
+
+export function createDirIfNotExistsSync(directoryPath: string) {
+    if (!fs.existsSync(directoryPath)) {
+        fs.mkdirSync(directoryPath, { recursive: true });
     }
 }
 

@@ -3,9 +3,7 @@ import * as assertion from "./shared/assertion";
 import * as cls from "./shared/class";
 import * as clone from "./shared/clone";
 import * as constants from "./shared/constants";
-import * as fileSync from "./shared/file_sync";
 import * as hash from "./shared/hash";
-import * as json from "./shared/json";
 import * as math from "./shared/math";
 import * as object from "./shared/object";
 import * as selector from "./shared/selector";
@@ -32,8 +30,6 @@ export const sharedUtils = {
     uuid,
     assertion,
     yaml,
-    fileSync,
-    json,
 };
 
 export const Utils = sharedUtils;

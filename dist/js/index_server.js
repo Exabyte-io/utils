@@ -26,10 +26,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utils = exports.serverUtils = void 0;
 const index_1 = require("./index");
 const file = __importStar(require("./server/file"));
+const json = __importStar(require("./server/json"));
 const yaml = __importStar(require("./server/yaml"));
 exports.serverUtils = {
     file,
     yaml,
+    json,
 };
 exports.Utils = {
     ...index_1.sharedUtils,

@@ -29,9 +29,7 @@ const assertion = __importStar(require("./shared/assertion"));
 const cls = __importStar(require("./shared/class"));
 const clone = __importStar(require("./shared/clone"));
 const constants = __importStar(require("./shared/constants"));
-const fileSync = __importStar(require("./shared/file_sync"));
 const hash = __importStar(require("./shared/hash"));
-const json = __importStar(require("./shared/json"));
 const math = __importStar(require("./shared/math"));
 const object = __importStar(require("./shared/object"));
 const selector = __importStar(require("./shared/selector"));
@@ -57,8 +55,6 @@ exports.sharedUtils = {
     uuid,
     assertion,
     yaml,
-    fileSync,
-    json,
 };
 exports.Utils = exports.sharedUtils;
 exports.default = { ...exports.Utils };

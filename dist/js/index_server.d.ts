@@ -1,12 +1,15 @@
 import * as file from "./server/file";
+import * as json from "./server/json";
 import * as yaml from "./server/yaml";
 export declare const serverUtils: {
     file: typeof file;
     yaml: typeof yaml;
+    json: typeof json;
 };
 export declare const Utils: {
     file: typeof file;
     yaml: typeof yaml;
+    json: typeof json;
     array: typeof import("./shared/array");
     cls: typeof import("./shared/class");
     clone: typeof import("./shared/clone");
@@ -21,12 +24,11 @@ export declare const Utils: {
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
     assertion: typeof import("./shared/assertion");
-    fileSync: typeof import("./shared/file_sync");
-    json: typeof import("./shared/json");
 };
 declare const _default: {
     file: typeof file;
     yaml: typeof yaml;
+    json: typeof json;
     array: typeof import("./shared/array");
     cls: typeof import("./shared/class");
     clone: typeof import("./shared/clone");
@@ -41,7 +43,5 @@ declare const _default: {
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
     assertion: typeof import("./shared/assertion");
-    fileSync: typeof import("./shared/file_sync");
-    json: typeof import("./shared/json");
 };
 export default _default;

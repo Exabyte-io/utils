@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import { createDirIfNotExistsSync } from "./file_sync";
+import { createDirIfNotExistsSync } from "./file";
 
 type Replacer = Parameters<typeof JSON.stringify>[1];
 type Space = Parameters<typeof JSON.stringify>[2];

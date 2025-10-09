@@ -76,7 +76,7 @@
         "prettier": "^2.7.1"
     },
     "engines": {
-        "node": ">=14.0.0"
+        "node": ">=20.0.0"
     },
     "lint-staged": {
         "*.{js,ts,tsx,!dist/**/*}": "eslint --cache --fix",

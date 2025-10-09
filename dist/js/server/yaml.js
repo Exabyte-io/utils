@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeYAMLFile = exports.readYAMLFile = void 0;
+exports.writeYAMLFileSync = exports.readYAMLFile = void 0;
 const fs_1 = __importDefault(require("fs"));
 const yaml_1 = require("../shared/yaml");
 /**
@@ -22,8 +22,8 @@ exports.readYAMLFile = readYAMLFile;
  * @param {object} [options] - Options for YAML dump (see js-yaml documentation).
  * @param {object} data - The JSON object to write.
  */
-function writeYAMLFile(filePath, data, options) {
+function writeYAMLFileSync(filePath, data, options) {
     const YAMLContent = (0, yaml_1.convertJSONToYAMLString)(data, options);
     fs_1.default.writeFileSync(filePath, YAMLContent);
 }
-exports.writeYAMLFile = writeYAMLFile;
+exports.writeYAMLFileSync = writeYAMLFileSync;

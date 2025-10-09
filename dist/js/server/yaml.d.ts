@@ -10,4 +10,4 @@ export declare function readYAMLFile(filePath: string): object;
  * @param {object} [options] - Options for YAML dump (see js-yaml documentation).
  * @param {object} data - The JSON object to write.
  */
-export declare function writeYAMLFile(filePath: string, data: object, options?: object): void;
+export declare function writeYAMLFileSync(filePath: string, data: object, options?: object): void;

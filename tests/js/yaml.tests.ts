@@ -2,7 +2,7 @@ import { expect } from "chai";
 import fs from "fs";
 import path from "path";
 
-import { readYAMLFile, writeYAMLFile } from "../../src/js/server/yaml";
+import { readYAMLFile, writeYAMLFileSync } from "../../src/js/server/yaml";
 import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../../src/js/shared/yaml";
 
 describe("YAML operations", () => {
@@ -34,14 +34,14 @@ describe("YAML operations", () => {
             },
         };
 
-        writeYAMLFile(testFilePath, testData);
+        writeYAMLFileSync(testFilePath, testData);
         const readData = readYAMLFile(testFilePath);
         expect(readData).to.deep.equal(testData);
     });
 
     it("should handle empty objects", () => {
         const emptyData = {};
-        writeYAMLFile(testFilePath, emptyData);
+        writeYAMLFileSync(testFilePath, emptyData);
         const readData = readYAMLFile(testFilePath);
         expect(readData).to.deep.equal(emptyData);
     });
@@ -52,7 +52,7 @@ describe("YAML operations", () => {
             { id: 2, name: "second" },
             { id: 3, name: "third" },
         ];
-        writeYAMLFile(testFilePath, arrayData);
+        writeYAMLFileSync(testFilePath, arrayData);
         const readData = readYAMLFile(testFilePath);
         expect(readData).to.deep.equal(arrayData);
     });
@@ -62,7 +62,7 @@ describe("YAML operations", () => {
             description: "This is a very long line that should normally be folded",
             key: "value",
         };
-        writeYAMLFile(testFilePath, testData, { lineWidth: 20 });
+        writeYAMLFileSync(testFilePath, testData, { lineWidth: 20 });
         const readData = readYAMLFile(testFilePath);
         expect(readData).to.deep.equal(testData);
     });
@@ -80,7 +80,7 @@ describe("YAML operations", () => {
                 },
             },
         };
-        writeYAMLFile(testFilePath, complexData);
+        writeYAMLFileSync(testFilePath, complexData);
         const readData = readYAMLFile(testFilePath);
         expect(readData).to.deep.equal(complexData);
     });

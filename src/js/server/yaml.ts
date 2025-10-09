@@ -18,7 +18,7 @@ export function readYAMLFile(filePath: string): object {
  * @param {object} [options] - Options for YAML dump (see js-yaml documentation).
  * @param {object} data - The JSON object to write.
  */
-export function writeYAMLFile(filePath: string, data: object, options?: object) {
+export function writeYAMLFileSync(filePath: string, data: object, options?: object) {
     const YAMLContent = convertJSONToYAMLString(data, options);
     fs.writeFileSync(filePath, YAMLContent);
 }

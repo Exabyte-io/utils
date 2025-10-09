@@ -10,8 +10,8 @@ const js_yaml_1 = __importDefault(require("js-yaml"));
  * @param {string} YAMLString - The YAML string to convert.
  * @returns {object} - The resulting JSON object.
  */
-function convertYAMLStringToJSON(YAMLString) {
-    return js_yaml_1.default.load(YAMLString);
+function convertYAMLStringToJSON(YAMLString, options = {}) {
+    return js_yaml_1.default.load(YAMLString, options);
 }
 exports.convertYAMLStringToJSON = convertYAMLStringToJSON;
 /**

@@ -3,7 +3,7 @@
  * @param {string} filePath - The path to the YAML file.
  * @returns {object} - The resulting JSON object.
  */
-export declare function readYAMLFileSync(filePath: string): object;
+export declare function readYAMLFileSync(filePath: string, options?: {}): object;
 export declare const readYAMLFile: typeof readYAMLFileSync;
 /**
  * Writes a JSON object to a YAML file.

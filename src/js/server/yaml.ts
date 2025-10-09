@@ -7,9 +7,9 @@ import { convertJSONToYAMLString, convertYAMLStringToJSON } from "../shared/yaml
  * @param {string} filePath - The path to the YAML file.
  * @returns {object} - The resulting JSON object.
  */
-export function readYAMLFileSync(filePath: string): object {
+export function readYAMLFileSync(filePath: string, options = {}): object {
     const YAMLContent = fs.readFileSync(filePath, "utf8");
-    return convertYAMLStringToJSON(YAMLContent);
+    return convertYAMLStringToJSON(YAMLContent, options);
 }
 
 export const readYAMLFile = readYAMLFileSync;

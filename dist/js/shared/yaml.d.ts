@@ -3,7 +3,7 @@
  * @param {string} YAMLString - The YAML string to convert.
  * @returns {object} - The resulting JSON object.
  */
-export function convertYAMLStringToJSON(YAMLString: string): object;
+export function convertYAMLStringToJSON(YAMLString: string, options?: {}): object;
 /**
  * Converts a JSON object to a YAML string.
  * @param {object} data - The JSON object to convert.

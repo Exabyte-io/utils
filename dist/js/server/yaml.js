@@ -11,9 +11,9 @@ const yaml_1 = require("../shared/yaml");
  * @param {string} filePath - The path to the YAML file.
  * @returns {object} - The resulting JSON object.
  */
-function readYAMLFileSync(filePath) {
+function readYAMLFileSync(filePath, options = {}) {
     const YAMLContent = fs_1.default.readFileSync(filePath, "utf8");
-    return (0, yaml_1.convertYAMLStringToJSON)(YAMLContent);
+    return (0, yaml_1.convertYAMLStringToJSON)(YAMLContent, options);
 }
 exports.readYAMLFileSync = readYAMLFileSync;
 exports.readYAMLFile = readYAMLFileSync;

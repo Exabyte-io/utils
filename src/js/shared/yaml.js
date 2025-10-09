@@ -5,8 +5,8 @@ import yaml from "js-yaml";
  * @param {string} YAMLString - The YAML string to convert.
  * @returns {object} - The resulting JSON object.
  */
-export function convertYAMLStringToJSON(YAMLString) {
-    return yaml.load(YAMLString);
+export function convertYAMLStringToJSON(YAMLString, options = {}) {
+    return yaml.load(YAMLString, options);
 }
 
 /**

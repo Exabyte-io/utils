@@ -82,4 +82,9 @@ interface Tree<T = string> {
  * mergeTerminalNodes(tree); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']
  */
 export declare function mergeTerminalNodes<T = string>(tree: Tree<T>, unique?: boolean): T[];
+/**
+ * Flattens nested object structure to single-level object.
+ * Useful for extracting entities from deeply nested configurations.
+ */
+export declare function flattenNestedObjects<T>(nestedData: Record<string, Record<string, T>>, filterFunction?: (item: T) => boolean): Record<string, T>;
 export {};

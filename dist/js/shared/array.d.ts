@@ -12,3 +12,9 @@ export function convertToCompactCSVArrayOfObjects(objects: any): any[][];
  * @return {Array<number|string|object>}
  */
 export function sortArrayByOrder(arr: Array<number | string | object>, order: Array<number | string | object>): Array<number | string | object>;
+/**
+ * Normalizes data to an array format.
+ * @param data {any} - The input data which can be of any type.
+ * @returns {any[]}
+ */
+export function normalizeToArray(data: any): any[];

@@ -1,6 +1,10 @@
 import { expect } from "chai";
 
-import { flattenObject, mergeTerminalNodes } from "../../src/js/shared/object";
+import {
+    flattenNestedObjects,
+    flattenObject,
+    mergeTerminalNodes,
+} from "../../src/js/shared/object";
 
 describe("flattenObject", () => {
     it("serializes simple object", () => {
@@ -88,5 +92,52 @@ describe("mergeTerminalNodes", () => {
         // @ts-ignore
         const merged = mergeTerminalNodes(array);
         expect(merged).to.have.deep.members(array);
+    });
+});
+
+describe("flattenNestedObjects", () => {
+    it("should flatten 2-level nested structure using item names as keys", () => {
+        const nested = {
+            metals: {
+                item1: { name: "iron", value: 1 },
+                item2: { name: "copper", value: 2 },
+            },
+            gases: {
+                item3: { name: "oxygen", value: 3 },
+            },
+        };
+
+        const result = flattenNestedObjects(nested);
+
+        expect(result).to.deep.equal({
+            iron: { name: "iron", value: 1 },
+            copper: { name: "copper", value: 2 },
+            oxygen: { name: "oxygen", value: 3 },
+        });
+    });
+
+    it("should filter items when filterFunction is provided", () => {
+        const nested = {
+            materials: {
+                item1: { name: "silicon", type: "semiconductor", active: true },
+                item2: { name: "glass", type: "insulator", active: false },
+            },
+            metals: {
+                item3: { name: "gold", type: "conductor", active: true },
+            },
+        };
+
+        const result = flattenNestedObjects(nested, (item: any) => item.active === true);
+
+        expect(result).to.deep.equal({
+            silicon: { name: "silicon", type: "semiconductor", active: true },
+            gold: { name: "gold", type: "conductor", active: true },
+        });
+    });
+
+    it("should handle empty nested structure", () => {
+        const nested = {};
+        const result = flattenNestedObjects(nested);
+        expect(result).to.deep.equal({});
     });
 });

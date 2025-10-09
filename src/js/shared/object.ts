@@ -261,3 +261,27 @@ export function mergeTerminalNodes<T = string>(tree: Tree<T>, unique = false): T
     // @ts-ignore
     return unique ? [...new Set(terminalValues)] : terminalValues;
 }
+
+
+/**
+ * Flattens nested object structure to single-level object.
+ * Useful for extracting entities from deeply nested configurations.
+ */
+export function flattenNestedObjects<T>(
+    nestedData: Record<string, Record<string, T>>,
+    filterFunction?: (item: T) => boolean,
+): Record<string, T> {
+    const flattened: Record<string, T> = {};
+
+    Object.values(nestedData).forEach((levelData) => {
+        Object.values(levelData).forEach((item) => {
+            if (item && typeof item === "object" && (item as any).name) {
+                if (!filterFunction || filterFunction(item)) {
+                    flattened[(item as any).name] = item;
+                }
+            }
+        });
+    });
+
+    return flattened;
+}

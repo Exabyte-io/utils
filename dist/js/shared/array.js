@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sortArrayByOrder = exports.convertToCompactCSVArrayOfObjects = exports.safeMakeArray = void 0;
+exports.normalizeToArray = exports.sortArrayByOrder = exports.convertToCompactCSVArrayOfObjects = exports.safeMakeArray = void 0;
 const flatten_1 = __importDefault(require("lodash/flatten"));
 const isArray_1 = __importDefault(require("lodash/isArray"));
 const keys_1 = __importDefault(require("lodash/keys"));
@@ -49,3 +49,18 @@ function sortArrayByOrder(arr, order) {
     });
 }
 exports.sortArrayByOrder = sortArrayByOrder;
+/**
+ * Normalizes data to an array format.
+ * @param data {any} - The input data which can be of any type.
+ * @returns {any[]}
+ */
+function normalizeToArray(data) {
+    if (Array.isArray(data)) {
+        return data.flat();
+    }
+    if (data && typeof data === "object" && !Array.isArray(data) && !data.name) {
+        return Object.values(data).flat();
+    }
+    return [data];
+}
+exports.normalizeToArray = normalizeToArray;

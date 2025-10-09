@@ -44,3 +44,18 @@ export function sortArrayByOrder(arr, order) {
         return indexA - indexB;
     });
 }
+
+/**
+ * Normalizes data to an array format.
+ * @param data {any} - The input data which can be of any type.
+ * @returns {any[]}
+ */
+export function normalizeToArray(data) {
+    if (Array.isArray(data)) {
+        return data.flat();
+    }
+    if (data && typeof data === "object" && !Array.isArray(data) && !data.name) {
+        return Object.values(data).flat();
+    }
+    return [data];
+}

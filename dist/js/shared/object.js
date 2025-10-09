@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mergeTerminalNodes = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
+exports.flattenNestedObjects = exports.mergeTerminalNodes = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
 const camelCase_1 = __importDefault(require("lodash/camelCase"));
 const filter_1 = __importDefault(require("lodash/filter"));
 const isArray_1 = __importDefault(require("lodash/isArray"));
@@ -208,3 +208,21 @@ function mergeTerminalNodes(tree, unique = false) {
     return unique ? [...new Set(terminalValues)] : terminalValues;
 }
 exports.mergeTerminalNodes = mergeTerminalNodes;
+/**
+ * Flattens nested object structure to single-level object.
+ * Useful for extracting entities from deeply nested configurations.
+ */
+function flattenNestedObjects(nestedData, filterFunction) {
+    const flattened = {};
+    Object.values(nestedData).forEach((levelData) => {
+        Object.values(levelData).forEach((item) => {
+            if (item && typeof item === "object" && item.name) {
+                if (!filterFunction || filterFunction(item)) {
+                    flattened[item.name] = item;
+                }
+            }
+        });
+    });
+    return flattened;
+}
+exports.flattenNestedObjects = flattenNestedObjects;

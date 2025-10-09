@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { sortArrayByOrder } from "../../src/js/shared/array";
+import { normalizeToArray, sortArrayByOrder } from "../../src/js/shared/array";
 
 describe("Array sort", () => {
     it("should sort order according to given order", () => {
@@ -28,5 +28,20 @@ describe("Array sort", () => {
         ];
         const result = sortArrayByOrder(arr, ord);
         expect(result).to.deep.equal(["3s", "3p", "4s", "3d"]);
+    });
+});
+
+describe("normalizeToArray", () => {
+    it("should return flattened array if data is array", () => {
+        expect(normalizeToArray([1, [2, 3]])).to.deep.equal([1, 2, 3]);
+    });
+
+    it("should return Object.values as flattened array if data is object", () => {
+        expect(normalizeToArray({ a: 1, b: [2, 3] })).to.deep.equal([1, 2, 3]);
+    });
+
+    it("should wrap non-array data in array", () => {
+        expect(normalizeToArray(5)).to.deep.equal([5]);
+        expect(normalizeToArray("text")).to.deep.equal(["text"]);
     });
 });

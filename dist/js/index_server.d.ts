@@ -21,6 +21,8 @@ export declare const Utils: {
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
     assertion: typeof import("./shared/assertion");
+    fileSync: typeof import("./shared/file_sync");
+    json: typeof import("./shared/json");
 };
 declare const _default: {
     file: typeof file;
@@ -39,5 +41,7 @@ declare const _default: {
     url: typeof import("./shared/url");
     uuid: typeof import("./shared/uuid");
     assertion: typeof import("./shared/assertion");
+    fileSync: typeof import("./shared/file_sync");
+    json: typeof import("./shared/json");
 };
 export default _default;

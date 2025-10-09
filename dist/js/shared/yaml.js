@@ -17,9 +17,10 @@ exports.convertYAMLStringToJSON = convertYAMLStringToJSON;
 /**
  * Converts a JSON object to a YAML string.
  * @param {object} data - The JSON object to convert.
+ * @param {object} options - Options for YAML dump (see js-yaml documentation).
  * @returns {string} - The resulting YAML string.
  */
-function convertJSONToYAMLString(data) {
-    return js_yaml_1.default.dump(data);
+function convertJSONToYAMLString(data, options = {}) {
+    return js_yaml_1.default.dump(data, { ...options });
 }
 exports.convertJSONToYAMLString = convertJSONToYAMLString;

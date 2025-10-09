@@ -47,3 +47,10 @@ export function renderTemplateString(template: string, context: Object): string;
  * @returns {*}
  */
 export function renderTemplateStringWithEval(template: string, context: Object): any;
+/**
+ * Creates a filesystem-safe filename from a given name.
+ * @param {string} name - The input name to be converted into a safe filename.
+ * @return {string} - The resulting safe filename.
+ *
+ */
+export function createSafeFilename(name: string): string;

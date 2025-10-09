@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
+exports.createSafeFilename = exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
 const lt_1 = __importDefault(require("semver/functions/lt"));
 const rcompare_1 = __importDefault(require("semver/functions/rcompare"));
@@ -133,3 +133,16 @@ function renderTemplateStringWithEval(template, context) {
     return new Function("context", "with (context) { return `" + template + "`; }")(context);
 }
 exports.renderTemplateStringWithEval = renderTemplateStringWithEval;
+/**
+ * Creates a filesystem-safe filename from a given name.
+ * @param {string} name - The input name to be converted into a safe filename.
+ * @return {string} - The resulting safe filename.
+ *
+ */
+function createSafeFilename(name) {
+    return name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "");
+}
+exports.createSafeFilename = createSafeFilename;

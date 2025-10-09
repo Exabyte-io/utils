@@ -34,3 +34,9 @@ export declare function createObjectPathFromFilePath(filePath: string, root: str
 export declare function createDirIfNotExists(directory: string): Promise<void>;
 export declare function createDirIfNotExistsSync(directoryPath: string): void;
 export declare function cleanDirectory(directory: string): Promise<void>;
+/**
+ * Remove all files and folders in a directory except those specified to omit.
+ * @param directoryPath
+ * @param omitFiles
+ */
+export declare function cleanDirectorySync(directoryPath: string, omitFiles?: string[]): void;

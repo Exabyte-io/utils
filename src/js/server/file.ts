@@ -115,3 +115,27 @@ export async function cleanDirectory(directory: string) {
         }
     }
 }
+
+/**
+ * Remove all files and folders in a directory except those specified to omit.
+ * @param directoryPath
+ * @param omitFiles
+ */
+export function cleanDirectorySync(directoryPath: string, omitFiles: string[] = []) {
+    if (!fs.existsSync(directoryPath)) {
+        return;
+    }
+    const files = fs.readdirSync(directoryPath, { withFileTypes: true });
+
+    files.forEach((file) => {
+        if (omitFiles.includes(file.name)) {
+            return;
+        }
+        const filePath = path.join(directoryPath, file.name);
+        if (file.isDirectory()) {
+            fs.rmSync(filePath, { recursive: true, force: true });
+        } else {
+            fs.unlinkSync(filePath);
+        }
+    });
+}

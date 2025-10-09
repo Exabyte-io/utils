@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cleanDirectory = exports.createDirIfNotExistsSync = exports.createDirIfNotExists = exports.createObjectPathFromFilePath = exports.getDirectories = exports.getFilesInDirectory = exports.formatFileSize = exports.getProgrammingLanguageFromFileExtension = void 0;
+exports.cleanDirectorySync = exports.cleanDirectory = exports.createDirIfNotExistsSync = exports.createDirIfNotExists = exports.createObjectPathFromFilePath = exports.getDirectories = exports.getFilesInDirectory = exports.formatFileSize = exports.getProgrammingLanguageFromFileExtension = void 0;
 const fs = __importStar(require("fs"));
 const promises_1 = require("node:fs/promises");
 const node_path_1 = __importDefault(require("node:path"));
@@ -138,3 +138,27 @@ async function cleanDirectory(directory) {
     }
 }
 exports.cleanDirectory = cleanDirectory;
+/**
+ * Remove all files and folders in a directory except those specified to omit.
+ * @param directoryPath
+ * @param omitFiles
+ */
+function cleanDirectorySync(directoryPath, omitFiles = []) {
+    if (!fs.existsSync(directoryPath)) {
+        return;
+    }
+    const files = fs.readdirSync(directoryPath, { withFileTypes: true });
+    files.forEach((file) => {
+        if (omitFiles.includes(file.name)) {
+            return;
+        }
+        const filePath = node_path_1.default.join(directoryPath, file.name);
+        if (file.isDirectory()) {
+            fs.rmSync(filePath, { recursive: true, force: true });
+        }
+        else {
+            fs.unlinkSync(filePath);
+        }
+    });
+}
+exports.cleanDirectorySync = cleanDirectorySync;

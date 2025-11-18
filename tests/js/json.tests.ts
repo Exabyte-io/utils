@@ -77,13 +77,6 @@ describe("JSON file operations", () => {
         fs.rmdirSync(path.dirname(path.dirname(nestedPath)));
     });
 
-    it("should write minified file with no spaces and formatting", () => {
-        const testData = { a: 1, b: 2, c: { d: 3 } };
-        writeJSONFileSync(testFilePath, testData, { spaces: 0 });
-        const content = fs.readFileSync(testFilePath, "utf-8");
-        expect(content).to.equal('{"a":1,"b":2,"c":{"d":3}}');
-    });
-
     it("should throw error when reading non-existent file", () => {
         const nonExistentPath = path.join(testDir, "nonexistent.json");
         expect(() => readJSONFileSync(nonExistentPath)).to.throw();

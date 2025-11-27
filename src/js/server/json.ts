@@ -26,3 +26,19 @@ export function writeJSONFileSync(
     const json = JSON.stringify(data, replacer, spaces) + (addNewLine ? "\n" : "");
     fs.writeFileSync(filePath, json, "utf-8");
 }
+
+export function isJSONMinified(filePath: string): boolean {
+    const content = fs.readFileSync(filePath, "utf8");
+    const trimmed = content.trim();
+    const lines = trimmed.split("\n");
+    if (lines.length > 1) {
+        return false;
+    }
+    try {
+        const parsed = JSON.parse(trimmed);
+        const minified = JSON.stringify(parsed);
+        return trimmed === minified;
+    } catch {
+        return false;
+    }
+}

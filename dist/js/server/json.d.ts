@@ -7,4 +7,5 @@ type WriteJSONOptions = {
 };
 export declare function readJSONFileSync(filePath: string): object;
 export declare function writeJSONFileSync(filePath: string, data: unknown, { replacer, spaces, addNewLine }?: WriteJSONOptions): void;
+export declare function isJSONMinified(filePath: string): boolean;
 export {};

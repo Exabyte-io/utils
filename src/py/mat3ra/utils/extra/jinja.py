@@ -34,6 +34,7 @@ def render_template_string(template_string: str, **kwargs):
     template = env.from_string(template_string)
     return template.render(**kwargs)
 
+
 def render_jinja_with_error_handling(template_string: str, **kwargs):
     """
     Renders a given template string with error handling.
@@ -46,6 +47,8 @@ def render_jinja_with_error_handling(template_string: str, **kwargs):
         str
     """
     try:
-       return render_template_string(template_string, **kwargs)
+        return render_template_string(template_string, **kwargs)
     except TemplateError as e:
-        return f"Error rendering template: {str(e)}"
+        return (
+            f"Error rendering template: {str(e)}\nTemplate content:\n{template_string}\nTemplate variables:\n{kwargs}"
+        )

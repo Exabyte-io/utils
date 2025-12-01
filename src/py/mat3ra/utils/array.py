@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Union, Sequence
+from typing import Any, List, Optional, Sequence, Union
 
 import numpy as np
 
@@ -17,6 +17,7 @@ def filter_by_slice_or_index_or_indices(
 
 def convert_to_array_if_not(array_or_item: Union[List, Any]):
     return array_or_item if isinstance(array_or_item, list) else [array_or_item]
+
 
 def jaccard_similarity_for_strings(array_a: Sequence[str], array_b: Sequence[str]) -> float:
     """

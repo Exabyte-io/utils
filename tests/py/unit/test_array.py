@@ -1,5 +1,4 @@
 import pytest
-
 from mat3ra.utils import array as utils
 
 REFERENCE_ARRAY = [1, 2, 3, 4, 5]
@@ -27,6 +26,7 @@ def test_convert_to_array_if_not():
     assert array == REFERENCE_ARRAY
     item = utils.convert_to_array_if_not(REFERENCE_ARRAY[0])
     assert item == [REFERENCE_ARRAY[0]]
+
 
 @pytest.mark.parametrize(
     "array_a,array_b,expected",

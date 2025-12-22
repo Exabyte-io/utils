@@ -10,6 +10,25 @@ REFERENCE_OBJECT_1_WITH_KEY3 = {"key1": "value1", "key2": "value2", "key3": "val
 REFERENCE_OBJECT_2_CLONE_SHALLOW = {"key2": {"nested_key1": "nested_value1"}}
 REFERENCE_OBJECT_2_CLONE_DEEP = {"key2": {"nested_key1": "nested_value1"}}
 REFERENCE_OBJECT_2_GET = {"key2": {"nested_key1": "nested_value1"}}
+REFERENCE_OBJECT_WITH_NONES = {
+    "key1": "value1",
+    "key2": None,
+    "key3": {
+        "nested_key1": "nested_value1",
+        "nested_key2": None,
+    },
+    "key4": [1, 2, None, 4],
+    "key5": None
+}
+REFERENCE_OBJECT_WITH_SOME_NONES_FILTERED = {
+    "key1": "value1",
+    "key3": {
+        "nested_key1": "nested_value1",
+        "nested_key2": None,
+    },
+    "key4": [1, 2, 4],
+    "key5": None
+}
 
 
 def test_omit():
@@ -40,6 +59,12 @@ def test_get():
     assert nested_value1 == "nested_value1"
     assert nested_value1 == utils.get(REFERENCE_OBJECT_2_GET, "/key2/nested_key1")
     assert nested_value1 == utils.get(REFERENCE_OBJECT_2_GET, "key2.nested_key1", ".")
+
+
+def test_filter_out_none_values():
+    filtered_object = utils.filter_out_none_values(REFERENCE_OBJECT_WITH_NONES, keep_as_none=["key5", "nested_key2"])
+
+    assert filtered_object == REFERENCE_OBJECT_WITH_SOME_NONES_FILTERED
 
 
 def test_attribute_dict():

@@ -1,6 +1,6 @@
 import copy
 import json
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 from mat3ra.utils.mixins import RoundNumericValuesMixin
@@ -30,6 +30,28 @@ def get(config: Dict, path: str = "", separator: str = "/") -> Any:
     for segment in segments:
         config = config.get(segment, {})
     return config
+
+
+def filter_out_none_values(data: Dict[str, Any], keep_as_none: Optional[List[str]] = None) -> Dict[str, Any]:
+    keep_as_none_set = set(keep_as_none) if keep_as_none else set()
+    return _filter_out_none_values_recursive(data, keep_as_none_set)
+
+
+def _filter_out_none_values_recursive(obj: Any, keep_as_none_set: set) -> Any:
+    if isinstance(obj, dict):
+        return {
+            k: _filter_out_none_values_recursive(v, keep_as_none_set)
+            for k, v in obj.items()
+            if v is not None or k in keep_as_none_set
+        }
+    elif isinstance(obj, list):
+        return [
+            _filter_out_none_values_recursive(item, keep_as_none_set)
+            for item in obj
+            if item is not None
+        ]
+    else:
+        return obj
 
 
 class AttributeDict(dict):

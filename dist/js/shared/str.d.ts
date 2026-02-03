@@ -54,3 +54,6 @@ export function renderTemplateStringWithEval(template: string, context: Object):
  *
  */
 export function createSafeFilename(name: string): string;
+export function numberPad(num: any, prec?: number, length?: number): any;
+export function numberPadArray(array: any, prec?: number, length?: number): any;
+export function numberFormat(n: any, precision?: number): any;

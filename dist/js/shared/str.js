@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSafeFilename = exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
+exports.numberFormat = exports.numberPadArray = exports.numberPad = exports.createSafeFilename = exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
 const lt_1 = __importDefault(require("semver/functions/lt"));
 const rcompare_1 = __importDefault(require("semver/functions/rcompare"));
 const underscore_1 = __importDefault(require("underscore"));
+const underscore_string_1 = __importDefault(require("underscore.string"));
 function removeNewLinesAndExtraSpaces(str) {
     return str.replace(/[\n\r]/g, "").replace(/  +/g, " ");
 }
@@ -146,3 +147,18 @@ function createSafeFilename(name) {
         .replace(/^_+|_+$/g, "");
 }
 exports.createSafeFilename = createSafeFilename;
+function numberPad(num, prec = 8, length = 16) {
+    return underscore_string_1.default.lpad(num.toFixed(prec), length, " ");
+}
+exports.numberPad = numberPad;
+function numberPadArray(array, prec = 4, length = 9) {
+    return array.map((x) => numberPad(x, prec, length)).join(" ");
+}
+exports.numberPadArray = numberPadArray;
+function numberFormat(n, precision = 3) {
+    if (precision === 0) {
+        return Math.ceil(n).toString();
+    }
+    return underscore_string_1.default.numberFormat(n, precision);
+}
+exports.numberFormat = numberFormat;

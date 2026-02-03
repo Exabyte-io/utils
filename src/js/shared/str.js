@@ -2,6 +2,7 @@ import semverCoerce from "semver/functions/coerce";
 import semverLt from "semver/functions/lt";
 import semverRcompare from "semver/functions/rcompare";
 import _ from "underscore";
+import s from "underscore.string";
 
 export function removeNewLinesAndExtraSpaces(str) {
     return str.replace(/[\n\r]/g, "").replace(/  +/g, " ");
@@ -143,4 +144,19 @@ export function createSafeFilename(name) {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "_")
         .replace(/^_+|_+$/g, "");
+}
+
+export function numberPad(num, prec = 8, length = 16) {
+    return s.lpad(num.toFixed(prec), length, " ");
+}
+
+export function numberPadArray(array, prec = 4, length = 9) {
+    return array.map((x) => numberPad(x, prec, length)).join(" ");
+}
+
+export function numberFormat(n, precision = 3) {
+    if (precision === 0) {
+        return Math.ceil(n).toString();
+    }
+    return s.numberFormat(n, precision);
 }

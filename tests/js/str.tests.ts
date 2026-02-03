@@ -3,6 +3,9 @@ import { expect } from "chai";
 import {
     createSafeFilename,
     findPreviousVersion,
+    numberFormat,
+    numberPad,
+    numberPadArray,
     renderTemplateString,
     renderTemplateStringWithEval,
 } from "../../src/js/shared/str";
@@ -79,5 +82,31 @@ describe("createSafeFilename", () => {
         expect(createSafeFilename("My File Name!")).to.equal("my_file_name");
         expect(createSafeFilename("Test@#$%/File123")).to.equal("test_file123");
         expect(createSafeFilename("---spaces and dashes---")).to.equal("spaces_and_dashes");
+    });
+});
+
+describe("numberPad", () => {
+    it("should pad number with spaces to specified length", () => {
+        expect(numberPad(3.14, 2, 10).trim()).to.equal("3.14");
+        expect(numberPad(42, 4, 12).trim()).to.equal("42.0000");
+        expect(numberPad(123.456, 2, 15).length).to.equal(15);
+    });
+});
+
+describe("numberPadArray", () => {
+    it("should pad array of numbers and join with spaces", () => {
+        const result = numberPadArray([1, 2.5, 3.14]);
+        expect(result).to.be.a("string");
+        expect(result).to.include("1.0000");
+        expect(result).to.include("2.5000");
+        expect(result).to.include("3.1400");
+    });
+});
+
+describe("numberFormat", () => {
+    it("should format numbers with specified precision", () => {
+        expect(numberFormat(1234.567, 2)).to.match(/^[\d,]+\.\d{1,2}$/);
+        expect(numberFormat(1000, 0)).to.equal("1000");
+        expect(numberFormat(3.1, 0)).to.equal("4");
     });
 });

@@ -1,6 +1,6 @@
 import hashlib
 import json
-from typing import Any
+from typing import Any, Optional
 
 
 def _sort_keys_deep(obj: Any) -> Any:
@@ -11,7 +11,7 @@ def _sort_keys_deep(obj: Any) -> Any:
     return obj
 
 
-def _get_hasher(hash_function: str):
+def _get_hasher(hash_function: Optional[str]) -> Any:
     try:
         return getattr(hashlib, (hash_function or "md5").lower())()
     except (AttributeError, TypeError, ValueError):

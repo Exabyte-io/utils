@@ -21,6 +21,9 @@ def _get_hasher(hash_function: Optional[str]) -> Any:
 def calculate_hash_from_string(message: str, hash_function: str = "MD5") -> str:
     """
     Calculates hash of a given text.
+
+    Defaults to MD5 for parity with the JS utilities and falls back to MD5 if the
+    requested algorithm is unavailable. Not intended for security-sensitive use.
     """
     hasher = _get_hasher(hash_function)
     hasher.update(message.encode())

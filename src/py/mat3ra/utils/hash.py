@@ -22,7 +22,7 @@ def calculate_hash_from_string(message: str, hash_function: str = "MD5") -> str:
     """
     Calculates hash of a given text.
 
-    Defaults to MD5 for parity with the JS utilities and falls back to MD5 if the
+    Defaults to MD5 for parity with the legacy JS utilities and falls back to MD5 if the
     requested algorithm is unavailable. Not intended for security-sensitive use.
     """
     hasher = _get_hasher(hash_function)
@@ -33,6 +33,8 @@ def calculate_hash_from_string(message: str, hash_function: str = "MD5") -> str:
 def calculate_hash_from_object(obj: Any, hash_function: str = "MD5") -> str:
     """
     Calculates hash of a given object. It must be serializable.
+
+    Keys are sorted recursively before hashing to ensure deterministic output.
     """
     sorted_obj = _sort_keys_deep(obj)
     message = json.dumps(sorted_obj, separators=(",", ":"), ensure_ascii=False)

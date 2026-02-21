@@ -39,3 +39,10 @@ def test_calculate_hash_from_string_invalid_algorithm_falls_back_to_md5():
     message = "fallback"
     expected = hashlib.md5(message.encode()).hexdigest()
     assert hash_utils.calculate_hash_from_string(message, "unknown") == expected
+
+
+def test_calculate_hash_from_object_invalid_algorithm_falls_back_to_md5():
+    obj = {"b": 1, "a": 2}
+    expected_message = json.dumps({"a": 2, "b": 1}, separators=(",", ":"), ensure_ascii=False)
+    expected = hashlib.md5(expected_message.encode()).hexdigest()
+    assert hash_utils.calculate_hash_from_object(obj, "unknown") == expected

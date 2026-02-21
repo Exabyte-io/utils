@@ -1,5 +1,6 @@
 import hashlib
 import json
+import warnings
 from typing import Any, Optional
 
 
@@ -12,9 +13,12 @@ def _sort_keys_deep(obj: Any) -> Any:
 
 
 def _get_hasher(hash_function: Optional[str]) -> Any:
+    algorithm = (hash_function or "md5").lower()
     try:
-        return getattr(hashlib, (hash_function or "md5").lower())()
+        return getattr(hashlib, algorithm)()
     except (AttributeError, TypeError, ValueError):
+        if algorithm != "md5":
+            warnings.warn(f"Hash function '{hash_function}' unavailable. Falling back to MD5.", RuntimeWarning)
         return hashlib.md5()
 
 

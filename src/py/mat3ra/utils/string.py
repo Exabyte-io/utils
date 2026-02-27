@@ -57,3 +57,13 @@ def snake_to_camel(snake_case_str: str) -> str:
     """
     parts = snake_case_str.split("_")
     return "".join(x.title() for x in parts)
+
+
+def remove_comments_from_source_code(text: str, language: str = "shell") -> str:
+    """Removes lines starting with # (except shebang)."""
+    return re.sub(r"^(\s+)?#(?!!).*$", "", text, flags=re.MULTILINE)
+
+
+def remove_empty_lines_from_string(text: str) -> str:
+    """Removes empty lines and trims."""
+    return re.sub(r"^\s*[\r\n]", "", text, flags=re.MULTILINE).strip()

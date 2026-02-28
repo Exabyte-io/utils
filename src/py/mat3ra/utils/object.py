@@ -26,7 +26,10 @@ def clone_deep(obj: Any) -> Any:
 def sort_keys_deep(obj: Any) -> Any:
     """Recursively sort object keys alphabetically."""
     if callable(getattr(obj, "model_dump", None)):
-        return sort_keys_deep(obj.model_dump(mode="json", exclude_none=True))
+        # Match JS behavior:
+        # - include explicit nulls (Python `None`) if provided
+        # - exclude fields that were never set (so defaults don't affect hashes)
+        return sort_keys_deep(obj.model_dump(mode="json", exclude_unset=True))
     if isinstance(obj, list):
         return [sort_keys_deep(item) for item in obj]
     if isinstance(obj, dict):
@@ -36,7 +39,8 @@ def sort_keys_deep(obj: Any) -> Any:
 
 def calculate_hash_from_object(obj: Any) -> str:
     """MD5 of JSON.stringify(sort_keys_deep(obj))."""
-    message = json.dumps(sort_keys_deep(obj), separators=(",", ":"))
+    # JS JSON.stringify does not ASCII-escape Unicode characters.
+    message = json.dumps(sort_keys_deep(obj), separators=(",", ":"), ensure_ascii=False)
     return hashlib.md5(message.encode()).hexdigest()
 
 

@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 from typing import Any, Dict, List, Optional
 
@@ -20,6 +21,32 @@ def clone_shallow(obj: Any) -> Any:
 
 def clone_deep(obj: Any) -> Any:
     return copy.deepcopy(obj)
+
+
+def sort_keys_deep(obj: Any) -> Any:
+    """Recursively sort object keys alphabetically."""
+    if callable(getattr(obj, "model_dump", None)):
+        # Match JS behavior:
+        # - include explicit nulls (Python `None`) if provided
+        # - exclude fields that were never set (so defaults don't affect hashes)
+        return sort_keys_deep(obj.model_dump(mode="json", exclude_unset=True))
+    if isinstance(obj, list):
+        return [sort_keys_deep(item) for item in obj]
+    if isinstance(obj, dict):
+        return {k: sort_keys_deep(obj[k]) for k in sorted(obj.keys())}
+    return obj
+
+
+def calculate_hash_from_object(obj: Any) -> str:
+    """MD5 of JSON.stringify(sort_keys_deep(obj))."""
+    # JS JSON.stringify does not ASCII-escape Unicode characters.
+    message = json.dumps(sort_keys_deep(obj), separators=(",", ":"), ensure_ascii=False)
+    return hashlib.md5(message.encode()).hexdigest()
+
+
+def remove_timestampable_keys(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Removes createdAt, updatedAt, removedAt."""
+    return {k: v for k, v in config.items() if k not in ("createdAt", "updatedAt", "removedAt")}
 
 
 def get(config: Dict, path: str = "", separator: str = "/") -> Any:

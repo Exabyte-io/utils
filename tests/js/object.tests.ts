@@ -4,6 +4,7 @@ import {
     flattenNestedObjects,
     flattenObject,
     mergeTerminalNodes,
+    sortKeysDeepForObject,
 } from "../../src/js/shared/object";
 
 describe("flattenObject", () => {
@@ -139,5 +140,43 @@ describe("flattenNestedObjects", () => {
         const nested = {};
         const result = flattenNestedObjects(nested);
         expect(result).to.deep.equal({});
+    });
+});
+
+describe("sortKeysDeepForObject", () => {
+    it("sorts object keys alphabetically", () => {
+        const obj = {
+            a: 1,
+            c: 3,
+            b: 2,
+        };
+
+        const expectedObj = {
+            a: 1,
+            b: 2,
+            c: 3,
+        };
+
+        const result = sortKeysDeepForObject(obj);
+        expect(result).to.deep.equal(expectedObj);
+    });
+
+    it("sorts object keys alphabetically with exclude keys", () => {
+        const obj = {
+            a: 1,
+            c: 3,
+            b: 2,
+        };
+
+        const excludeKeys = ["b"];
+
+        const expectedObj = {
+            b: 2,
+            a: 1,
+            c: 3,
+        };
+
+        const result = sortKeysDeepForObject(obj, excludeKeys);
+        expect(result).to.deep.equal(expectedObj);
     });
 });

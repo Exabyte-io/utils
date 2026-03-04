@@ -48,8 +48,10 @@ export declare function flattenObject(obj: NameValueObject, levelSeparator?: str
 };
 /**
  * Sort object keys alphabetically
+ * @param obj - Object to sort (recursively)
+ * @param excludeKeys - Keys to leave out of sorting; these appear first in their original order
  */
-export declare function sortKeysDeepForObject<T>(obj: T): T;
+export declare function sortKeysDeepForObject<T>(obj: T, excludeKeys?: string[]): T;
 interface Tree<T = string> {
     [key: string]: Tree<T> | T[];
 }

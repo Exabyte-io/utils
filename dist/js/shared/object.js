@@ -149,19 +149,27 @@ function flattenObject(obj, levelSeparator = ":", keyValueSeparator = "=", suffi
 }
 exports.flattenObject = flattenObject;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function sortKeysDeepForObject(obj) {
-    if (Array.isArray(obj)) {
-        return obj.map(sortKeysDeepForObject);
+function sortKeysDeepForObject(obj, excludeKeys) {
+    const excludeSet = excludeKeys ? new Set(excludeKeys) : null;
+    function sortKeys(obj) {
+        if (Array.isArray(obj)) {
+            return obj.map((item) => sortKeys(item));
+        }
+        if ((0, isObject_1.default)(obj)) {
+            const keys = Object.keys(obj);
+            const excluded = keys.filter((k) => { var _a; return (_a = excludeSet === null || excludeSet === void 0 ? void 0 : excludeSet.has(k)) !== null && _a !== void 0 ? _a : false; });
+            const toSort = keys.filter((k) => !(excludeSet === null || excludeSet === void 0 ? void 0 : excludeSet.has(k)));
+            toSort.sort();
+            const orderedKeys = [...excluded, ...toSort];
+            const sortedObject = {};
+            for (const key of orderedKeys) {
+                sortedObject[key] = sortKeys(obj[key]);
+            }
+            return sortedObject;
+        }
+        return obj;
     }
-    if ((0, isObject_1.default)(obj)) {
-        const sortedObject = {};
-        Object.keys(obj)
-            .sort()
-            // @ts-ignore
-            .map((key) => (sortedObject[key] = sortKeysDeepForObject(obj[key])));
-        return sortedObject;
-    }
-    return obj;
+    return sortKeys(obj);
 }
 exports.sortKeysDeepForObject = sortKeysDeepForObject;
 function isTreeObject(value) {

@@ -195,23 +195,35 @@ export function flattenObject(
 
 /**
  * Sort object keys alphabetically
+ * @param obj - Object to sort (recursively)
+ * @param excludeKeys - Keys to leave out of sorting; these appear first in their original order
  */
-export function sortKeysDeepForObject<T>(obj: T): T;
+export function sortKeysDeepForObject<T>(obj: T, excludeKeys?: string[]): T;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function sortKeysDeepForObject(obj: any): any {
-    if (Array.isArray(obj)) {
-        return obj.map(sortKeysDeepForObject);
+export function sortKeysDeepForObject(obj: any, excludeKeys?: string[]): any {
+    const excludeSet = excludeKeys ? new Set(excludeKeys) : null;
+
+    function sortKeys(obj: any): any {
+        if (Array.isArray(obj)) {
+            return obj.map((item) => sortKeys(item));
+        }
+        if (isObject(obj)) {
+            const keys = Object.keys(obj);
+            const excluded = keys.filter((k) => excludeSet?.has(k) ?? false);
+            const toSort = keys.filter((k) => !excludeSet?.has(k));
+            toSort.sort();
+            const orderedKeys = [...excluded, ...toSort];
+            const sortedObject: Record<string, unknown> = {};
+            for (const key of orderedKeys) {
+                sortedObject[key] = sortKeys(obj[key]);
+            }
+            return sortedObject;
+        }
+        return obj;
     }
-    if (isObject(obj)) {
-        const sortedObject = {};
-        Object.keys(obj)
-            .sort()
-            // @ts-ignore
-            .map((key) => (sortedObject[key] = sortKeysDeepForObject(obj[key])));
-        return sortedObject;
-    }
-    return obj;
+
+    return sortKeys(obj);
 }
 
 interface Tree<T = string> {

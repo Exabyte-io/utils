@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.flattenNestedObjects = exports.mergeTerminalNodes = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
+exports.flattenNestedObjects = exports.mergeTerminalNodes = exports.sortKeysDeepForObjectWithExclude = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
 const camelCase_1 = __importDefault(require("lodash/camelCase"));
 const filter_1 = __importDefault(require("lodash/filter"));
 const isArray_1 = __importDefault(require("lodash/isArray"));
@@ -164,6 +164,33 @@ function sortKeysDeepForObject(obj) {
     return obj;
 }
 exports.sortKeysDeepForObject = sortKeysDeepForObject;
+/**
+ * Recursive helper: excluded keys first, then sortKeysDeepForObject(rest). Exclude set optional.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function sortWithExcludeRecursive(o, excludeSet) {
+    if (Array.isArray(o)) {
+        return o.map((item) => sortWithExcludeRecursive(item, excludeSet));
+    }
+    if ((0, isObject_1.default)(o)) {
+        const keys = Object.keys(o);
+        const excluded = keys.filter((k) => { var _a; return (_a = excludeSet === null || excludeSet === void 0 ? void 0 : excludeSet.has(k)) !== null && _a !== void 0 ? _a : false; });
+        const toSort = keys.filter((k) => { var _a; return !((_a = excludeSet === null || excludeSet === void 0 ? void 0 : excludeSet.has(k)) !== null && _a !== void 0 ? _a : false); });
+        toSort.sort();
+        const orderedKeys = [...excluded, ...toSort];
+        const result = {};
+        for (const key of orderedKeys) {
+            result[key] = sortWithExcludeRecursive(o[key], excludeSet);
+        }
+        return result;
+    }
+    return o;
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function sortKeysDeepForObjectWithExclude(obj, excludeKeys = []) {
+    return sortWithExcludeRecursive(obj, new Set(excludeKeys));
+}
+exports.sortKeysDeepForObjectWithExclude = sortKeysDeepForObjectWithExclude;
 function isTreeObject(value) {
     return (0, isPlainObject_1.default)(value);
 }

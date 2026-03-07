@@ -50,6 +50,13 @@ export declare function flattenObject(obj: NameValueObject, levelSeparator?: str
  * Sort object keys alphabetically
  */
 export declare function sortKeysDeepForObject<T>(obj: T): T;
+/**
+ * Sort object keys alphabetically with excluded keys first (original order), then the rest sorted via sortKeysDeepForObject.
+ * Excluded keys are removed from the sort order; the remaining key set is sorted with sortKeysDeepForObject.
+ * @param obj - Object to sort (recursively)
+ * @param excludeKeys - Keys to leave out of sorting; these appear first in their original order at each level (default: [])
+ */
+export declare function sortKeysDeepForObjectWithExclude<T>(obj: T, excludeKeys?: string[]): T;
 interface Tree<T = string> {
     [key: string]: Tree<T> | T[];
 }

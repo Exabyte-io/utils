@@ -214,6 +214,42 @@ export function sortKeysDeepForObject(obj: any): any {
     return obj;
 }
 
+/**
+ * Recursive helper: excluded keys first, then sortKeysDeepForObject(rest). Exclude set optional.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function sortWithExcludeRecursive(o: any, excludeSet?: Set<string> | null): any {
+    if (Array.isArray(o)) {
+        return o.map((item) => sortWithExcludeRecursive(item, excludeSet));
+    }
+    if (isObject(o)) {
+        const keys = Object.keys(o);
+        const excluded = keys.filter((k) => excludeSet?.has(k) ?? false);
+        const toSort = keys.filter((k) => !(excludeSet?.has(k) ?? false));
+        toSort.sort();
+        const orderedKeys = [...excluded, ...toSort];
+        const result: Record<string, unknown> = {};
+        for (const key of orderedKeys) {
+            result[key] = sortWithExcludeRecursive(o[key], excludeSet);
+        }
+        return result;
+    }
+    return o;
+}
+
+/**
+ * Sort object keys alphabetically with excluded keys first (original order), then the rest sorted via sortKeysDeepForObject.
+ * Excluded keys are removed from the sort order; the remaining key set is sorted with sortKeysDeepForObject.
+ * @param obj - Object to sort (recursively)
+ * @param excludeKeys - Keys to leave out of sorting; these appear first in their original order at each level (default: [])
+ */
+export function sortKeysDeepForObjectWithExclude<T>(obj: T, excludeKeys?: string[]): T;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function sortKeysDeepForObjectWithExclude(obj: any, excludeKeys: string[] = []): any {
+    return sortWithExcludeRecursive(obj, new Set(excludeKeys));
+}
+
 interface Tree<T = string> {
     [key: string]: Tree<T> | T[];
 }

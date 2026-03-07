@@ -4,6 +4,8 @@ import {
     flattenNestedObjects,
     flattenObject,
     mergeTerminalNodes,
+    sortKeysDeepForObject,
+    sortKeysDeepForObjectWithExclude,
 } from "../../src/js/shared/object";
 
 describe("flattenObject", () => {
@@ -139,5 +141,40 @@ describe("flattenNestedObjects", () => {
         const nested = {};
         const result = flattenNestedObjects(nested);
         expect(result).to.deep.equal({});
+    });
+});
+
+describe("sortKeysDeepForObject", () => {
+    it("sorts object keys alphabetically", () => {
+        const obj = { a: 1, c: 3, b: 2 };
+        const expectedObj = { a: 1, b: 2, c: 3 };
+
+        const result = sortKeysDeepForObject(obj);
+        expect(result).to.deep.equal(expectedObj);
+    });
+});
+
+describe("sortKeysDeepForObjectWithExclude", () => {
+    it("sorts object keys with excluded keys first", () => {
+        const obj = { a: 1, c: 3, b: 2 };
+        const excludeKeys = ["b"];
+        const expectedObj = { b: 2, a: 1, c: 3 };
+
+        const result = sortKeysDeepForObjectWithExclude(obj, excludeKeys);
+        expect(result).to.deep.equal(expectedObj);
+    });
+
+    it("sorts nested objects with excluded keys first at each level", () => {
+        const obj = {
+            y: { d: 5, e: 7, f: 9 },
+            x: { a: 1, c: 3, b: 2 },
+        };
+        const expectedObj = {
+            x: { a: 1, b: 2, c: 3 },
+            y: { f: 9, d: 5, e: 7 },
+        }
+
+        const result = sortKeysDeepForObjectWithExclude(obj, ["f"]);
+        expect(result).to.deep.equal(expectedObj);
     });
 });

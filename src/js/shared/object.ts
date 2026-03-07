@@ -225,18 +225,12 @@ function sortWithExcludeRecursive(o: any, excludeSet?: Set<string> | null): any 
     if (isObject(o)) {
         const keys = Object.keys(o);
         const excluded = keys.filter((k) => excludeSet?.has(k) ?? false);
-        const restKeys = keys.filter((k) => !(excludeSet?.has(k) ?? false));
-        const rest: Record<string, unknown> = {};
-        for (const k of restKeys) {
-            rest[k] = o[k];
-        }
-        const sortedRest = sortKeysDeepForObject(rest);
+        const toSort = keys.filter((k) => !(excludeSet?.has(k) ?? false));
+        toSort.sort();
+        const orderedKeys = [...excluded, ...toSort];
         const result: Record<string, unknown> = {};
-        for (const key of excluded) {
+        for (const key of orderedKeys) {
             result[key] = sortWithExcludeRecursive(o[key], excludeSet);
-        }
-        for (const key of Object.keys(sortedRest)) {
-            result[key] = (sortedRest as Record<string, unknown>)[key];
         }
         return result;
     }

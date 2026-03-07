@@ -215,17 +215,17 @@ export function sortKeysDeepForObject(obj: any): any {
 }
 
 /**
- * Recursive helper: excluded keys first, then sortKeysDeepForObject(rest). Exclude set passed explicitly.
+ * Recursive helper: excluded keys first, then sortKeysDeepForObject(rest). Exclude set optional.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function sortWithExcludeRecursive(o: any, excludeSet: Set<string>): any {
+function sortWithExcludeRecursive(o: any, excludeSet?: Set<string> | null): any {
     if (Array.isArray(o)) {
         return o.map((item) => sortWithExcludeRecursive(item, excludeSet));
     }
     if (isObject(o)) {
         const keys = Object.keys(o);
-        const excluded = keys.filter((k) => excludeSet.has(k));
-        const restKeys = keys.filter((k) => !excludeSet.has(k));
+        const excluded = keys.filter((k) => excludeSet?.has(k) ?? false);
+        const restKeys = keys.filter((k) => !(excludeSet?.has(k) ?? false));
         const rest: Record<string, unknown> = {};
         for (const k of restKeys) {
             rest[k] = o[k];
@@ -247,12 +247,12 @@ function sortWithExcludeRecursive(o: any, excludeSet: Set<string>): any {
  * Sort object keys alphabetically with excluded keys first (original order), then the rest sorted via sortKeysDeepForObject.
  * Excluded keys are removed from the sort order; the remaining key set is sorted with sortKeysDeepForObject.
  * @param obj - Object to sort (recursively)
- * @param excludeKeys - Keys to leave out of sorting; these appear first in their original order at each level
+ * @param excludeKeys - Keys to leave out of sorting; these appear first in their original order at each level (default: [])
  */
-export function sortKeysDeepForObjectWithExclude<T>(obj: T, excludeKeys: string[]): T;
+export function sortKeysDeepForObjectWithExclude<T>(obj: T, excludeKeys?: string[]): T;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function sortKeysDeepForObjectWithExclude(obj: any, excludeKeys: string[]): any {
+export function sortKeysDeepForObjectWithExclude(obj: any, excludeKeys: string[] = []): any {
     return sortWithExcludeRecursive(obj, new Set(excludeKeys));
 }
 

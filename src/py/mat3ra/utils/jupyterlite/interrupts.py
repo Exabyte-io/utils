@@ -151,7 +151,7 @@ async def run_interruptible_loop_async(
     broadcast_channel_abort_controller = BroadcastChannelAbortController(channel_name=channel_name)
     broadcast_channel_abort_controller.start()
 
-    if show_controls and ENVIRONMENT != EnvironmentsEnum.PYODIDE:
+    if show_controls and ENVIRONMENT == EnvironmentsEnum.PYODIDE:
         display_abort_controls_in_current_cell_output(channel_name=channel_name, abort_button_text="Abort")
 
     try:

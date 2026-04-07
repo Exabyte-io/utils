@@ -55,6 +55,7 @@ def render_jinja_with_error_handling(template_string: str, **kwargs):
         )
 
 
+NUMERIC_VALUE_PATTERN = r"[\d.e+\-]+"
 JINJA_EXPRESSION_PATTERN = r"\{\{[^}]+\}\}"
 
 

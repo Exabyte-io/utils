@@ -59,9 +59,9 @@ NUMERIC_VALUE_PATTERN = r"[\d.e+\-]+"
 JINJA_EXPRESSION_PATTERN = r"\{\{[^}]+\}\}"
 
 
-def wrap_in_raw_block(text: str) -> str:
+def wrap_text_in_raw_block(text: str) -> str:
     return f"{{% raw %}}{text}{{% endraw %}}"
 
 
-def replace_in_template_content(content: str, pattern: str, replacement: str) -> str:
+def replace_in_text(content: str, pattern: str, replacement: str) -> str:
     return re.sub(pattern, replacement, content)

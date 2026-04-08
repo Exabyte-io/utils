@@ -44,8 +44,8 @@ def test_render_template_string():
         (TEXT_DOTTED_VAR, EXPECTED_RAW_DOTTED),
     ],
 )
-def test_wrap_in_raw_block(text, expected):
-    assert utils.wrap_in_raw_block(text) == expected
+def test_wrap_text_in_raw_block(text, expected):
+    assert utils.wrap_text_in_raw_block(text) == expected
 
 
 @pytest.mark.parametrize(
@@ -56,5 +56,5 @@ def test_wrap_in_raw_block(text, expected):
         (CONTENT_NO_MATCH, PATTERN_OTHER_NUMERIC, REPLACEMENT_OTHER, CONTENT_NO_MATCH),
     ],
 )
-def test_replace_in_template_content(content, pattern, replacement, expected):
-    assert utils.replace_in_template_content(content, pattern, replacement) == expected
+def test_replace_in_text(content, pattern, replacement, expected):
+    assert utils.replace_in_text(content, pattern, replacement) == expected

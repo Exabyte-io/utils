@@ -1,4 +1,5 @@
 import os
+import re
 
 from jinja2 import Environment, FileSystemLoader, TemplateError
 
@@ -52,3 +53,15 @@ def render_jinja_with_error_handling(template_string: str, **kwargs):
         return (
             f"Error rendering template: {str(e)}\nTemplate content:\n{template_string}\nTemplate variables:\n{kwargs}"
         )
+
+
+NUMERIC_VALUE_PATTERN = r"[\d.e+\-]+"
+JINJA_EXPRESSION_PATTERN = r"\{\{[^}]+\}\}"
+
+
+def wrap_text_in_raw_block(text: str) -> str:
+    return f"{{% raw %}}{text}{{% endraw %}}"
+
+
+def replace_in_text(content: str, pattern: str, replacement: str) -> str:
+    return re.sub(pattern, replacement, content)

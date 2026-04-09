@@ -1,8 +1,28 @@
+import pytest
 from pathlib import Path
 
 from mat3ra.utils.extra import jinja as utils
 
 FILE_JINJA_TEMPLATE_PATH = Path(__file__).parent / "./fixtures/file_jinja_template.jinja"
+
+TEXT_SIMPLE_VAR = "{{ variable_name }}"
+TEXT_DOTTED_VAR = "{{ scope.variable_name }}"
+EXPECTED_RAW_SIMPLE = "{% raw %}{{ variable_name }}{% endraw %}"
+EXPECTED_RAW_DOTTED = "{% raw %}{{ scope.variable_name }}{% endraw %}"
+
+CONTENT_NUMERIC_VALUE = "variable_name = 0.005\n"
+CONTENT_JINJA_VALUE = "variable_name = {{ scope.variable_name }}\n"
+CONTENT_NO_MATCH = "no_match = value\n"
+
+PATTERN_NUMERIC_VALUE = r"variable_name\s*=\s*[\d.e+\-]+"
+PATTERN_JINJA_VALUE = r"variable_name\s*=\s*\{\{[^}]+\}\}"
+PATTERN_OTHER_NUMERIC = r"other\s*=\s*[\d.e+\-]+"
+
+REPLACEMENT_RAW_VALUE = "variable_name = {% raw %}{{ variable_name }}{% endraw %}"
+REPLACEMENT_OTHER = "other = x"
+
+EXPECTED_NUMERIC_REPLACED = "variable_name = {% raw %}{{ variable_name }}{% endraw %}\n"
+EXPECTED_JINJA_REPLACED = "variable_name = {% raw %}{{ variable_name }}{% endraw %}\n"
 
 
 def test_render_template():
@@ -15,3 +35,26 @@ def test_render_template_string():
     context = {"name": "World"}
     rendered = utils.render_template_string("Hello, {{ name }}!", **context)
     assert rendered == "Hello, World!"
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        (TEXT_SIMPLE_VAR, EXPECTED_RAW_SIMPLE),
+        (TEXT_DOTTED_VAR, EXPECTED_RAW_DOTTED),
+    ],
+)
+def test_wrap_text_in_raw_block(text, expected):
+    assert utils.wrap_text_in_raw_block(text) == expected
+
+
+@pytest.mark.parametrize(
+    "content,pattern,replacement,expected",
+    [
+        (CONTENT_NUMERIC_VALUE, PATTERN_NUMERIC_VALUE, REPLACEMENT_RAW_VALUE, EXPECTED_NUMERIC_REPLACED),
+        (CONTENT_JINJA_VALUE, PATTERN_JINJA_VALUE, REPLACEMENT_RAW_VALUE, EXPECTED_JINJA_REPLACED),
+        (CONTENT_NO_MATCH, PATTERN_OTHER_NUMERIC, REPLACEMENT_OTHER, CONTENT_NO_MATCH),
+    ],
+)
+def test_replace_in_text(content, pattern, replacement, expected):
+    assert utils.replace_in_text(content, pattern, replacement) == expected

@@ -27,13 +27,24 @@ async def install_package_pyodide(pkg: str, verbose: bool = True):
     Install a package in a Pyodide environment.
 
     Args:
-        pkg (str): The name of the package to install.
+        pkg (str): The name of the package to install. Can be prefixed with 'nodeps:' to skip dependencies.
         verbose (bool): Whether to print the name of the installed package.
+        
+    Examples:
+        await install_package_pyodide("numpy")  # installs with deps
+        await install_package_pyodide("nodeps:e3nn==0.4.4")  # installs without deps
     """
-    is_url = pkg.startswith("http://") or pkg.startswith("https://") or pkg.startswith("emfs:/")
-    are_dependencies_installed = not is_url
+
+    if pkg.startswith("nodeps:"):
+        pkg = pkg.replace("nodeps:", "")
+        are_dependencies_installed = False
+    else:
+        # URLs and emfs packages should not install dependencies
+        is_url = pkg.startswith("http://") or pkg.startswith("https://") or pkg.startswith("emfs:/")
+        are_dependencies_installed = not is_url
+    
     await micropip.install(pkg, deps=are_dependencies_installed)
-    pkg_name = pkg.split("/")[-1].split("-")[0] if is_url else pkg.split("==")[0]
+    pkg_name = pkg.split("/")[-1].split("-")[0] if "://" in pkg else pkg.split("==")[0]
     if verbose:
         log(f"Installed {pkg_name}", force_verbose=verbose)
 

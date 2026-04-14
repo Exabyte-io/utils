@@ -1,10 +1,40 @@
+import io
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objs as go
-from IPython.display import clear_output, display
+from IPython.display import Image, clear_output, display
+from matplotlib.figure import Figure as MatplotlibFigure
 from plotly.subplots import make_subplots
+
+from .environment import is_pyodide_environment
+
+
+def configure_matplotlib_renderer() -> None:
+    if is_pyodide_environment():
+        plt.switch_backend("Agg")
+
+
+configure_matplotlib_renderer()
+
+
+def display_matplotlib_figure(figure: MatplotlibFigure) -> None:
+    buffer = io.BytesIO()
+    figure.savefig(buffer, format="png")
+    buffer.seek(0)
+    display(Image(buffer.read()))
+    plt.close(figure)
+
+
+def render_figure(figure: Union[MatplotlibFigure, go.Figure, go.FigureWidget]) -> None:
+    if is_pyodide_environment() and isinstance(figure, MatplotlibFigure):
+        display_matplotlib_figure(figure)
+        return
+    if is_pyodide_environment():
+        display(figure)
+        return
+    figure.show()
 
 
 def scatter_plot_2d(
@@ -103,7 +133,7 @@ def create_update_callback(
 
         # Update the plot by clearing and redrawing
         clear_output(wait=True)
-        display(figure)
+        render_figure(figure)
 
     return update
 
@@ -127,14 +157,14 @@ def plot_distribution_function(
         title: The title of the plot.
         figsize: The size of the figure.
     """
-    plt.figure(figsize=figsize)
+    figure = plt.figure(figsize=figsize)
     plt.plot(bin_centers, distribution, label=title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.title(title)
     plt.legend()
     plt.grid()
-    plt.show()
+    render_figure(figure)
 
 
 def plot_3d_surface(
@@ -176,7 +206,7 @@ def plot_3d_surface(
         width=800,
         height=800,
     )
-    fig.show()
+    render_figure(fig)
 
 
 def plot_2d_heatmap(
@@ -218,4 +248,4 @@ def plot_2d_heatmap(
         )
 
     fig.update_layout(title=title, xaxis_title=labels["x"], yaxis_title=labels["y"], width=800, height=600)
-    fig.show()
+    render_figure(fig)

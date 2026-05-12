@@ -6,7 +6,7 @@ from .environment import ENVIRONMENT
 
 def read_from_url_python(url: str, as_bytes: bool = False) -> Union[str, bytes]:
     """
-    Fetch, read and decode content from a URL in a Python environment.
+    Fetch, read, and decode content from a URL in a Python environment.
 
     Args:
         url (str): The URL to fetch from.
@@ -37,8 +37,8 @@ async def read_from_url_pyodide(url: str, as_bytes: bool = False) -> Union[str, 
     """
     # `http` is a Pyodide module that will be installed in the Pyodide environment by default.
     from pyodide.http import pyfetch  # type: ignore
-
-    response = await pyfetch(url)
+    # Per https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    response = await pyfetch(url, mode="no-cors") 
     if as_bytes:
         return await response.bytes()
     return await response.string()

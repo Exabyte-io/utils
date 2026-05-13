@@ -18,6 +18,14 @@ async def install_init():
     if sys.platform == "emscripten":
         import micropip
 
+        # Import Pyodide built-ins
+        import lzma  # noqa: F401
+        import numpy  # noqa: F401
+        import pandas  # noqa: F401
+        import sympy  # noqa: F401
+        import uncertainties  # noqa: F401
+        import jinja2  # noqa: F401
+
         for package in ["pyyaml"]:
             await micropip.install(package)
 
@@ -29,7 +37,7 @@ async def install_package_pyodide(pkg: str, verbose: bool = True):
     Args:
         pkg (str): The name of the package to install. Can be prefixed with 'nodeps:' to skip dependencies.
         verbose (bool): Whether to print the name of the installed package.
-        
+
     Examples:
         await install_package_pyodide("numpy")  # installs with deps
         await install_package_pyodide("nodeps:e3nn==0.4.4")  # installs without deps
@@ -42,7 +50,7 @@ async def install_package_pyodide(pkg: str, verbose: bool = True):
         # URLs and emfs packages should not install dependencies
         is_url = pkg.startswith("http://") or pkg.startswith("https://") or pkg.startswith("emfs:/")
         are_dependencies_installed = not is_url
-    
+
     await micropip.install(pkg, deps=are_dependencies_installed)
     pkg_name = pkg.split("/")[-1].split("-")[0] if "://" in pkg else pkg.split("==")[0]
     if verbose:
@@ -136,8 +144,7 @@ async def install_packages_with_hashing(packages: List[str], verbose: bool = Tru
     Install the packages listed in the requirements file for the notebook with the given name.
 
     Args:
-        notebook_name_pattern (str): The name pattern of the notebook for which to install packages.
-        config_file_path (str): The path to the requirements file.
+        packages (str): The name pattern of the notebook for which to install packages.
         verbose (bool): Whether to print the names of the installed packages and status of installation.
     """
     # Hash the requirements to avoid re-installing packages

@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+from types import SimpleNamespace
 from typing import Any, Dict, List, Optional
 
 import numpy as np
@@ -35,6 +36,16 @@ def sort_keys_deep(obj: Any) -> Any:
     if isinstance(obj, dict):
         return {k: sort_keys_deep(obj[k]) for k in sorted(obj.keys())}
     return obj
+
+
+# Helper function to convert dictionaries to SimpleNamespace objects for dot notation access
+def dict_to_namespace(obj):
+    if isinstance(obj, dict):
+        return SimpleNamespace(**{k: dict_to_namespace(v) for k, v in obj.items()})
+    elif isinstance(obj, list):
+        return [dict_to_namespace(item) for item in obj]
+    else:
+        return obj
 
 
 def calculate_hash_from_object(obj: Any) -> str:

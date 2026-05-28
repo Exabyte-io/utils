@@ -1,4 +1,4 @@
-import mathjs from "mathjs";
+import * as math from "mathjs";
 
 import { tolerance as TOLERANCE } from "./constants";
 /*
@@ -219,7 +219,7 @@ export function numberToPrecision(number: number | string, precision?: number): 
 }
 
 export default {
-    ...mathjs,
+    ...math,
     PI: Math.PI,
     trunc: Math.trunc,
     product,

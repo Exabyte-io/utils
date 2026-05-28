@@ -1,4 +1,4 @@
-import mathjs from "mathjs";
+import * as mathjs from "mathjs";
 /**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.

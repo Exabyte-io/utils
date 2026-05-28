@@ -4,7 +4,7 @@ import * as cls from "./shared/class";
 import * as clone from "./shared/clone";
 import * as constants from "./shared/constants";
 import * as hash from "./shared/hash";
-import * as math from "./shared/math";
+import math from "./shared/math";
 import * as object from "./shared/object";
 import * as selector from "./shared/selector";
 import * as specific from "./shared/specific";

@@ -1,4 +1,4 @@
-import * as math from "mathjs";
+import * as mathjs from "mathjs";
 
 import { tolerance as TOLERANCE } from "./constants";
 /*

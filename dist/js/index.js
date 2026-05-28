@@ -22,6 +22,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utils = exports.sharedUtils = void 0;
 const array = __importStar(require("./shared/array"));
@@ -30,7 +33,7 @@ const cls = __importStar(require("./shared/class"));
 const clone = __importStar(require("./shared/clone"));
 const constants = __importStar(require("./shared/constants"));
 const hash = __importStar(require("./shared/hash"));
-const math = __importStar(require("./shared/math"));
+const math_1 = __importDefault(require("./shared/math"));
 const object = __importStar(require("./shared/object"));
 const selector = __importStar(require("./shared/selector"));
 const specific = __importStar(require("./shared/specific"));
@@ -45,7 +48,7 @@ exports.sharedUtils = {
     clone,
     constants,
     hash,
-    math,
+    math: math_1.default,
     object,
     selector,
     specific,

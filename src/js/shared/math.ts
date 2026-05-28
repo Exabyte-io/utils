@@ -219,7 +219,7 @@ export function numberToPrecision(number: number | string, precision?: number): 
 }
 
 export default {
-    ...math,
+    ...mathjs,
     PI: Math.PI,
     trunc: Math.trunc,
     product,

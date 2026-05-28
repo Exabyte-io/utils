@@ -1,4 +1,4 @@
-import mathjs, { Complex } from "mathjs";
+import mathjs from "mathjs";
 
 import { tolerance as TOLERANCE } from "./constants";
 /*
@@ -51,7 +51,7 @@ const /**
      * @param v2 {Number[]} Vector
      * @return {Number}
      */
-    vDist = (v1: number[], v2: number[]): number | Complex => {
+    vDist = (v1: number[], v2: number[]) => {
         if (v1.length !== v2.length) {
             console.error(
                 "Attempting to calculate distance between vectors of different dimensionality",

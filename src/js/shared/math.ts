@@ -1,4 +1,5 @@
-import mathjs, { Complex } from "mathjs";
+import type { Complex } from "mathjs";
+import * as mathjs from "mathjs";
 
 import { tolerance as TOLERANCE } from "./constants";
 /*

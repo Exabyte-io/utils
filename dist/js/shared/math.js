@@ -1,10 +1,30 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.numberToPrecision = void 0;
-const mathjs_1 = __importDefault(require("mathjs"));
+const mathjs = __importStar(require("mathjs"));
 const constants_1 = require("./constants");
 /*
  * @summary Same as `combinations` but accepting intervals (tuples) of integers: eg. [-3, 4]
@@ -19,7 +39,7 @@ const /**
  * @param v2 Vector 2
  */
 product = (v1, v2) => {
-    return mathjs_1.default.multiply(v1, mathjs_1.default.transpose(v2));
+    return mathjs.multiply(v1, mathjs.transpose(v2));
 }, 
 /**
  * @summary Returns length of a vector.
@@ -27,7 +47,7 @@ product = (v1, v2) => {
  */
 vlen = (v) => {
     // @ts-ignore
-    return mathjs_1.default.sqrt(product(v, v));
+    return mathjs.sqrt(product(v, v));
 }, 
 /**
  * @summary Returns angle between `a` and `b` vectors.
@@ -38,9 +58,9 @@ vlen = (v) => {
 angle = (a, b, unit) => {
     const lenA = vlen(a);
     const lenB = vlen(b);
-    return (mathjs_1.default
+    return (mathjs
         // @ts-ignore
-        .unit(mathjs_1.default.acos(product(a, b) / (lenA * lenB)), "rad")
+        .unit(mathjs.acos(product(a, b) / (lenA * lenB)), "rad")
         .toNumber(unit || "deg"));
 }, angleUpTo90 = (a, b, unit) => {
     const angleUpTo180 = angle(a, b, unit);
@@ -93,8 +113,8 @@ precise = (x, n = 7) => {
 mod = (num, tolerance = 0.001) => {
     const m = num % 1;
     const x = num >= 0 ? m : 1 + m;
-    if (mathjs_1.default.smallerEq(Math.abs(x - 1), tolerance) ||
-        mathjs_1.default.smallerEq(Math.abs(x), tolerance)) {
+    if (mathjs.smallerEq(Math.abs(x - 1), tolerance) ||
+        mathjs.smallerEq(Math.abs(x), tolerance)) {
         return 0;
     }
     return x;
@@ -202,7 +222,7 @@ function numberToPrecision(number, precision) {
 }
 exports.numberToPrecision = numberToPrecision;
 exports.default = {
-    ...mathjs_1.default,
+    ...mathjs,
     PI: Math.PI,
     trunc: Math.trunc,
     product,

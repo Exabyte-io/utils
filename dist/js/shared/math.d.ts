@@ -16,7 +16,7 @@ declare const _default: {
     vlen: (v: number[]) => number;
     angle: (a: number[], b: number[], unit: string) => number;
     angleUpTo90: (a: number[], b: number[], unit: string) => number;
-    vDist: (v1: number[], v2: number[]) => number | mathjs.Complex;
+    vDist: (v1: number[], v2: number[]) => number;
     vEqualWithTolerance: (vec1: number[], vec2: number[], tolerance?: number) => boolean;
     roundToZero: (n: number) => number;
     precise: (x: number, n?: number) => number;
@@ -535,8 +535,8 @@ declare const _default: {
         (x: mathjs.MathNumericType, y: mathjs.MathNumericType): mathjs.MathNumericType;
     };
     dotPow: <T_14 extends mathjs.MathType>(x: T_14, y: mathjs.MathType) => T_14;
-    exp: <T_15 extends number | mathjs.Complex | mathjs.BigNumber>(x: T_15) => T_15;
-    expm1: <T_16 extends number | mathjs.Complex | mathjs.BigNumber>(x: T_16) => T_16;
+    exp: <T_15 extends number | mathjs.BigNumber | mathjs.Complex>(x: T_15) => T_15;
+    expm1: <T_16 extends number | mathjs.BigNumber | mathjs.Complex>(x: T_16) => T_16;
     gcd: {
         <T_17 extends number | mathjs.BigNumber | mathjs.Fraction | mathjs.MathCollection>(...args: T_17[]): T_17;
         <T_18 extends number | mathjs.BigNumber | mathjs.Fraction | mathjs.Matrix>(args: T_18[]): T_18;
@@ -546,10 +546,10 @@ declare const _default: {
         <T_20 extends number | mathjs.BigNumber>(args: T_20[]): T_20;
     };
     lcm: <T_21 extends number | mathjs.BigNumber | mathjs.MathCollection>(a: T_21, b: T_21) => T_21;
-    log: <T_22 extends number | mathjs.Complex | mathjs.BigNumber>(x: T_22, base?: number | mathjs.Complex | mathjs.BigNumber | undefined) => mathjs.NoLiteralType<T_22>;
-    log10: <T_23 extends number | mathjs.Complex | mathjs.BigNumber | mathjs.MathCollection>(x: T_23) => T_23;
-    log1p: <T_24 extends number | mathjs.Complex | mathjs.BigNumber | mathjs.MathCollection>(x: T_24, base?: number | mathjs.Complex | mathjs.BigNumber | undefined) => T_24;
-    log2: <T_25 extends number | mathjs.Complex | mathjs.BigNumber | mathjs.MathCollection>(x: T_25) => T_25;
+    log: <T_22 extends number | mathjs.BigNumber | mathjs.Complex>(x: T_22, base?: number | mathjs.BigNumber | mathjs.Complex | undefined) => mathjs.NoLiteralType<T_22>;
+    log10: <T_23 extends number | mathjs.BigNumber | mathjs.Complex | mathjs.MathCollection>(x: T_23) => T_23;
+    log1p: <T_24 extends number | mathjs.BigNumber | mathjs.Complex | mathjs.MathCollection>(x: T_24, base?: number | mathjs.BigNumber | mathjs.Complex | undefined) => T_24;
+    log2: <T_25 extends number | mathjs.BigNumber | mathjs.Complex | mathjs.MathCollection>(x: T_25) => T_25;
     multiply: {
         <T_26 extends mathjs.Matrix>(x: T_26, y: mathjs.MathType): mathjs.Matrix;
         <T_27 extends mathjs.Matrix>(x: mathjs.MathType, y: T_27): mathjs.Matrix;
@@ -560,13 +560,13 @@ declare const _default: {
         (x: number, y: number): number;
         (x: mathjs.MathType, y: mathjs.MathType): mathjs.MathType;
     };
-    norm: (x: number | mathjs.Complex | mathjs.BigNumber | mathjs.MathCollection, p?: string | number | mathjs.BigNumber | undefined) => number | mathjs.BigNumber;
-    nthRoot: (a: number | mathjs.Complex | mathjs.BigNumber | mathjs.MathCollection, root?: number | mathjs.BigNumber | undefined) => number | mathjs.Complex | mathjs.MathCollection;
-    pow: (x: mathjs.MathType, y: number | mathjs.Complex | mathjs.BigNumber) => mathjs.MathType;
+    norm: (x: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathCollection, p?: string | number | mathjs.BigNumber | undefined) => number | mathjs.BigNumber;
+    nthRoot: (a: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathCollection, root?: number | mathjs.BigNumber | undefined) => number | mathjs.Complex | mathjs.MathCollection;
+    pow: (x: mathjs.MathType, y: number | mathjs.BigNumber | mathjs.Complex) => mathjs.MathType;
     sign: <T_31 extends mathjs.MathType>(x: T_31) => T_31;
     sqrt: {
         (x: number): number | mathjs.Complex;
-        <T_32 extends mathjs.Complex | mathjs.BigNumber | mathjs.Unit>(x: T_32): T_32;
+        <T_32 extends mathjs.BigNumber | mathjs.Complex | mathjs.Unit>(x: T_32): T_32;
     };
     square: <T_33 extends mathjs.MathNumericType | mathjs.Unit>(x: T_33) => T_33;
     subtract: {
@@ -589,10 +589,10 @@ declare const _default: {
     stirlingS2: <T_47 extends number | mathjs.BigNumber>(n: T_47, k: number | mathjs.BigNumber) => mathjs.NoLiteralType<T_47>;
     arg: {
         (x: number | mathjs.Complex): number;
-        (x: mathjs.Complex | mathjs.BigNumber): mathjs.BigNumber;
+        (x: mathjs.BigNumber | mathjs.Complex): mathjs.BigNumber;
         <T_48 extends mathjs.MathCollection>(x: T_48): T_48;
     };
-    conj: <T_49 extends number | mathjs.Complex | mathjs.BigNumber | mathjs.MathCollection>(x: T_49) => mathjs.NoLiteralType<T_49>;
+    conj: <T_49 extends number | mathjs.BigNumber | mathjs.Complex | mathjs.MathCollection>(x: T_49) => mathjs.NoLiteralType<T_49>;
     im: {
         (x: mathjs.MathJsChain<number | mathjs.Complex>): mathjs.MathJsChain<number>;
         <T_50 extends mathjs.BigNumber | mathjs.MathCollection>(x: mathjs.MathJsChain<T_50>): mathjs.MathJsChain<T_50>;
@@ -603,10 +603,10 @@ declare const _default: {
     };
     distance: (x: object | mathjs.MathCollection, y: object | mathjs.MathCollection, z?: object | mathjs.MathCollection | undefined) => number | mathjs.BigNumber;
     intersect: (w: mathjs.MathCollection, x: mathjs.MathCollection, y: mathjs.MathCollection, z?: mathjs.MathCollection | undefined) => mathjs.MathArray;
-    and: (x: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | mathjs.MathCollection, y: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
-    not: (x: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
-    or: (x: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | mathjs.MathCollection, y: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
-    xor: (x: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | mathjs.MathCollection, y: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
+    and: (x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathCollection, y: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
+    not: (x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
+    or: (x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathCollection, y: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
+    xor: (x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathCollection, y: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathCollection) => boolean | mathjs.MathCollection;
     apply: <T_52 extends mathjs.MathCollection>(array: T_52, dim: number, callback: (array: mathjs.MathCollection) => number) => T_52;
     concat: (...args: (number | mathjs.BigNumber | mathjs.MathCollection)[]) => mathjs.MathCollection;
     cross: (x: mathjs.MathCollection, y: mathjs.MathCollection) => mathjs.MathCollection;
@@ -662,10 +662,10 @@ declare const _default: {
     };
     reshape: <T_58 extends mathjs.MathCollection>(x: T_58, sizes: number[]) => T_58;
     resize: <T_59 extends mathjs.MathCollection>(x: T_59, size: mathjs.MathCollection, defaultValue?: string | number | undefined) => T_59;
-    rotationMatrix: <T_60 extends mathjs.MathCollection>(theta?: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit | undefined, axis?: T_60 | undefined, format?: "sparse" | "dense" | undefined) => T_60;
+    rotationMatrix: <T_60 extends mathjs.MathCollection>(theta?: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | undefined, axis?: T_60 | undefined, format?: "sparse" | "dense" | undefined) => T_60;
     row: <T_61 extends mathjs.MathCollection>(value: T_61, row: number) => T_61;
     column: <T_62 extends mathjs.MathCollection>(value: T_62, column: number) => T_62;
-    rotate: <T_63 extends mathjs.MathCollection>(w: T_63, theta: number | mathjs.Complex | mathjs.BigNumber | mathjs.Unit, v?: T_63 | undefined) => T_63;
+    rotate: <T_63 extends mathjs.MathCollection>(w: T_63, theta: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit, v?: T_63 | undefined) => T_63;
     size: (x: string | number | boolean | mathjs.Complex | mathjs.Unit | mathjs.MathCollection) => mathjs.MathCollection;
     sort: <T_64 extends mathjs.MathCollection>(x: T_64, compare: "asc" | "desc" | ((a: any, b: any) => number) | "natural") => T_64;
     sqrtm: <T_65 extends mathjs.MathCollection>(A: T_65) => T_65;
@@ -681,7 +681,7 @@ declare const _default: {
     fft: <T_69 extends mathjs.MathCollection>(arr: T_69) => T_69;
     ifft: <T_70 extends mathjs.MathCollection>(arr: T_70) => T_70;
     factorial: <T_71 extends number | mathjs.BigNumber | mathjs.MathCollection>(n: T_71) => mathjs.NoLiteralType<T_71>;
-    gamma: <T_72 extends number | mathjs.Complex | mathjs.BigNumber>(n: T_72) => mathjs.NoLiteralType<T_72>;
+    gamma: <T_72 extends number | mathjs.BigNumber | mathjs.Complex>(n: T_72) => mathjs.NoLiteralType<T_72>;
     kldivergence: (q: mathjs.MathCollection, p: mathjs.MathCollection) => number;
     lgamma: <T_73 extends number | mathjs.Complex>(n: T_73) => mathjs.NoLiteralType<T_73>;
     multinomial: <T_74 extends number | mathjs.BigNumber>(a: T_74[]) => mathjs.NoLiteralType<T_74>;
@@ -726,7 +726,7 @@ declare const _default: {
         h: T_89;
     };
     erf: <T_90 extends number | mathjs.MathCollection>(x: T_90) => mathjs.NoLiteralType<T_90>;
-    zeta: <T_91 extends number | mathjs.Complex | mathjs.BigNumber>(s: T_91) => T_91;
+    zeta: <T_91 extends number | mathjs.BigNumber | mathjs.Complex>(s: T_91) => T_91;
     mad: (array: mathjs.MathCollection) => any;
     max: {
         <T_92 extends mathjs.MathScalarType>(...args: T_92[]): T_92;
@@ -792,94 +792,94 @@ declare const _default: {
     print: (template: string, values: any, precision?: number | undefined, options?: number | object | undefined) => void;
     acos: {
         (x: number): number | mathjs.Complex;
-        <T_107 extends mathjs.Complex | mathjs.BigNumber>(x: T_107): T_107;
+        <T_107 extends mathjs.BigNumber | mathjs.Complex>(x: T_107): T_107;
     };
     acosh: {
         (x: number): number | mathjs.Complex;
-        <T_108 extends mathjs.Complex | mathjs.BigNumber>(x: T_108): T_108;
+        <T_108 extends mathjs.BigNumber | mathjs.Complex>(x: T_108): T_108;
     };
     acot: {
         (x: number): number;
-        <T_109 extends mathjs.Complex | mathjs.BigNumber>(x: T_109): T_109;
+        <T_109 extends mathjs.BigNumber | mathjs.Complex>(x: T_109): T_109;
     };
     acoth: {
         (x: number): number;
-        <T_110 extends mathjs.Complex | mathjs.BigNumber>(x: T_110): T_110;
+        <T_110 extends mathjs.BigNumber | mathjs.Complex>(x: T_110): T_110;
     };
     acsc: {
         (x: number): number | mathjs.Complex;
-        <T_111 extends mathjs.Complex | mathjs.BigNumber>(x: T_111): T_111;
+        <T_111 extends mathjs.BigNumber | mathjs.Complex>(x: T_111): T_111;
     };
     acsch: {
         (x: number): number;
-        <T_112 extends mathjs.Complex | mathjs.BigNumber>(x: T_112): T_112;
+        <T_112 extends mathjs.BigNumber | mathjs.Complex>(x: T_112): T_112;
     };
     asec: {
         (x: number): number | mathjs.Complex;
-        <T_113 extends mathjs.Complex | mathjs.BigNumber>(x: T_113): T_113;
+        <T_113 extends mathjs.BigNumber | mathjs.Complex>(x: T_113): T_113;
     };
     asech: {
         (x: number): number | mathjs.Complex;
-        <T_114 extends mathjs.Complex | mathjs.BigNumber>(x: T_114): T_114;
+        <T_114 extends mathjs.BigNumber | mathjs.Complex>(x: T_114): T_114;
     };
     asin: {
         (x: number): number | mathjs.Complex;
-        <T_115 extends mathjs.Complex | mathjs.BigNumber>(x: T_115): T_115;
+        <T_115 extends mathjs.BigNumber | mathjs.Complex>(x: T_115): T_115;
     };
-    asinh: <T_116 extends number | mathjs.Complex | mathjs.BigNumber>(x: T_116) => T_116;
-    atan: <T_117 extends number | mathjs.Complex | mathjs.BigNumber>(x: T_117) => T_117;
+    asinh: <T_116 extends number | mathjs.BigNumber | mathjs.Complex>(x: T_116) => T_116;
+    atan: <T_117 extends number | mathjs.BigNumber | mathjs.Complex>(x: T_117) => T_117;
     atan2: <T_118 extends number | mathjs.MathCollection>(y: T_118, x: T_118) => T_118;
     atanh: {
         (x: number): number | mathjs.Complex;
-        <T_119 extends mathjs.Complex | mathjs.BigNumber>(x: T_119): T_119;
+        <T_119 extends mathjs.BigNumber | mathjs.Complex>(x: T_119): T_119;
     };
     cos: {
         (x: number | mathjs.Unit): number;
-        <T_120 extends mathjs.Complex | mathjs.BigNumber>(x: T_120): T_120;
+        <T_120 extends mathjs.BigNumber | mathjs.Complex>(x: T_120): T_120;
     };
     cosh: {
         (x: number | mathjs.Unit): number;
-        <T_121 extends mathjs.Complex | mathjs.BigNumber>(x: T_121): T_121;
+        <T_121 extends mathjs.BigNumber | mathjs.Complex>(x: T_121): T_121;
     };
     cot: {
         (x: number | mathjs.Unit): number;
-        <T_122 extends mathjs.Complex | mathjs.BigNumber>(x: T_122): T_122;
+        <T_122 extends mathjs.BigNumber | mathjs.Complex>(x: T_122): T_122;
     };
     coth: {
         (x: number | mathjs.Unit): number;
-        <T_123 extends mathjs.Complex | mathjs.BigNumber>(x: T_123): T_123;
+        <T_123 extends mathjs.BigNumber | mathjs.Complex>(x: T_123): T_123;
     };
     csc: {
         (x: number | mathjs.Unit): number;
-        <T_124 extends mathjs.Complex | mathjs.BigNumber>(x: T_124): T_124;
+        <T_124 extends mathjs.BigNumber | mathjs.Complex>(x: T_124): T_124;
     };
     csch: {
         (x: number | mathjs.Unit): number;
-        <T_125 extends mathjs.Complex | mathjs.BigNumber>(x: T_125): T_125;
+        <T_125 extends mathjs.BigNumber | mathjs.Complex>(x: T_125): T_125;
     };
     sec: {
         (x: number | mathjs.Unit): number;
-        <T_126 extends mathjs.Complex | mathjs.BigNumber>(x: T_126): T_126;
+        <T_126 extends mathjs.BigNumber | mathjs.Complex>(x: T_126): T_126;
     };
     sech: {
         (x: number | mathjs.Unit): number;
-        <T_127 extends mathjs.Complex | mathjs.BigNumber>(x: T_127): T_127;
+        <T_127 extends mathjs.BigNumber | mathjs.Complex>(x: T_127): T_127;
     };
     sin: {
         (x: number | mathjs.Unit): number;
-        <T_128 extends mathjs.Complex | mathjs.BigNumber>(x: T_128): T_128;
+        <T_128 extends mathjs.BigNumber | mathjs.Complex>(x: T_128): T_128;
     };
     sinh: {
         (x: number | mathjs.Unit): number;
-        <T_129 extends mathjs.Complex | mathjs.BigNumber>(x: T_129): T_129;
+        <T_129 extends mathjs.BigNumber | mathjs.Complex>(x: T_129): T_129;
     };
     tan: {
         (x: number | mathjs.Unit): number;
-        <T_130 extends mathjs.Complex | mathjs.BigNumber>(x: T_130): T_130;
+        <T_130 extends mathjs.BigNumber | mathjs.Complex>(x: T_130): T_130;
     };
     tanh: {
         (x: number | mathjs.Unit): number;
-        <T_131 extends mathjs.Complex | mathjs.BigNumber>(x: T_131): T_131;
+        <T_131 extends mathjs.BigNumber | mathjs.Complex>(x: T_131): T_131;
     };
     to: (x: mathjs.Unit | mathjs.MathCollection, unit: string | mathjs.Unit) => mathjs.Unit | mathjs.MathCollection;
     isNumber: (x: unknown) => x is number;

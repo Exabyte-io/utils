@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HASH_TOLERANCE = exports.ATOMIC_COORD_UNITS = exports.units = exports.tolerance = exports.coefficients = void 0;
 exports.coefficients = {
     "EV_TO_RY": 0.0734986444,
-    "BOHR_TO_ANGSTROM": 0.52917721054,
+    "BOHR_TO_ANGSTROM": 0.529177210544,
     "ANGSTROM_TO_BOHR": 1.8897261259077822,
     "EV_A_TO_RY_BOHR": 0.0388938075966032
 };

@@ -26,5 +26,6 @@ declare namespace _default {
     export { tolerance };
     export { units };
     export { ATOMIC_COORD_UNITS };
+    export { HASH_TOLERANCE };
 }
 export default _default;

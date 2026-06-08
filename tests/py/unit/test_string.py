@@ -18,6 +18,25 @@ def test_camel_to_snake():
     assert utils.camel_to_snake("TestCamelToSnake") == "test_camel_to_snake"
 
 
+def test_remove_comments_from_bash_script():
+    bash_script = """#!/bin/bash
+# This is a bash script header comment
+export JOB_NAME="pw_scf"  # inline comment
+echo "Starting calculation"
+"""
+
+    cleaned_script = remove_comments_from_source_code(bash_script)
+    cleaned_lines = cleaned_script.splitlines()
+
+    # Check that actual code is preserved
+    assert cleaned_lines[0] == "#!/bin/bash"
+    assert any('export JOB_NAME="pw_scf"' in line for line in cleaned_lines)
+    assert any('echo "Starting calculation"' in line for line in cleaned_lines)
+    # Check that comments are removed
+    assert not any("bash script header comment" in line for line in cleaned_lines)
+    assert not any("inline comment" in line for line in cleaned_lines)
+
+
 def test_remove_comments_from_espresso_input():
     espresso_input = """! This is a Quantum ESPRESSO input block
 &SYSTEM

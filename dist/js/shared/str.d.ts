@@ -7,7 +7,7 @@ export function removeNewLinesAndExtraSpaces(str: any): any;
 export function randomAlphanumeric(length: number): string;
 export function toFixedLocale(number: any, precision: any): any;
 /**
- * @summary Removes lines started with # character. Shebang (#!) is excluded.
+ * @summary Removes full-line and inline comments starting with #. Shebang (#!) is excluded.
  * @param text {String} text to remove comments from.
  * @param language {String} programming language of the text.
  * @return {String}

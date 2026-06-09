@@ -37,14 +37,14 @@ export function toFixedLocale(number, precision) {
 }
 
 /**
- * @summary Removes lines started with # character. Shebang (#!) is excluded.
+ * @summary Removes full-line and inline comments starting with #. Shebang (#!) is excluded.
  * @param text {String} text to remove comments from.
  * @param language {String} programming language of the text.
  * @return {String}
  */
 export function removeCommentsFromSourceCode(text, language = "shell") {
     const regexList = {
-        shell: /^(\s+)?#(?!!).*$/gm,
+        shell: /#(?!!).*$/gm,
     };
     return text.replace(regexList[language], "");
 }

@@ -46,11 +46,12 @@ exports.toFixedLocale = toFixedLocale;
  * @return {String}
  */
 function removeCommentsFromSourceCode(text, language = "shell") {
+    var _a;
     const regexList = {
         shell: /#(?!!).*$/gm,
-        fortran: /!.*$/gm,
+        fortran: /[!#].*$/gm,
     };
-    return text.replace(regexList[language], "");
+    return text.replace((_a = regexList[language]) !== null && _a !== void 0 ? _a : regexList.shell, "");
 }
 exports.removeCommentsFromSourceCode = removeCommentsFromSourceCode;
 /**

@@ -60,8 +60,15 @@ def snake_to_camel(snake_case_str: str) -> str:
 
 
 def remove_comments_from_source_code(text: str, language: str = "shell") -> str:
-    """Removes lines starting with # (except shebang)."""
-    return re.sub(r"^(\s+)?#(?!!).*$", "", text, flags=re.MULTILINE)
+    """Removes comments from source code based on the language.
+    TODO: consider preserving values enclosed in quotes
+    """
+    if language == "fortran":
+        # Removes inline and full-line comments starting with ! or #
+        return re.sub(r"[!#].*$", "", text, flags=re.MULTILINE)
+
+    # Default (shell): removes inline and full-line # comments (except shebang)
+    return re.sub(r"#(?!!).*$", "", text, flags=re.MULTILINE)
 
 
 def remove_empty_lines_from_string(text: str) -> str:

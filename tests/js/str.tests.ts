@@ -6,6 +6,7 @@ import {
     numberFormat,
     numberPad,
     numberPadArray,
+    removeCommentsFromSourceCode,
     renderTemplateString,
     renderTemplateStringWithEval,
 } from "../../src/js/shared/str";
@@ -74,6 +75,30 @@ describe("Test string template expansion with eval", () => {
         };
         const expected = "As a User, I want to generate test cases automatically. ---test---";
         expect(renderTemplateStringWithEval(template, context)).to.equal(expected);
+    });
+});
+
+describe("removeCommentsFromSourceCode", () => {
+    it("should remove comments from bash script", () => {
+        const bashScript = `#!/bin/bash
+# This is a bash script header comment
+export JOB_NAME="pw_scf"  # inline comment
+echo "Starting calculation"
+`;
+
+        const cleanedScript = removeCommentsFromSourceCode(bashScript);
+        const cleanedLines = cleanedScript.split("\n");
+
+        // Check that actual code is preserved
+        expect(cleanedLines[0]).to.equal("#!/bin/bash");
+        expect(cleanedLines.some((line) => line.includes('export JOB_NAME="pw_scf"'))).to.be
+            .true;
+        expect(cleanedLines.some((line) => line.includes('echo "Starting calculation"'))).to.be
+            .true;
+        // Check that comments are removed
+        expect(cleanedLines.some((line) => line.includes("bash script header comment"))).to.be
+            .false;
+        expect(cleanedLines.some((line) => line.includes("inline comment"))).to.be.false;
     });
 });
 

@@ -45,10 +45,10 @@ def test_remove_timestampable_keys():
 
 
 def test_comment_and_empty_line_stripping_matches_js():
-    text = "# comment\n\nx=1\n  # indented\n#!/bin/bash\n echo hi # inline\n"
+    text = "# comment\n\nx=1\n  # indented\n#!/bin/bash\necho hi # inline\n"
     without_comments = remove_comments_from_source_code(text)
     assert "#!/" in without_comments  # shebang preserved
-    assert "echo hi # inline" in without_comments  # inline comment preserved
+    assert "echo hi # inline" not in without_comments  # inline comment removed
     assert "comment" not in without_comments
 
-    assert remove_empty_lines_from_string(without_comments) == "x=1\n#!/bin/bash\n echo hi # inline"
+    assert remove_empty_lines_from_string(without_comments) == "x=1\n#!/bin/bash\necho hi"

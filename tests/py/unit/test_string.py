@@ -48,7 +48,7 @@ def test_remove_comments_from_espresso_input():
     ecutrho = 200
 /"""
 
-    cleaned_input = remove_comments_from_source_code(espresso_input, language="fortran")
+    cleaned_input = remove_comments_from_source_code(espresso_input, language="espresso")
     cleaned_lines = cleaned_input.splitlines()
 
     # Check that actual code is preserved
@@ -59,6 +59,28 @@ def test_remove_comments_from_espresso_input():
     assert any("ntyp = 1" in line for line in cleaned_lines)
     assert any("ecutwfc = 40" in line for line in cleaned_lines)
     assert any("ecutrho = 200" in line for line in cleaned_lines)
-    # Check that comments are removed
+    # Check that ! and # comments are removed
     assert not any("This is a Quantum ESPRESSO input block" in line for line in cleaned_lines)
     assert not any("this is an inline comment" in line for line in cleaned_lines)
+
+
+def test_remove_comments_from_fortran_source():
+    fortran_source = """! This is a fortran header comment
+program test
+    integer :: i  ! inline fortran comment
+    i = 5  # not a fortran comment marker
+end program
+"""
+
+    cleaned_source = remove_comments_from_source_code(fortran_source, language="fortran")
+    cleaned_lines = cleaned_source.splitlines()
+
+    # Check that actual code is preserved
+    assert any("program test" in line for line in cleaned_lines)
+    assert any("integer :: i" in line for line in cleaned_lines)
+    assert any("i = 5  # not a fortran comment marker" in line for line in cleaned_lines)
+    assert any("end program" in line for line in cleaned_lines)
+    # Check that only ! comments are removed
+    assert not any("This is a fortran header comment" in line for line in cleaned_lines)
+    assert not any("inline fortran comment" in line for line in cleaned_lines)
+    assert any("not a fortran comment marker" in line for line in cleaned_lines)

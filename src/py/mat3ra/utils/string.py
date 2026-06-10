@@ -64,11 +64,17 @@ def remove_comments_from_source_code(text: str, language: str = "shell") -> str:
     TODO: consider preserving values enclosed in quotes
     """
     if language == "fortran":
-        # Removes inline and full-line comments starting with ! or # (QE input uses both)
-        return re.sub(r"[!#].*$", "", text, flags=re.MULTILINE)
-
-    # Default (shell): removes inline and full-line # comments (except shebang)
+        return re.sub(r"!.*$", "", text, flags=re.MULTILINE)
+    if language == "python":
+        return re.sub(r"#.*$", "", text, flags=re.MULTILINE)
     return re.sub(r"#(?!!).*$", "", text, flags=re.MULTILINE)
+
+
+def remove_comments_qe(text: str) -> str:
+    return remove_comments_from_source_code(
+        remove_comments_from_source_code(text, language="fortran"),
+        language="python",
+    )
 
 
 def remove_empty_lines_from_string(text: str) -> str:

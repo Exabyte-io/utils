@@ -45,9 +45,19 @@ export function toFixedLocale(number, precision) {
 export function removeCommentsFromSourceCode(text, language = "shell") {
     const regexList = {
         shell: /#(?!!).*$/gm,
-        fortran: /[!#].*$/gm,
+        fortran: /!.*$/gm,
+        python: /#.*$/gm,
     };
     return text.replace(regexList[language] ?? regexList.shell, "");
+}
+
+/**
+ * @summary Removes comments from Quantum ESPRESSO input (Fortran ! then Python #).
+ * @param text {String} text to remove comments from.
+ * @return {String}
+ */
+export function removeCommentsQe(text) {
+    return removeCommentsFromSourceCode(removeCommentsFromSourceCode(text, "fortran"), "python");
 }
 
 /**

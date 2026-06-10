@@ -70,13 +70,6 @@ def remove_comments_from_source_code(text: str, language: str = "shell") -> str:
     return re.sub(r"#(?!!).*$", "", text, flags=re.MULTILINE)
 
 
-def remove_comments_qe(text: str) -> str:
-    return remove_comments_from_source_code(
-        remove_comments_from_source_code(text, language="fortran"),
-        language="python",
-    )
-
-
 def remove_empty_lines_from_string(text: str) -> str:
     """Removes empty lines and trims."""
     return re.sub(r"^\s*[\r\n]", "", text, flags=re.MULTILINE).strip()

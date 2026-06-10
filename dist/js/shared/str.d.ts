@@ -14,12 +14,6 @@ export function toFixedLocale(number: any, precision: any): any;
  */
 export function removeCommentsFromSourceCode(text: string, language?: string): string;
 /**
- * @summary Removes comments from Quantum ESPRESSO input (Fortran ! then Python #).
- * @param text {String} text to remove comments from.
- * @return {String}
- */
-export function removeCommentsQe(text: string): string;
-/**
  * @summary Removes empty lines from a given string.
  * @param string {String} string to remove empty lines from.
  * @return {String}

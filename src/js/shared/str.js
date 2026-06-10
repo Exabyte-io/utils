@@ -51,14 +51,6 @@ export function removeCommentsFromSourceCode(text, language = "shell") {
     return text.replace(regexList[language] ?? regexList.shell, "");
 }
 
-/**
- * @summary Removes comments from Quantum ESPRESSO input (Fortran ! then Python #).
- * @param text {String} text to remove comments from.
- * @return {String}
- */
-export function removeCommentsQe(text) {
-    return removeCommentsFromSourceCode(removeCommentsFromSourceCode(text, "fortran"), "python");
-}
 
 /**
  * @summary Removes empty lines from a given string.

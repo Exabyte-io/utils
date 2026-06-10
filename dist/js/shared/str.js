@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.numberFormat = exports.numberPadArray = exports.numberPad = exports.createSafeFilename = exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsQe = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
+exports.numberFormat = exports.numberPadArray = exports.numberPad = exports.createSafeFilename = exports.renderTemplateStringWithEval = exports.renderTemplateString = exports.findPreviousVersion = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
 const lt_1 = __importDefault(require("semver/functions/lt"));
 const rcompare_1 = __importDefault(require("semver/functions/rcompare"));
@@ -55,15 +55,6 @@ function removeCommentsFromSourceCode(text, language = "shell") {
     return text.replace((_a = regexList[language]) !== null && _a !== void 0 ? _a : regexList.shell, "");
 }
 exports.removeCommentsFromSourceCode = removeCommentsFromSourceCode;
-/**
- * @summary Removes comments from Quantum ESPRESSO input (Fortran ! then Python #).
- * @param text {String} text to remove comments from.
- * @return {String}
- */
-function removeCommentsQe(text) {
-    return removeCommentsFromSourceCode(removeCommentsFromSourceCode(text, "fortran"), "python");
-}
-exports.removeCommentsQe = removeCommentsQe;
 /**
  * @summary Removes empty lines from a given string.
  * @param string {String} string to remove empty lines from.

@@ -51,7 +51,6 @@ export function removeCommentsFromSourceCode(text, language = "shell") {
     return text.replace(regexList[language] ?? regexList.shell, "");
 }
 
-
 /**
  * @summary Removes empty lines from a given string.
  * @param string {String} string to remove empty lines from.

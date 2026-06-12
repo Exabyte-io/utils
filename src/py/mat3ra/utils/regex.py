@@ -1,5 +1,5 @@
 import re
-from typing import Union, Any
+from typing import Union, Any, Dict, Optional
 
 
 def convert_js_flags_to_python(flags: str) -> int:
@@ -55,3 +55,54 @@ def regex_search(content: str, pattern: Union[str, re.Pattern], flags: int = 0, 
     #     return match.group(group_index)
 
     return match
+
+def regex_search_by_schema(
+    content: str,
+    schema: Dict[str, Any],
+    param_replacements: Optional[Dict[str, str]] = None,
+    find_all: bool = False
+) -> Any:
+    """
+    Executes a regex search using a configuration schema block.
+    The schema is based on the regex repo:
+    "namelist_block": {
+        "regex": "&{{BLOCK_NAME}}\\s*([\\s\\S]*?)\\/",
+        "flags": ["i"],
+        "params": {
+            "BLOCK_NAME": [
+                "CONTROL",
+                "SYSTEM",
+                "ELECTRONS",
+                "IONS",
+                "CELL",
+                "FCP",
+                "RISM"
+            ]
+        }
+    }
+    Handles schemas that completely omit the 'flags' key.
+    """
+    regex_pattern = schema["regex"]
+
+    # handle template variable injections (e.g., {{BLOCK_NAME}})
+    if param_replacements:
+        for placeholder, value in param_replacements.items():
+            # Validates that the provided value matches allowed parameters in schema
+            allowed_params = schema.get("params", {}).get(placeholder, [])
+            if allowed_params and value not in allowed_params:
+                raise ValueError(
+                    f"Value '{value}' is not an allowed parameter for '{placeholder}'. "
+                    f"Expected one of: {allowed_params}"
+                )
+            regex_pattern = regex_pattern.replace(f"{{{{{placeholder}}}}}", value)
+
+    # handle the flags key (and default to 0 if missing or empty)
+    schema_flags = schema.get("flags", [])
+    python_flags = convert_js_flags_to_python("".join(schema_flags))
+
+    return regex_search(
+        pattern=regex_pattern,
+        content=content,
+        flags=python_flags,
+        find_all=find_all
+    )

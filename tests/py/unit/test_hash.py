@@ -39,9 +39,7 @@ def test_sort_keys_deep_pydantic_exclude_unset_include_none():
 
 
 def test_remove_timestampable_keys():
-    assert remove_timestampable_keys(
-        {"a": 1, "createdAt": "x", "updatedAt": "y", "removedAt": "z"}
-    ) == {"a": 1}
+    assert remove_timestampable_keys({"a": 1, "createdAt": "x", "updatedAt": "y", "removedAt": "z"}) == {"a": 1}
 
 
 def test_comment_and_empty_line_stripping_matches_js():
@@ -50,5 +48,4 @@ def test_comment_and_empty_line_stripping_matches_js():
     assert "#!/" in without_comments  # shebang preserved
     assert "echo hi # inline" not in without_comments  # inline comment removed
     assert "comment" not in without_comments
-
     assert remove_empty_lines_from_string(without_comments) == "x=1\n#!/bin/bash\necho hi"

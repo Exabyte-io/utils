@@ -37,16 +37,19 @@ export function toFixedLocale(number, precision) {
 }
 
 /**
- * @summary Removes full-line and inline comments starting with #. Shebang (#!) is excluded.
+ * @summary Removes comments from a given source code text based on the specified programming language.
  * @param text {String} text to remove comments from.
  * @param language {String} programming language of the text.
  * @return {String}
  */
 export function removeCommentsFromSourceCode(text, language = "shell") {
     const regexList = {
+        espresso: /[!#].*$/gm,
+        fortran: /!.*$/gm,
+        python: /#.*$/gm,
         shell: /#(?!!).*$/gm,
     };
-    return text.replace(regexList[language], "");
+    return text.replace(regexList[language] ?? regexList.shell, "");
 }
 
 /**

@@ -48,7 +48,9 @@ def test_remove_comments_from_espresso_input():
     ecutrho = 200
 /"""
 
-    cleaned_input = remove_comments_from_source_code(espresso_input, language="espresso")
+    cleaned_input = remove_comments_from_source_code(
+        remove_comments_from_source_code(espresso_input, language="fortran"), language="python"
+    )
     cleaned_lines = cleaned_input.splitlines()
 
     # Check that actual code is preserved

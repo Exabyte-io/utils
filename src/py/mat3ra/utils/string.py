@@ -67,7 +67,6 @@ def remove_comments_from_source_code(text: str, language: str = "shell") -> str:
         var = 2  # it's a comment
     """
     patterns = {
-        "espresso": r"[!#].*$",  # ! or # comments
         "fortran": r"!.*$",  # ! comments only
         "python": r"#.*$",
         "shell": r"#(?!!).*$",  # # comments (except shebang)

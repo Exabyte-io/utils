@@ -230,7 +230,7 @@ function sortWithExcludeRecursive(o: any, excludeSet?: Set<string> | null): any 
         const orderedKeys = [...excluded, ...toSort];
         const result: Record<string, unknown> = {};
         for (const key of orderedKeys) {
-            result[key] = sortWithExcludeRecursive(o[key], excludeSet);
+            result[key] = sortWithExcludeRecursive((o as any)[key], excludeSet);
         }
         return result;
     }

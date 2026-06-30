@@ -1,3 +1,4 @@
+import { Decimal } from "decimal.js";
 import * as mathjs from "mathjs";
 
 import { tolerance as TOLERANCE } from "./constants";
@@ -203,6 +204,49 @@ const /**
     };
 
 /**
+ * Rounding modes using decimal.js constants.
+ * Bankers (round half to even) is the default — matches Python's np.round and built-in round().
+ * See: https://en.wikipedia.org/wiki/Rounding#Rounding_half_to_even
+ */
+export const RoundingMethodEnum = {
+    Bankers: Decimal.ROUND_HALF_EVEN,
+    HalfAwayFromZero: Decimal.ROUND_HALF_UP,
+};
+
+/**
+ * Round a number to the specified number of decimal places.
+ * Uses decimal.js for correctness. Defaults to Bankers rounding (round half to even).
+ * @param value - The number to round.
+ * @param decimals - Number of decimal places (default: 0).
+ * @param mode - Rounding mode from decimal.js (default: ROUND_HALF_EVEN).
+ */
+export const roundCustom = (
+    value: number,
+    decimals = 0,
+    mode: Decimal.Rounding = RoundingMethodEnum.Bankers,
+): number => {
+    return new Decimal(value).toDecimalPlaces(decimals, mode).toNumber();
+};
+
+/**
+ * Round a number or each element of an array to the specified number of decimal places.
+ * Non-number values are passed through unchanged.
+ * @param value - A number, array of numbers, or mixed array.
+ * @param decimals - Number of decimal places (default: 9).
+ * @param mode - Rounding mode from decimal.js (default: ROUND_HALF_EVEN).
+ */
+export const roundArrayOrNumber = (
+    value: unknown,
+    decimals = 9,
+    mode: Decimal.Rounding = RoundingMethodEnum.Bankers,
+) => {
+    if (Array.isArray(value)) {
+        return value.map((v) => (typeof v === "number" ? roundCustom(v, decimals, mode) : v));
+    }
+    return typeof value === "number" ? roundCustom(value, decimals, mode) : value;
+};
+
+/**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.
  * @locus Client
@@ -239,4 +283,7 @@ export default {
     calculateSegmentsBetweenPoints3D,
     roundValueToNDecimals,
     numberToPrecision,
+    roundCustom,
+    RoundingMethod: RoundingMethodEnum,
+    roundArrayOrNumber,
 };

@@ -8,7 +8,9 @@ class RoundNumericValuesMixin(object):
     __round_precision__ = 9
 
     @classmethod
-    def round_array_or_number(cls, array, decimal_places=None, retain_sign_for_zero=False, method=RoundingMethodEnum.Bankers):
+    def round_array_or_number(
+        cls, array, decimal_places=None, retain_sign_for_zero=False, method=RoundingMethodEnum.Bankers
+    ):
         decimal_places = cls.__round_precision__ if decimal_places is None else decimal_places
         vectorized_round = np.vectorize(lambda v: round_custom(v, decimal_places, method))
         rounded_array = vectorized_round(np.asarray(array))

@@ -61,13 +61,17 @@ def snake_to_camel(snake_case_str: str) -> str:
 
 def remove_comments_from_source_code(text: str, language: str = "shell") -> str:
     """Removes comments from source code based on the language.
-    TODO: consider preserving values enclosed in quotes
+    TODO: consider preserving values enclosed in quotes. support for following cases:
+        url="https://www.example.com/about#company"
+        message = "Hello, world!"
+        var = 2  # it's a comment
     """
-    if language == "fortran":
-        return re.sub(r"!.*$", "", text, flags=re.MULTILINE)
-    if language == "python":
-        return re.sub(r"#.*$", "", text, flags=re.MULTILINE)
-    return re.sub(r"#(?!!).*$", "", text, flags=re.MULTILINE)
+    patterns = {
+        "fortran": r"!.*$",  # ! comments only
+        "python": r"#.*$",
+        "shell": r"#(?!!).*$",  # # comments (except shebang)
+    }
+    return re.sub(patterns.get(language, patterns["shell"]), "", text, flags=re.MULTILINE)
 
 
 def remove_empty_lines_from_string(text: str) -> str:

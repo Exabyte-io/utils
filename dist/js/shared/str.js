@@ -48,9 +48,10 @@ exports.toFixedLocale = toFixedLocale;
 function removeCommentsFromSourceCode(text, language = "shell") {
     var _a;
     const regexList = {
-        shell: /#(?!!).*$/gm,
+        espresso: /[!#].*$/gm,
         fortran: /!.*$/gm,
         python: /#.*$/gm,
+        shell: /#(?!!).*$/gm,
     };
     return text.replace((_a = regexList[language]) !== null && _a !== void 0 ? _a : regexList.shell, "");
 }

@@ -1,4 +1,30 @@
+import { Decimal } from "decimal.js";
 import * as mathjs from "mathjs";
+/**
+ * Rounding modes using decimal.js constants.
+ * Bankers (round half to even) is the default — matches Python's np.round and built-in round().
+ * See: https://en.wikipedia.org/wiki/Rounding#Rounding_half_to_even
+ */
+export declare const RoundingMethodEnum: {
+    Bankers: 6;
+    HalfAwayFromZero: 4;
+};
+/**
+ * Round a number to the specified number of decimal places.
+ * Uses decimal.js for correctness. Defaults to Bankers rounding (round half to even).
+ * @param value - The number to round.
+ * @param decimals - Number of decimal places (default: 0).
+ * @param mode - Rounding mode from decimal.js (default: ROUND_HALF_EVEN).
+ */
+export declare const roundCustom: (value: number, decimals?: number, mode?: Decimal.Rounding) => number;
+/**
+ * Round a number or each element of an array to the specified number of decimal places.
+ * Non-number values are passed through unchanged.
+ * @param value - A number, array of numbers, or mixed array.
+ * @param decimals - Number of decimal places (default: 9).
+ * @param mode - Rounding mode from decimal.js (default: ROUND_HALF_EVEN).
+ */
+export declare const roundArrayOrNumber: (value: unknown, decimals?: number, mode?: Decimal.Rounding) => unknown;
 /**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.
@@ -29,6 +55,12 @@ declare const _default: {
     calculateSegmentsBetweenPoints3D: (point1: (string | number)[], point2: (string | number)[], n: string | number) => number[][];
     roundValueToNDecimals: (value: number, decimals?: number) => number;
     numberToPrecision: typeof numberToPrecision;
+    roundCustom: (value: number, decimals?: number, mode?: Decimal.Rounding) => number;
+    RoundingMethod: {
+        Bankers: 6;
+        HalfAwayFromZero: 4;
+    };
+    roundArrayOrNumber: (value: unknown, decimals?: number, mode?: Decimal.Rounding) => unknown;
     AccessorNode: mathjs.AccessorNodeCtor;
     ArrayNode: mathjs.ArrayNodeCtor;
     AssignmentNode: mathjs.AssignmentNodeCtor;

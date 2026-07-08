@@ -23,7 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.numberToPrecision = void 0;
+exports.numberToPrecision = exports.roundArrayOrNumber = exports.roundCustom = exports.RoundingMethodEnum = void 0;
+const decimal_js_1 = require("decimal.js");
 const mathjs = __importStar(require("mathjs"));
 const constants_1 = require("./constants");
 /*
@@ -206,6 +207,40 @@ calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
     return result;
 };
 /**
+ * Rounding modes using decimal.js constants.
+ * Bankers (round half to even) is the default — matches Python's np.round and built-in round().
+ * See: https://en.wikipedia.org/wiki/Rounding#Rounding_half_to_even
+ */
+exports.RoundingMethodEnum = {
+    Bankers: decimal_js_1.Decimal.ROUND_HALF_EVEN,
+    HalfAwayFromZero: decimal_js_1.Decimal.ROUND_HALF_UP,
+};
+/**
+ * Round a number to the specified number of decimal places.
+ * Uses decimal.js for correctness. Defaults to Bankers rounding (round half to even).
+ * @param value - The number to round.
+ * @param decimals - Number of decimal places (default: 0).
+ * @param mode - Rounding mode from decimal.js (default: ROUND_HALF_EVEN).
+ */
+const roundCustom = (value, decimals = 0, mode = exports.RoundingMethodEnum.Bankers) => {
+    return new decimal_js_1.Decimal(value).toDecimalPlaces(decimals, mode).toNumber();
+};
+exports.roundCustom = roundCustom;
+/**
+ * Round a number or each element of an array to the specified number of decimal places.
+ * Non-number values are passed through unchanged.
+ * @param value - A number, array of numbers, or mixed array.
+ * @param decimals - Number of decimal places (default: 9).
+ * @param mode - Rounding mode from decimal.js (default: ROUND_HALF_EVEN).
+ */
+const roundArrayOrNumber = (value, decimals = 9, mode = exports.RoundingMethodEnum.Bankers) => {
+    if (Array.isArray(value)) {
+        return value.map((v) => (typeof v === "number" ? (0, exports.roundCustom)(v, decimals, mode) : v));
+    }
+    return typeof value === "number" ? (0, exports.roundCustom)(value, decimals, mode) : value;
+};
+exports.roundArrayOrNumber = roundArrayOrNumber;
+/**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.
  * @locus Client
@@ -242,4 +277,7 @@ exports.default = {
     calculateSegmentsBetweenPoints3D,
     roundValueToNDecimals,
     numberToPrecision,
+    roundCustom: exports.roundCustom,
+    RoundingMethod: exports.RoundingMethodEnum,
+    roundArrayOrNumber: exports.roundArrayOrNumber,
 };

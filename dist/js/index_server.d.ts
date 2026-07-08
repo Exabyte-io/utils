@@ -35,6 +35,12 @@ export declare const Utils: {
         calculateSegmentsBetweenPoints3D: (point1: (string | number)[], point2: (string | number)[], n: string | number) => number[][];
         roundValueToNDecimals: (value: number, decimals?: number) => number;
         numberToPrecision: typeof import("./shared/math").numberToPrecision;
+        roundCustom: (value: number, decimals?: number, mode?: import("decimal.js").default.Rounding) => number;
+        RoundingMethod: {
+            Bankers: 6;
+            HalfAwayFromZero: 4;
+        };
+        roundArrayOrNumber: (value: unknown, decimals?: number, mode?: import("decimal.js").default.Rounding) => unknown;
         AccessorNode: import("mathjs").AccessorNodeCtor;
         ArrayNode: import("mathjs").ArrayNodeCtor;
         AssignmentNode: import("mathjs").AssignmentNodeCtor;
@@ -983,6 +989,12 @@ declare const _default: {
         calculateSegmentsBetweenPoints3D: (point1: (string | number)[], point2: (string | number)[], n: string | number) => number[][];
         roundValueToNDecimals: (value: number, decimals?: number) => number;
         numberToPrecision: typeof import("./shared/math").numberToPrecision;
+        roundCustom: (value: number, decimals?: number, mode?: import("decimal.js").default.Rounding) => number;
+        RoundingMethod: {
+            Bankers: 6;
+            HalfAwayFromZero: 4;
+        };
+        roundArrayOrNumber: (value: unknown, decimals?: number, mode?: import("decimal.js").default.Rounding) => unknown;
         AccessorNode: import("mathjs").AccessorNodeCtor;
         ArrayNode: import("mathjs").ArrayNodeCtor;
         AssignmentNode: import("mathjs").AssignmentNodeCtor;

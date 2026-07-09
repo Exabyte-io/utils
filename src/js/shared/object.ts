@@ -321,3 +321,52 @@ export function flattenNestedObjects<T>(
 
     return flattened;
 }
+
+/**
+ * Recursively walks a plain object (or array) and applies a mapping function
+ * to every nested plain-object node.
+ *
+ * Non-plain objects (class instances, Date, RegExp, etc.) and primitives are
+ * returned unchanged.
+ *
+ * @param object - The value to traverse.
+ * @param mapValue - A function called on every plain-object node. If it returns
+ *   a truthy value, that value replaces the node (and its children are still
+ *   traversed). If it returns a falsy value the original node is kept.
+ * @returns A new object tree with the mapping applied.
+ *
+ * @example
+ * ```ts
+ * const result = mapObjectDeep(
+ *     { a: { val: "$ref.x" }, b: [{ val: "$ref.y" }] },
+ *     (node) => {
+ *         if (node.val?.startsWith("$ref.")) return { ...node, val: "resolved" };
+ *     },
+ * );
+ * // { a: { val: "resolved" }, b: [{ val: "resolved" }] }
+ * ```
+ */
+export function mapObjectDeep(
+    object: any,
+    mapValue: (node: any) => any | undefined,
+): any {
+    if (typeof object !== "object" || object === null) {
+        return object;
+    }
+
+    if (Array.isArray(object)) {
+        return object.map((innerValue) => mapObjectDeep(innerValue, mapValue));
+    }
+
+    if (object.constructor !== Object) {
+        return object;
+    }
+
+    const mappedObject = mapValue(object) || object;
+
+    const entries = Object.entries(mappedObject).map(([key, value]) => {
+        return [key, mapObjectDeep(value, mapValue)];
+    });
+
+    return Object.fromEntries(entries);
+}

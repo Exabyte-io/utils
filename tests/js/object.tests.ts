@@ -3,6 +3,7 @@ import { expect } from "chai";
 import {
     flattenNestedObjects,
     flattenObject,
+    mapObjectDeep,
     mergeTerminalNodes,
     sortKeysDeepForObject,
     sortKeysDeepForObjectWithExclude,
@@ -176,5 +177,53 @@ describe("sortKeysDeepForObjectWithExclude", () => {
 
         const result = sortKeysDeepForObjectWithExclude(obj, ["f"]);
         expect(result).to.deep.equal(expectedObj);
+    });
+});
+
+describe("mapObjectDeep", () => {
+    it("returns primitives and null unchanged", () => {
+        expect(mapObjectDeep(42, () => undefined)).to.equal(42);
+        expect(mapObjectDeep("hello", () => undefined)).to.equal("hello");
+        expect(mapObjectDeep(null, () => undefined)).to.equal(null);
+        expect(mapObjectDeep(undefined, () => undefined)).to.equal(undefined);
+    });
+
+    it("traverses arrays inside objects and maps nested nodes", () => {
+        const input = { items: [{ val: 1 }, { val: 2 }] };
+        const result = mapObjectDeep(input, (node: any) => {
+            if (node.val !== undefined) return { val: node.val * 10 };
+        });
+        expect(result).to.deep.equal({ items: [{ val: 10 }, { val: 20 }] });
+    });
+
+    it("recursively maps nested plain objects", () => {
+        const input = { a: { b: { val: "original" } } };
+        const result = mapObjectDeep(input, (node: any) => {
+            if (node.val === "original") return { val: "replaced" };
+        });
+        expect(result).to.deep.equal({ a: { b: { val: "replaced" } } });
+    });
+
+    it("does not recurse into class instances", () => {
+        const date = new Date("2026-01-01");
+        const input = { created: date };
+        const result = mapObjectDeep(input, () => undefined);
+        expect(result.created).to.equal(date);
+    });
+
+    it("resolves $ref-style variables (real-world use case)", () => {
+        const input = {
+            a: { val: "$ref.x" },
+            b: [{ val: "$ref.y" }],
+        };
+        const result = mapObjectDeep(input, (node: any) => {
+            if (typeof node.val === "string" && node.val.startsWith("$ref.")) {
+                return { ...node, val: "resolved" };
+            }
+        });
+        expect(result).to.deep.equal({
+            a: { val: "resolved" },
+            b: [{ val: "resolved" }],
+        });
     });
 });

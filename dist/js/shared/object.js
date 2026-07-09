@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.flattenNestedObjects = exports.mergeTerminalNodes = exports.sortKeysDeepForObjectWithExclude = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
+exports.mapObjectDeep = exports.flattenNestedObjects = exports.mergeTerminalNodes = exports.sortKeysDeepForObjectWithExclude = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
 const camelCase_1 = __importDefault(require("lodash/camelCase"));
 const filter_1 = __importDefault(require("lodash/filter"));
 const isArray_1 = __importDefault(require("lodash/isArray"));
@@ -253,3 +253,44 @@ function flattenNestedObjects(nestedData, filterFunction) {
     return flattened;
 }
 exports.flattenNestedObjects = flattenNestedObjects;
+/**
+ * Recursively walks a plain object (or array) and applies a mapping function
+ * to every nested plain-object node.
+ *
+ * Non-plain objects (class instances, Date, RegExp, etc.) and primitives are
+ * returned unchanged.
+ *
+ * @param object - The value to traverse.
+ * @param mapValue - A function called on every plain-object node. If it returns
+ *   a truthy value, that value replaces the node (and its children are still
+ *   traversed). If it returns a falsy value the original node is kept.
+ * @returns A new object tree with the mapping applied.
+ *
+ * @example
+ * ```ts
+ * const result = mapObjectDeep(
+ *     { a: { val: "$ref.x" }, b: [{ val: "$ref.y" }] },
+ *     (node) => {
+ *         if (node.val?.startsWith("$ref.")) return { ...node, val: "resolved" };
+ *     },
+ * );
+ * // { a: { val: "resolved" }, b: [{ val: "resolved" }] }
+ * ```
+ */
+function mapObjectDeep(object, mapValue) {
+    if (typeof object !== "object" || object === null) {
+        return object;
+    }
+    if (Array.isArray(object)) {
+        return object.map((innerValue) => mapObjectDeep(innerValue, mapValue));
+    }
+    if (object.constructor !== Object) {
+        return object;
+    }
+    const mappedObject = mapValue(object) || object;
+    const entries = Object.entries(mappedObject).map(([key, value]) => {
+        return [key, mapObjectDeep(value, mapValue)];
+    });
+    return Object.fromEntries(entries);
+}
+exports.mapObjectDeep = mapObjectDeep;

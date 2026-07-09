@@ -94,4 +94,29 @@ export declare function mergeTerminalNodes<T = string>(tree: Tree<T>, unique?: b
  * Useful for extracting entities from deeply nested configurations.
  */
 export declare function flattenNestedObjects<T>(nestedData: Record<string, Record<string, T>>, filterFunction?: (item: T) => boolean): Record<string, T>;
+/**
+ * Recursively walks a plain object (or array) and applies a mapping function
+ * to every nested plain-object node.
+ *
+ * Non-plain objects (class instances, Date, RegExp, etc.) and primitives are
+ * returned unchanged.
+ *
+ * @param object - The value to traverse.
+ * @param mapValue - A function called on every plain-object node. If it returns
+ *   a truthy value, that value replaces the node (and its children are still
+ *   traversed). If it returns a falsy value the original node is kept.
+ * @returns A new object tree with the mapping applied.
+ *
+ * @example
+ * ```ts
+ * const result = mapObjectDeep(
+ *     { a: { val: "$ref.x" }, b: [{ val: "$ref.y" }] },
+ *     (node) => {
+ *         if (node.val?.startsWith("$ref.")) return { ...node, val: "resolved" };
+ *     },
+ * );
+ * // { a: { val: "resolved" }, b: [{ val: "resolved" }] }
+ * ```
+ */
+export declare function mapObjectDeep(object: any, mapValue: (node: any) => any | undefined): any;
 export {};

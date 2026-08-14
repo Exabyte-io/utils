@@ -15,4 +15,4 @@ fi
 
 npm run transpile
 npx lint-staged
-git add dist/js
+# dist/ is gitignored - not staged here

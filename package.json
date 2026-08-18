@@ -10,7 +10,8 @@
         "prettier": "prettier --check src/js tests/js",
         "test": "nyc --reporter=text mocha --recursive --bail tests/js",
         "transpile": "tsc -p tsconfig-transpile.json",
-        "build:constants": "node scripts/build_constants.js"
+        "build:constants": "node scripts/build_constants.js",
+        "prepublishOnly": "npm run transpile"
     },
     "author": "Exabyte Inc.",
     "license": "ISC",
